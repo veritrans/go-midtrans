@@ -3,7 +3,7 @@ package midtrans_test
 import (
     "github.com/cheekybits/is"
     "testing"
-    "go-midtrans/paytype"
+    "midtrans/paytype"
 )
 
 func TestPaymentType(t *testing.T) {
