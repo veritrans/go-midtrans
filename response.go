@@ -2,6 +2,7 @@ package midtrans
 
 // Response after calling the API
 type Response struct {
+    StatusCode string `json:"status_code"`
     StatusMessage string `json:"status_message"`
     PermataVaNumber string `json:"permata_va_number"`
     SignKey string `json:"signature_key"`
@@ -20,4 +21,14 @@ type Response struct {
     Page int `json:"page"`
     TotalPage int `json:"total_page"`
     TotalRecord int `json:"total_record"`
+}
+
+// Response from calling the GetToken
+type TokenResponse struct {
+    StatusCode string
+    Token string `json:"token_id"`
+    RedURL string `json:"redirect_url"`
+    ECI string `json:"eci"`
+    StatusMessage string `json:"status_message"`
+    ValMessages []string `json:"validation_messages"`
 }
