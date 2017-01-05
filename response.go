@@ -22,13 +22,3 @@ type Response struct {
     TotalPage int `json:"total_page"`
     TotalRecord int `json:"total_record"`
 }
-
-// Response from calling the GetToken
-type TokenResponse struct {
-    StatusCode string
-    Token string `json:"token_id"`
-    RedURL string `json:"redirect_url"`
-    ECI string `json:"eci"`
-    StatusMessage string `json:"status_message"`
-    ValMessages []string `json:"validation_messages"`
-}

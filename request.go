@@ -1,15 +1,10 @@
 package midtrans
 
-import (
-    "midtrans/paytype"
-    "encoding/json"
-)
-
 // Represent the transaction details
-type Item struct {
+type ItemDetail struct {
     Id string `json:"id"`
     Name string `json:"name"`
-    Price int64 `json:"price"`
+    Price float64 `json:"price"`
     Qty int32 `json:"quantity"`
 }
 
@@ -37,33 +32,34 @@ type CustDetail struct {
     ShipAddr CustAddress `json:"customer_address"`
 }
 
-type TxnDetail struct {
+type TransactionDetails struct {
     OrderID string `json:"order_id"`
-    GrossAmt int64 `json:"gross_amount"`
+    GrossAmt float64 `json:"gross_amount"`
+}
+
+type CreditCardDetail struct {
+    TokenID string `json:"token_id"`
+    Bank string `json:"bank,omitempty"`
+    Bins []string `json:"bins,omitempty"`
+    InstallmentTerm []int8 `json:"installment_term,omitempty"`
+    Type string `json:"type,omitempty"`
+    // indicate if generated token should be saved for next charge
+    SaveTokenID bool `json:"save_token_id,omitempty"`
+    SavedTokenIdExpireAt string `json:"saved_token_id_expired_at"`
 }
 
 // Represent the request payload
-type Req struct {
-    PaymentType paytype.PaymentType `json:"payment_type"`
-    TxnDetail TxnDetail `json:"transaction_details"`
-    Items []Item `json:"item_details"`
+type ChargeReq struct {
+    PaymentType PaymentType `json:"payment_type"`
+    TransactionDetails TransactionDetails `json:"transaction_details"`
+    CreditCard CreditCardDetail `json:"credit_card,omitempty"`
+    Items []ItemDetail `json:"item_details"`
     CustField1 string `json:"custom_field1,omitempty"`
     CustField2 string `json:"custom_field2,omitempty"`
     CustField3 string `json:"custom_field3,omitempty"`
 }
 
-func (r Req) ToJson() ([]byte, error) {
-    data, err := json.Marshal(r)
-    if err == nil {
-        return data, nil
-    }
-    return nil, err
-}
-
-func (r Req) ToJsonStr() (string, error) {
-    data, err := r.ToJson()
-    if err == nil {
-        return string(data), nil
-    }
-    return "", err
+type CaptureReq struct {
+    TransactionID string `json:"transaction_id"`
+    GrossAmt float64 `json:"gross_amount"`
 }

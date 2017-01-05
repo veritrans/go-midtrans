@@ -9,9 +9,10 @@ import (
     "strings"
     "io/ioutil"
     "encoding/json"
+    "fmt"
 )
 
-type clientSetting struct {
+type Client struct {
     ApiEnvType EnvironmentType
     ClientKey string
     ServerKey string
@@ -20,11 +21,9 @@ type clientSetting struct {
     Logger *log.Logger
 }
 
-var ClientSetting clientSetting
-
 // this function will always be called when the library is in use
-func init() {
-    ClientSetting = clientSetting{
+func NewClient() Client {
+    return Client{
         ApiEnvType: Sandbox,
 
         // LogLevel is the logging level used by the Midtrans library
@@ -41,15 +40,15 @@ func init() {
 var defHttpTimeout = 80 * time.Second
 var httpClient = &http.Client{Timeout: defHttpTimeout}
 
-func NewRequest(method string, path string, body io.Reader) (*http.Request, error) {
-    logLevel := ClientSetting.LogLevel
-    logger := ClientSetting.Logger
+func (c *Client) NewRequest(method string, path string, body io.Reader) (*http.Request, error) {
+    logLevel := c.LogLevel
+    logger := c.Logger
 
     if !strings.HasPrefix(path, "/") {
         path = "/" + path
     }
 
-    path = ClientSetting.ApiEnvType.String() + path
+    path = c.ApiEnvType.String() + path
 
     req, err := http.NewRequest(method, path, body)
     if err != nil {
@@ -61,14 +60,18 @@ func NewRequest(method string, path string, body io.Reader) (*http.Request, erro
 
     req.Header.Add("Content-Type", "application/json")
     req.Header.Add("Accept", "application/json")
-    req.SetBasicAuth("", ClientSetting.ServerKey)
+
+    fmt.Println(c.ServerKey)
+    req.SetBasicAuth(c.ServerKey, "")
+
+    fmt.Println(req)
 
     return req, nil
 }
 
-func ExecuteRequest(req *http.Request, v interface{}) error {
-    logLevel := ClientSetting.LogLevel
-    logger := ClientSetting.Logger
+func (c *Client) ExecuteRequest(req *http.Request, v interface{}) error {
+    logLevel := c.LogLevel
+    logger := c.Logger
 
     if logLevel > 1 {
         logger.Println("Request ", req.Method, ": ", req.URL.Host, req.URL.Path)
@@ -104,6 +107,23 @@ func ExecuteRequest(req *http.Request, v interface{}) error {
 
     if v != nil {
         return json.Unmarshal(resBody, v)
+    }
+
+    return nil
+}
+
+// Call the Midtrans API at specific `path` using the specified HTTP `method`. The result will be
+// given to `v` if there is no error. If any error occured, the return of this function is the error
+// itself, otherwise nil.
+func (c *Client) Call(method, path string, body io.Reader, v interface{}) error {
+    req, err := c.NewRequest(method, path, body)
+
+    if err != nil {
+        return err
+    }
+
+    if err := c.ExecuteRequest(req, v); err != nil {
+        return err
     }
 
     return nil
