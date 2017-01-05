@@ -18,8 +18,8 @@ an advantage of itself. Now, Midtrans is available to be used in Go, too.
 
 ```go
     midclient := midtrans.NewClient()
-    midclient.ServerKey = "VT-server-7CVlR3AJ8Dpkez3k_TeGJQZU"
-    midclient.ClientKey = "VT-client-IKktHiy3aRYHljsw"
+    midclient.ServerKey = "YOUR-VT-SERVER-KEY"
+    midclient.ClientKey = "YOUR-VT-CLIENT-KEY"
     midclient.ApiEnvType = midtrans.Sandbox
 
     coreGateway = midtrans.CoreGateway{
