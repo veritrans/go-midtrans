@@ -41,9 +41,63 @@ func (g *CoreGateway) CaptureCard(req *CaptureReq) (Response, error) {
         return resp, err
     }
 
-    if resp.StatusMessage != "" {
-        g.Client.Logger.Println(resp.StatusMessage)
+    if resp.StatusMessage != "" { g.Client.Logger.Println(resp.StatusMessage) }
+
+    return resp, nil
+}
+
+func (g *CoreGateway) Approve(orderId string) (Response, error) {
+    resp := Response{}
+
+    err := g.Client.Call("POST", orderId + "/approve", nil, &resp)
+    if err != nil {
+        g.Client.Logger.Println("Error approving: ", err)
+        return resp, err
     }
+
+    if resp.StatusMessage != "" { g.Client.Logger.Println(resp.StatusMessage) }
+
+    return resp, nil
+}
+
+func (g *CoreGateway) Cancel(orderId string) (Response, error) {
+    resp := Response{}
+
+    err := g.Client.Call("POST", orderId + "/cancel", nil, &resp)
+    if err != nil {
+        g.Client.Logger.Println("Error approving: ", err)
+        return resp, err
+    }
+
+    if resp.StatusMessage != "" { g.Client.Logger.Println(resp.StatusMessage) }
+
+    return resp, nil
+}
+
+func (g *CoreGateway) Expire(orderId string) (Response, error) {
+    resp := Response{}
+
+    err := g.Client.Call("POST", orderId + "/expire", nil, &resp)
+    if err != nil {
+        g.Client.Logger.Println("Error approving: ", err)
+        return resp, err
+    }
+
+    if resp.StatusMessage != "" { g.Client.Logger.Println(resp.StatusMessage) }
+
+    return resp, nil
+}
+
+func (g *CoreGateway) Status(orderId string) (Response, error) {
+    resp := Response{}
+
+    err := g.Client.Call("GET", orderId + "/status", nil, &resp)
+    if err != nil {
+        g.Client.Logger.Println("Error approving: ", err)
+        return resp, err
+    }
+
+    if resp.StatusMessage != "" { g.Client.Logger.Println(resp.StatusMessage) }
 
     return resp, nil
 }
