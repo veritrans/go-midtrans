@@ -9,7 +9,6 @@ import (
     "strings"
     "io/ioutil"
     "encoding/json"
-    "fmt"
 )
 
 type Client struct {
@@ -60,11 +59,7 @@ func (c *Client) NewRequest(method string, path string, body io.Reader) (*http.R
 
     req.Header.Add("Content-Type", "application/json")
     req.Header.Add("Accept", "application/json")
-
-    fmt.Println(c.ServerKey)
     req.SetBasicAuth(c.ServerKey, "")
-
-    fmt.Println(req)
 
     return req, nil
 }

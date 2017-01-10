@@ -45,7 +45,7 @@ type CreditCardDetail struct {
     Type string `json:"type,omitempty"`
     // indicate if generated token should be saved for next charge
     SaveTokenID bool `json:"save_token_id,omitempty"`
-    SavedTokenIdExpireAt string `json:"saved_token_id_expired_at"`
+    SavedTokenIdExpireAt string `json:"saved_token_id_expired_at,omitempty"`
 }
 
 type PermataBankTransferDetail struct {
@@ -143,13 +143,13 @@ type ChargeReq struct {
     BankTransfer *BankTransferDetail `json:"bank_transfer,omitempty"`
 
     BCAKlikPay *BCAKlikPayDetail `json:"bca_klikpay,omitempty"`
-    BCAKlikBCA *BCAKlikBCADetail `json:"bca_klikbca"`
-    MandiriClickPay *MandiriClickPayDetail `json:"mandiri_clickpay"`
-    CIMBClicks *CIMBClicksDetail `json:"cimb_clicks"`
-    TelkomselCash *TelkomselCashDetail `json:"telkomsel_cash"`
-    IndosatDompetku *IndosatDompetkuDetail `json:"indosat_dompetku"`
+    BCAKlikBCA *BCAKlikBCADetail `json:"bca_klikbca,omitempty"`
+    MandiriClickPay *MandiriClickPayDetail `json:"mandiri_clickpay,omitempty"`
+    CIMBClicks *CIMBClicksDetail `json:"cimb_clicks,omitempty"`
+    TelkomselCash *TelkomselCashDetail `json:"telkomsel_cash,omitempty"`
+    IndosatDompetku *IndosatDompetkuDetail `json:"indosat_dompetku,omitempty"`
 
-    ConvStore *ConvStoreDetail `json:"cstore"`
+    ConvStore *ConvStoreDetail `json:"cstore,omitempty"`
 
     Items []ItemDetail `json:"item_details,omitempty"`
     CustField1 string `json:"custom_field1,omitempty"`
