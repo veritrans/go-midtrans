@@ -1,7 +1,5 @@
 # Midtrans Library for Go(lang)
 
-### This library has been moved to [Midtrans Go-Lang Repo](https://github.com/veritrans/go-midtrans).
-
 Midtrans :heart: Go !
 
 Go is a very modern, terse, and combine aspect of dynamic and static typing that in a way very
