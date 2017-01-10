@@ -1,9 +1,11 @@
 # Midtrans Library for Go(lang)
 
+### This library has been moved to [Midtrans Go-Lang Repo](https://github.com/veritrans/go-midtrans).
+
 Midtrans :heart: Go !
 
-Go is a very modern, terse, and combine aspect of dynamic and static typing that is very
-well suited for web development, among other things. Its small memory usage is also
+Go is a very modern, terse, and combine aspect of dynamic and static typing that in a way very
+well suited for web development, among other things. Its small memory footprint is also
 an advantage of itself. Now, Midtrans is available to be used in Go, too.
 
 ## Usage blueprint
