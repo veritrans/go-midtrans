@@ -3,17 +3,28 @@ package midtrans
 import (
     "encoding/json"
     "bytes"
+    "io"
+    "strings"
 )
 
 type CoreGateway struct {
     Client Client
 }
 
+func (c *CoreGateway) Call(method, path string, body io.Reader, v interface{}) error {
+    if !strings.HasPrefix(path, "/") {
+        path = "/" + path
+    }
+
+    path = c.Client.ApiEnvType.String() + path
+    return c.Client.Call(method, path, body, v)
+}
+
 func (g *CoreGateway) Charge(req *ChargeReq) (Response, error) {
     resp := Response{}
     jsonReq, _ := json.Marshal(req)
 
-    err := g.Client.Call("POST", "charge", bytes.NewBuffer(jsonReq), &resp)
+    err := g.Call("POST", "v2/charge", bytes.NewBuffer(jsonReq), &resp)
     if err != nil {
         g.Client.Logger.Println("Error charging: ", err)
         return resp, err
@@ -35,7 +46,7 @@ func (g *CoreGateway) CaptureCard(req *CaptureReq) (Response, error) {
     resp := Response{}
     jsonReq, _ := json.Marshal(req)
 
-    err := g.Client.Call("POST", "capture", bytes.NewBuffer(jsonReq), &resp)
+    err := g.Call("POST", "v2/capture", bytes.NewBuffer(jsonReq), &resp)
     if err != nil {
         g.Client.Logger.Println("Error capturing: ", err)
         return resp, err
@@ -49,7 +60,7 @@ func (g *CoreGateway) CaptureCard(req *CaptureReq) (Response, error) {
 func (g *CoreGateway) Approve(orderId string) (Response, error) {
     resp := Response{}
 
-    err := g.Client.Call("POST", orderId + "/approve", nil, &resp)
+    err := g.Call("POST", "v2/" + orderId + "/approve", nil, &resp)
     if err != nil {
         g.Client.Logger.Println("Error approving: ", err)
         return resp, err
@@ -63,7 +74,7 @@ func (g *CoreGateway) Approve(orderId string) (Response, error) {
 func (g *CoreGateway) Cancel(orderId string) (Response, error) {
     resp := Response{}
 
-    err := g.Client.Call("POST", orderId + "/cancel", nil, &resp)
+    err := g.Call("POST", "v2/" + orderId + "/cancel", nil, &resp)
     if err != nil {
         g.Client.Logger.Println("Error approving: ", err)
         return resp, err
@@ -77,7 +88,7 @@ func (g *CoreGateway) Cancel(orderId string) (Response, error) {
 func (g *CoreGateway) Expire(orderId string) (Response, error) {
     resp := Response{}
 
-    err := g.Client.Call("POST", orderId + "/expire", nil, &resp)
+    err := g.Call("POST", "v2/" + orderId + "/expire", nil, &resp)
     if err != nil {
         g.Client.Logger.Println("Error approving: ", err)
         return resp, err
@@ -91,7 +102,7 @@ func (g *CoreGateway) Expire(orderId string) (Response, error) {
 func (g *CoreGateway) Status(orderId string) (Response, error) {
     resp := Response{}
 
-    err := g.Client.Call("GET", orderId + "/status", nil, &resp)
+    err := g.Call("GET", "v2/" + orderId + "/status", nil, &resp)
     if err != nil {
         g.Client.Logger.Println("Error approving: ", err)
         return resp, err

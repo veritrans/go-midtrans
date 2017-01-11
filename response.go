@@ -22,3 +22,10 @@ type Response struct {
     TotalPage int `json:"total_page"`
     TotalRecord int `json:"total_record"`
 }
+
+// Response after calling the Snap API
+type SnapResponse struct {
+    StatusCode string `json:"status_code"`
+    Token string `json:"token"`
+    ErrorMessages []string `json:"error_messages"`
+}

@@ -1,5 +1,7 @@
 package midtrans
 
+import "strings"
+
 type EnvironmentType int8
 
 const (
@@ -9,8 +11,8 @@ const (
 )
 
 var typeString = map[EnvironmentType]string {
-    Sandbox: "https://api.sandbox.veritrans.co.id/v2",
-    Production: "https://api.veritrans.co.id/v2",
+    Sandbox: "https://api.sandbox.veritrans.co.id",
+    Production: "https://api.veritrans.co.id",
 }
 
 // implement stringer
@@ -21,4 +23,8 @@ func (e EnvironmentType) String() string {
         }
     }
     return "undefined"
+}
+
+func (e EnvironmentType) SnapUrl() string {
+    return strings.Replace(e.String(), "api.", "app.", 1)
 }

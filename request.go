@@ -151,10 +151,17 @@ type ChargeReq struct {
 
     ConvStore *ConvStoreDetail `json:"cstore,omitempty"`
 
-    Items []ItemDetail `json:"item_details,omitempty"`
+    Items *[]ItemDetail `json:"item_details,omitempty"`
     CustField1 string `json:"custom_field1,omitempty"`
     CustField2 string `json:"custom_field2,omitempty"`
     CustField3 string `json:"custom_field3,omitempty"`
+}
+
+type SnapReq struct {
+    TransactionDetails TransactionDetails `json:"transaction_details"`
+    EnabledPayments []PaymentType `json:"enabled_payments"`
+    Items *[]ItemDetail `json:"item_details,omitempty"`
+    CustomerDetail *CustDetail `json:"customer_details,omitempty"`
 }
 
 type CaptureReq struct {

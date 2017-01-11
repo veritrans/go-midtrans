@@ -6,7 +6,6 @@ import (
     "net/http"
     "time"
     "io"
-    "strings"
     "io/ioutil"
     "encoding/json"
 )
@@ -39,17 +38,11 @@ func NewClient() Client {
 var defHttpTimeout = 80 * time.Second
 var httpClient = &http.Client{Timeout: defHttpTimeout}
 
-func (c *Client) NewRequest(method string, path string, body io.Reader) (*http.Request, error) {
+func (c *Client) NewRequest(method string, fullPath string, body io.Reader) (*http.Request, error) {
     logLevel := c.LogLevel
     logger := c.Logger
 
-    if !strings.HasPrefix(path, "/") {
-        path = "/" + path
-    }
-
-    path = c.ApiEnvType.String() + path
-
-    req, err := http.NewRequest(method, path, body)
+    req, err := http.NewRequest(method, fullPath, body)
     if err != nil {
         if logLevel > 0 {
             logger.Println("Request creation failed: ", err)
