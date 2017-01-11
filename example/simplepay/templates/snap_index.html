@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+    <title>Simplepay</title>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" type="text/javascript"></script>
+    <script src="https://api.sandbox.midtrans.com/v2/assets/js/midtrans.min.js" type="text/javascript"></script>
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js"></script>
+    <link href="/assets/common.css" rel="stylesheet"/>
+</head>
+<body>
+<div class='cart'>
+    <div class='popup'>
+        <div class='row header'>
+            <span>Items</span>
+            <span>Amount</span>
+        </div>
+
+        <div class='row items'>
+            <span>2</span>
+            <span>200000</span>
+        </div>
+
+        <input type="hidden" id="snap-token" name="snap-token" value="{{.Token}}"/>
+
+        <div class='row checkout'>
+            <span><a href='/snap'>via SNAP</a></span>
+            <span class='checkout-button'>Checkout</span>
+        </div>
+    </div>
+</div>
+</body>
+
+    <script type='text/javascript'>
+        $(document).ready(function() {
+            $(".checkout-button").on("click", function() {
+                var token = $("#snap-token").val();
+                console.log("Token", token);
+
+                snap.pay(token, {
+                    onSuccess: function(res) {
+                        alert("Payment accepted!");
+                    },
+
+                    onPending: function(res) {
+                        alert("Payment pending", res);
+                    },
+
+                    onError: function(res) {
+                        alert("Error", res);
+                    }
+                });
+            });
+        });
+    </script>
+</html>

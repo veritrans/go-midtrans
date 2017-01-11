@@ -12,6 +12,7 @@ import (
 
 var midclient midtrans.Client
 var coreGateway midtrans.CoreGateway
+var snapGateway midtrans.SnapGateway
 
 func main() {
     setupMidtrans()
@@ -20,6 +21,20 @@ func main() {
     fmt.Println("Server started on port: ", *addr)
 
     http.Handle("/", &templateHandler{filename: "index.html"})
+    http.Handle("/snap", &templateHandler{
+        filename: "snap_index.html",
+        dataInitializer: func (t *templateHandler) {
+            snapResp, err := snapGateway.GetTokenQuick(generateOrderId(), 200000)
+            t.data = make(map[string]interface{})
+
+            if err != nil {
+                log.Fatal("Error generating snap token: ", err)
+                t.data["Token"] = ""
+            } else {
+                t.data["Token"] = snapResp.Token
+            }
+        },
+    })
     http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
     http.HandleFunc("/chargeDirect", chargeDirect)
 
@@ -37,6 +52,10 @@ func setupMidtrans() {
     coreGateway = midtrans.CoreGateway{
         Client: midclient,
     }
+
+    snapGateway = midtrans.SnapGateway{
+        Client: midclient,
+    }
 }
 
 func chargeDirect(w http.ResponseWriter, r *http.Request) {
@@ -46,11 +65,15 @@ func chargeDirect(w http.ResponseWriter, r *http.Request) {
             TokenID: r.FormValue("card-token"),
         },
         TransactionDetails: midtrans.TransactionDetails{
-            OrderID: strconv.FormatInt(time.Now().UnixNano(), 10),
+            OrderID: generateOrderId(),
             GrossAmt: 200000,
         },
     })
 
     fmt.Println(chargeResp.ValMessages)
     fmt.Println(chargeResp.StatusMessage)
+}
+
+func generateOrderId() string {
+    return strconv.FormatInt(time.Now().UnixNano(), 10)
 }

@@ -11,6 +11,8 @@ type templateHandler struct {
     once sync.Once
     filename string
     templ *template.Template
+    data map[string]interface{}
+    dataInitializer func(t *templateHandler)
 }
 
 func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -18,9 +20,13 @@ func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
         t.templ = template.Must(template.ParseFiles(filepath.Join("templates", t.filename)))
     })
 
-    data := map[string]interface{}{
-        "Host": r.Host,
+    if t.dataInitializer != nil {
+        t.dataInitializer(t)
+    } else {
+        t.data = make(map[string]interface{})
     }
 
-    t.templ.Execute(w, data)
+    t.data["Host"] = r.Host
+
+    t.templ.Execute(w, t.data)
 }
