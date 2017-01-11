@@ -14,6 +14,9 @@ an advantage of itself. Now, Midtrans is available to be used in Go, too.
 
 ## Example
 
+We have attached usage examples in this repository in folder `example/simplepay`.
+Please proceed there for more detail on how to run the example.
+
 ### Core Gateway
 
 ```go

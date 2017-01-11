@@ -10,4 +10,5 @@ for integrating Midtrans PG with Go.
 2. Clone and change dir to this example folder
 3. Run: `go build -o main && ./main`
 
-Visit: `localhost:1234` and make payment.
+Visit: `localhost:1234` and make payment using core API. Visit `/snap` to
+to make payment using Snap.
