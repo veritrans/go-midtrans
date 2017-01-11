@@ -47,3 +47,37 @@ an advantage of itself. Now, Midtrans is available to be used in Go, too.
 
     resp, _ := coreGateway.Charge(chargeReq)
 ```
+
+### Snap Gateway
+
+Snap is Midtrans existing tool to help merchant charge customers using a
+mobile-friendly, in-page, no-redirect checkout facilities. Using snap is
+completely simple.
+
+```go
+var snapGateway midtrans.SnapGateway
+snapGateway = midtrans.SnapGateway{
+  Client: midclient,
+}
+
+snapResp, err := snapGateway.GetTokenQuick(generateOrderId(), 200000)
+var snapToken string
+if err != nil {
+  snapToken = snapResp.Token
+}
+```
+
+On the client side:
+
+```javascript
+var token = $("#snap-token").val();
+snap.pay(token, {
+    onSuccess: function(res) { alert("Payment accepted!"); },
+    onPending: function(res) { alert("Payment pending", res); },
+    onError: function(res) { alert("Error", res); }
+});
+```
+
+You may want to override those `onSuccess`, `onPending` and `onError`
+functions to reflect the behaviour that you wished when the charging
+result in their respective state.
