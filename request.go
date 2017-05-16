@@ -83,13 +83,14 @@ type BCABankTransferDetail struct {
 }
 
 type MandiriBillBankTransferDetail struct {
-	BillInfo1 string `json:"bill_info1"`
-	BillInfo2 string `json:"bill_info2"`
+	BillInfo1 string `json:"bill_info1,omitempty"`
+	BillInfo2 string `json:"bill_info2,omitempty"`
 }
 
 type BankTransferDetail struct {
-	*PermataBankTransferDetail
-	*BCABankTransferDetail
+	Bank     Bank                          `json:"bank,omitempty"`
+	VaNumber string                        `json:"va_number,omitempty"`
+	FreeText BCABankTransferDetailFreeText `json:"free_text,omitempty"`
 	*MandiriBillBankTransferDetail
 }
 
