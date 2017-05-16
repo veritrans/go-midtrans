@@ -151,8 +151,8 @@ type ChargeReq struct {
 	CIMBClicks                    *CIMBClicksDetail              `json:"cimb_clicks,omitempty"`
 	TelkomselCash                 *TelkomselCashDetail           `json:"telkomsel_cash,omitempty"`
 	IndosatDompetku               *IndosatDompetkuDetail         `json:"indosat_dompetku,omitempty"`
-
-	ConvStore *ConvStoreDetail `json:"cstore,omitempty"`
+	CustomerDetail                CustDetail                     `json:"customer_details,omitempty"`
+	ConvStore                     *ConvStoreDetail               `json:"cstore,omitempty"`
 
 	Items      *[]ItemDetail `json:"item_details,omitempty"`
 	CustField1 string        `json:"custom_field1,omitempty"`
