@@ -70,13 +70,16 @@ type BCABankTransferLangDetail struct {
        },
    }
 */
+
+type BCABankTransferDetailFreeText struct {
+	Inquiry []BCABankTransferLangDetail `json:"inquiry"`
+	Payment []BCABankTransferLangDetail `json:"payment"`
+}
+
 type BCABankTransferDetail struct {
-	Bank     Bank   `json:"bank"`
-	VaNumber string `json:"va_number"`
-	FreeText struct {
-		Inquiry []BCABankTransferLangDetail `json:"inquiry"`
-		Payment []BCABankTransferLangDetail `json:"payment"`
-	} `json:"free_text"`
+	Bank     Bank                          `json:"bank"`
+	VaNumber string                        `json:"va_number"`
+	FreeText BCABankTransferDetailFreeText `json:"free_text"`
 }
 
 type MandiriBillBankTransferDetail struct {
