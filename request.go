@@ -139,15 +139,15 @@ type ChargeReq struct {
 	PaymentType        PaymentType        `json:"payment_type"`
 	TransactionDetails TransactionDetails `json:"transaction_details"`
 
-	CreditCard   *CreditCardDetail   `json:"credit_card,omitempty"`
-	BankTransfer *BankTransferDetail `json:"bank_transfer,omitempty"`
-
-	BCAKlikPay      *BCAKlikPayDetail      `json:"bca_klikpay,omitempty"`
-	BCAKlikBCA      *BCAKlikBCADetail      `json:"bca_klikbca,omitempty"`
-	MandiriClickPay *MandiriClickPayDetail `json:"mandiri_clickpay,omitempty"`
-	CIMBClicks      *CIMBClicksDetail      `json:"cimb_clicks,omitempty"`
-	TelkomselCash   *TelkomselCashDetail   `json:"telkomsel_cash,omitempty"`
-	IndosatDompetku *IndosatDompetkuDetail `json:"indosat_dompetku,omitempty"`
+	CreditCard                    *CreditCardDetail              `json:"credit_card,omitempty"`
+	BankTransfer                  *BankTransferDetail            `json:"bank_transfer,omitempty"`
+	MandiriBillBankTransferDetail *MandiriBillBankTransferDetail `json:"echannel,omitempty"`
+	BCAKlikPay                    *BCAKlikPayDetail              `json:"bca_klikpay,omitempty"`
+	BCAKlikBCA                    *BCAKlikBCADetail              `json:"bca_klikbca,omitempty"`
+	MandiriClickPay               *MandiriClickPayDetail         `json:"mandiri_clickpay,omitempty"`
+	CIMBClicks                    *CIMBClicksDetail              `json:"cimb_clicks,omitempty"`
+	TelkomselCash                 *TelkomselCashDetail           `json:"telkomsel_cash,omitempty"`
+	IndosatDompetku               *IndosatDompetkuDetail         `json:"indosat_dompetku,omitempty"`
 
 	ConvStore *ConvStoreDetail `json:"cstore,omitempty"`
 
