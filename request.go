@@ -4,7 +4,7 @@ package midtrans
 type ItemDetail struct {
     Id string `json:"id"`
     Name string `json:"name"`
-    Price float64 `json:"price"`
+    Price int64 `json:"price"`
     Qty int32 `json:"quantity"`
 }
 
@@ -34,7 +34,7 @@ type CustDetail struct {
 
 type TransactionDetails struct {
     OrderID string `json:"order_id"`
-    GrossAmt float64 `json:"gross_amount"`
+    GrossAmt int64 `json:"gross_amount"`
 }
 
 type CreditCardDetail struct {
