@@ -26,10 +26,10 @@ type CustDetail struct {
 	// last name
 	LName string `json:"last_name"`
 
-	Email    string      `json:"email"`
-	Phone    string      `json:"phone"`
-	BillAddr CustAddress `json:"billing_address"`
-	ShipAddr CustAddress `json:"customer_address"`
+	Email    string       `json:"email"`
+	Phone    string       `json:"phone"`
+	BillAddr *CustAddress `json:"billing_address,omitempty"`
+	ShipAddr *CustAddress `json:"customer_address,omitempty"`
 }
 
 type TransactionDetails struct {
