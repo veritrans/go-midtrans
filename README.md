@@ -25,7 +25,7 @@ Please proceed there for more detail on how to run the example.
     midclient.ClientKey = "YOUR-VT-CLIENT-KEY"
     midclient.ApiEnvType = midtrans.Sandbox
 
-    coreGateway = midtrans.CoreGateway{
+    coreGateway := midtrans.CoreGateway{
         Client: midclient,
     }
 
@@ -38,7 +38,7 @@ Please proceed there for more detail on how to run the example.
         CreditCard: &midtrans.CreditCardDetail{
             TokenID: "YOUR-CC-TOKEN",
         },
-        Items: []midtrans.ItemDetail{
+        Items: &[]midtrans.ItemDetail{
             midtrans.ItemDetail{
                 Id: "ITEM1",
                 Price: 200000,
