@@ -2,10 +2,10 @@ package midtrans
 
 // Represent the transaction details
 type ItemDetail struct {
-	Id    string  `json:"id"`
-	Name  string  `json:"name"`
-	Price float64 `json:"price"`
-	Qty   int32   `json:"quantity"`
+    Id string `json:"id"`
+    Name string `json:"name"`
+    Price int64 `json:"price"`
+    Qty int32 `json:"quantity"`
 }
 
 type CustAddress struct {
@@ -33,8 +33,8 @@ type CustDetail struct {
 }
 
 type TransactionDetails struct {
-	OrderID  string  `json:"order_id"`
-	GrossAmt float64 `json:"gross_amount"`
+    OrderID string `json:"order_id"`
+    GrossAmt int64 `json:"gross_amount"`
 }
 
 type CreditCardDetail struct {
@@ -169,6 +169,6 @@ type SnapReq struct {
 }
 
 type CaptureReq struct {
-	TransactionID string  `json:"transaction_id"`
-	GrossAmt      float64 `json:"gross_amount"`
+    TransactionID string `json:"transaction_id"`
+    GrossAmt float64 `json:"gross_amount"`
 }
