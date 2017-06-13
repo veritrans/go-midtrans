@@ -149,6 +149,7 @@ type ChargeReq struct {
 	BCAKlikPay                    *BCAKlikPayDetail              `json:"bca_klikpay,omitempty"`
 	BCAKlikBCA                    *BCAKlikBCADetail              `json:"bca_klikbca,omitempty"`
 	MandiriClickPay               *MandiriClickPayDetail         `json:"mandiri_clickpay,omitempty"`
+	MandiriEcash                  *MandiriEcashDetail            `json:"mandiri_ecash,omitempty"`
 	CIMBClicks                    *CIMBClicksDetail              `json:"cimb_clicks,omitempty"`
 	TelkomselCash                 *TelkomselCashDetail           `json:"telkomsel_cash,omitempty"`
 	IndosatDompetku               *IndosatDompetkuDetail         `json:"indosat_dompetku,omitempty"`
