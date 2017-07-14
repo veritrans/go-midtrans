@@ -146,6 +146,7 @@ type ChargeReq struct {
 	CreditCard                    *CreditCardDetail              `json:"credit_card,omitempty"`
 	BankTransfer                  *BankTransferDetail            `json:"bank_transfer,omitempty"`
 	MandiriBillBankTransferDetail *MandiriBillBankTransferDetail `json:"echannel,omitempty"`
+	MandiriEcash                  *MandiriEcashDetail            `json:"mandiri_ecash,omitempty"`
 	BCAKlikPay                    *BCAKlikPayDetail              `json:"bca_klikpay,omitempty"`
 	BCAKlikBCA                    *BCAKlikBCADetail              `json:"bca_klikbca,omitempty"`
 	MandiriClickPay               *MandiriClickPayDetail         `json:"mandiri_clickpay,omitempty"`
