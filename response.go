@@ -32,6 +32,7 @@ type Response struct {
 	TransactionStatus string     `json:"transaction_status"`
 	GrossAmount       string     `json:"gross_amount"`
 	VANumbers         []VANumber `json:"va_numbers"`
+	PaymentCode       string     `json:"payment_code"`
 }
 
 // Response after calling the Snap API
