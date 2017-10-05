@@ -39,5 +39,6 @@ type Response struct {
 type SnapResponse struct {
 	StatusCode    string   `json:"status_code"`
 	Token         string   `json:"token"`
+	RedirectURL   string   `json:"redirect_url"`
 	ErrorMessages []string `json:"error_messages"`
 }
