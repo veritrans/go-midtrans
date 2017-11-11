@@ -38,6 +38,7 @@ type TransactionDetails struct {
 }
 
 type CreditCardDetail struct {
+	Secure          bool     `json:"secure"`
 	TokenID         string   `json:"token_id"`
 	Bank            string   `json:"bank,omitempty"`
 	Bins            []string `json:"bins,omitempty"`
