@@ -26,6 +26,8 @@ type Response struct {
 	Page              int        `json:"page"`
 	TotalPage         int        `json:"total_page"`
 	TotalRecord       int        `json:"total_record"`
+	FraudStatus       string     `json:"fraud_status"`
+	PaymentType       string     `json:"payment_type"`
 	OrderID           string     `json:"order_id"`
 	TransactionId     string     `json:"transaction_id"`
 	TransactionTime   string     `json:"transaction_time"`

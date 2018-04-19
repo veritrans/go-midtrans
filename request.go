@@ -38,6 +38,7 @@ type TransactionDetails struct {
 }
 
 type CreditCardDetail struct {
+	Secure          bool     `json:"secure,omitempty"`
 	TokenID         string   `json:"token_id"`
 	Bank            string   `json:"bank,omitempty"`
 	Bins            []string `json:"bins,omitempty"`
@@ -167,6 +168,7 @@ type SnapReq struct {
 	EnabledPayments    []PaymentType      `json:"enabled_payments"`
 	Items              *[]ItemDetail      `json:"item_details,omitempty"`
 	CustomerDetail     *CustDetail        `json:"customer_details,omitempty"`
+	CreditCard         *CreditCardDetail  `json:"credit_card,omitempty"`
 	CustomField1       string             `json:"custom_field1"`
 	CustomField2       string             `json:"custom_field2"`
 	CustomField3       string             `json:"custom_field3"`
