@@ -73,8 +73,8 @@ type BCABankTransferLangDetail struct {
 */
 
 type BCABankTransferDetailFreeText struct {
-	Inquiry []BCABankTransferLangDetail `json:"inquiry"`
-	Payment []BCABankTransferLangDetail `json:"payment"`
+	Inquiry []BCABankTransferLangDetail `json:"inquiry,omitempty"`
+	Payment []BCABankTransferLangDetail `json:"payment,omitempty"`
 }
 
 type BCABankTransferDetail struct {
@@ -89,9 +89,9 @@ type MandiriBillBankTransferDetail struct {
 }
 
 type BankTransferDetail struct {
-	Bank     Bank                          `json:"bank,omitempty"`
-	VaNumber string                        `json:"va_number,omitempty"`
-	FreeText BCABankTransferDetailFreeText `json:"free_text,omitempty"`
+	Bank     Bank                           `json:"bank,omitempty"`
+	VaNumber string                         `json:"va_number,omitempty"`
+	FreeText *BCABankTransferDetailFreeText `json:"free_text,omitempty"`
 	*MandiriBillBankTransferDetail
 }
 
