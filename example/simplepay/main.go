@@ -21,7 +21,7 @@ func main() {
 	flag.Parse()
 	fmt.Println("Server started on port: ", *addr)
 
-	http.Handle("/", &templateHandler{filename: "index.html"})
+	http.Handle("/", &templateHandler{filename: "core_api_index.html"})
 	http.Handle("/snap", &templateHandler{
 		filename: "snap_index.html",
 		dataInitializer: func(t *templateHandler) {
