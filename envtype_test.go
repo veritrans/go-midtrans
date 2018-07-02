@@ -1,13 +1,14 @@
 package midtrans_test
 
 import (
-    "github.com/cheekybits/is"
-    "testing"
-    "midtrans"
+	"testing"
+
+	"github.com/cheekybits/is"
+	midtrans "github.com/veritrans/go-midtrans"
 )
 
 func TestEnvironmentType(t *testing.T) {
-    is := is.New(t)
-    is.Equal("https://api.sandbox.veritrans.co.id/v2", midtrans.Sandbox.String())
-    is.Equal("https://api.veritrans.co.id/v2", midtrans.Production.String())
+	is := is.New(t)
+	is.Equal("https://api.sandbox.midtrans.com", midtrans.Sandbox.String())
+	is.Equal("https://api.midtrans.com", midtrans.Production.String())
 }
