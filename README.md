@@ -1,3 +1,5 @@
+[![Go Report Card](https://goreportcard.com/badge/github.com/veritrans/go-midtrans)](https://goreportcard.com/report/github.com/veritrans/go-midtrans)
+
 # Midtrans Library for Go(lang)
 
 Midtrans :heart: Go !

@@ -2,11 +2,16 @@ package midtrans
 
 import "strings"
 
+// EnvironmentType value
 type EnvironmentType int8
 
 const (
 	_ EnvironmentType = iota
+
+	// Sandbox : represent sandbox environment
 	Sandbox
+
+	// Production : represent production environment
 	Production
 )
 
@@ -25,6 +30,7 @@ func (e EnvironmentType) String() string {
 	return "undefined"
 }
 
-func (e EnvironmentType) SnapUrl() string {
+// SnapURL : Get environment API URL
+func (e EnvironmentType) SnapURL() string {
 	return strings.Replace(e.String(), "api.", "app.", 1)
 }

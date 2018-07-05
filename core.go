@@ -1,114 +1,133 @@
 package midtrans
 
 import (
-    "encoding/json"
-    "bytes"
-    "io"
-    "strings"
+	"bytes"
+	"encoding/json"
+	"io"
+	"strings"
 )
 
+// CoreGateway struct
 type CoreGateway struct {
-    Client Client
+	Client Client
 }
 
-func (c *CoreGateway) Call(method, path string, body io.Reader, v interface{}) error {
-    if !strings.HasPrefix(path, "/") {
-        path = "/" + path
-    }
+// Call : base method to call Core API
+func (gateway *CoreGateway) Call(method, path string, body io.Reader, v interface{}) error {
+	if !strings.HasPrefix(path, "/") {
+		path = "/" + path
+	}
 
-    path = c.Client.ApiEnvType.String() + path
-    return c.Client.Call(method, path, body, v)
+	path = gateway.Client.APIEnvType.String() + path
+	return gateway.Client.Call(method, path, body, v)
 }
 
-func (g *CoreGateway) Charge(req *ChargeReq) (Response, error) {
-    resp := Response{}
-    jsonReq, _ := json.Marshal(req)
+// Charge : Perform transaction using ChargeReq
+func (gateway *CoreGateway) Charge(req *ChargeReq) (Response, error) {
+	resp := Response{}
+	jsonReq, _ := json.Marshal(req)
 
-    err := g.Call("POST", "v2/charge", bytes.NewBuffer(jsonReq), &resp)
-    if err != nil {
-        g.Client.Logger.Println("Error charging: ", err)
-        return resp, err
-    }
+	err := gateway.Call("POST", "v2/charge", bytes.NewBuffer(jsonReq), &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error charging: ", err)
+		return resp, err
+	}
 
-    if resp.StatusMessage != "" {
-        g.Client.Logger.Println(resp.StatusMessage)
-    }
+	if resp.StatusMessage != "" {
+		gateway.Client.Logger.Println(resp.StatusMessage)
+	}
 
-    return resp, nil
+	return resp, nil
 }
 
-func (g *CoreGateway) PreauthCard(req *ChargeReq) (Response, error) {
-    req.CreditCard.Type = "authorize"
-    return g.Charge(req)
+// PreauthCard : Perform authorized transactions using ChargeReq
+func (gateway *CoreGateway) PreauthCard(req *ChargeReq) (Response, error) {
+	req.CreditCard.Type = "authorize"
+	return gateway.Charge(req)
 }
 
-func (g *CoreGateway) CaptureCard(req *CaptureReq) (Response, error) {
-    resp := Response{}
-    jsonReq, _ := json.Marshal(req)
+// CaptureCard : Capture an authorized transaction for card payment
+func (gateway *CoreGateway) CaptureCard(req *CaptureReq) (Response, error) {
+	resp := Response{}
+	jsonReq, _ := json.Marshal(req)
 
-    err := g.Call("POST", "v2/capture", bytes.NewBuffer(jsonReq), &resp)
-    if err != nil {
-        g.Client.Logger.Println("Error capturing: ", err)
-        return resp, err
-    }
+	err := gateway.Call("POST", "v2/capture", bytes.NewBuffer(jsonReq), &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error capturing: ", err)
+		return resp, err
+	}
 
-    if resp.StatusMessage != "" { g.Client.Logger.Println(resp.StatusMessage) }
+	if resp.StatusMessage != "" {
+		gateway.Client.Logger.Println(resp.StatusMessage)
+	}
 
-    return resp, nil
+	return resp, nil
 }
 
-func (g *CoreGateway) Approve(orderId string) (Response, error) {
-    resp := Response{}
+// Approve : Approve order using order ID
+func (gateway *CoreGateway) Approve(orderID string) (Response, error) {
+	resp := Response{}
 
-    err := g.Call("POST", "v2/" + orderId + "/approve", nil, &resp)
-    if err != nil {
-        g.Client.Logger.Println("Error approving: ", err)
-        return resp, err
-    }
+	err := gateway.Call("POST", "v2/"+orderID+"/approve", nil, &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error approving: ", err)
+		return resp, err
+	}
 
-    if resp.StatusMessage != "" { g.Client.Logger.Println(resp.StatusMessage) }
+	if resp.StatusMessage != "" {
+		gateway.Client.Logger.Println(resp.StatusMessage)
+	}
 
-    return resp, nil
+	return resp, nil
 }
 
-func (g *CoreGateway) Cancel(orderId string) (Response, error) {
-    resp := Response{}
+// Cancel : Cancel order using order ID
+func (gateway *CoreGateway) Cancel(orderID string) (Response, error) {
+	resp := Response{}
 
-    err := g.Call("POST", "v2/" + orderId + "/cancel", nil, &resp)
-    if err != nil {
-        g.Client.Logger.Println("Error approving: ", err)
-        return resp, err
-    }
+	err := gateway.Call("POST", "v2/"+orderID+"/cancel", nil, &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error approving: ", err)
+		return resp, err
+	}
 
-    if resp.StatusMessage != "" { g.Client.Logger.Println(resp.StatusMessage) }
+	if resp.StatusMessage != "" {
+		gateway.Client.Logger.Println(resp.StatusMessage)
+	}
 
-    return resp, nil
+	return resp, nil
 }
 
-func (g *CoreGateway) Expire(orderId string) (Response, error) {
-    resp := Response{}
+// Expire : change order status to expired using order ID
+func (gateway *CoreGateway) Expire(orderID string) (Response, error) {
+	resp := Response{}
 
-    err := g.Call("POST", "v2/" + orderId + "/expire", nil, &resp)
-    if err != nil {
-        g.Client.Logger.Println("Error approving: ", err)
-        return resp, err
-    }
+	err := gateway.Call("POST", "v2/"+orderID+"/expire", nil, &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error approving: ", err)
+		return resp, err
+	}
 
-    if resp.StatusMessage != "" { g.Client.Logger.Println(resp.StatusMessage) }
+	if resp.StatusMessage != "" {
+		gateway.Client.Logger.Println(resp.StatusMessage)
+	}
 
-    return resp, nil
+	return resp, nil
 }
 
-func (g *CoreGateway) Status(orderId string) (Response, error) {
-    resp := Response{}
+// Status : get order status using order ID
+func (gateway *CoreGateway) Status(orderID string) (Response, error) {
+	resp := Response{}
 
-    err := g.Call("GET", "v2/" + orderId + "/status", nil, &resp)
-    if err != nil {
-        g.Client.Logger.Println("Error approving: ", err)
-        return resp, err
-    }
+	err := gateway.Call("GET", "v2/"+orderID+"/status", nil, &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error approving: ", err)
+		return resp, err
+	}
 
-    if resp.StatusMessage != "" { g.Client.Logger.Println(resp.StatusMessage) }
+	if resp.StatusMessage != "" {
+		gateway.Client.Logger.Println(resp.StatusMessage)
+	}
 
-    return resp, nil
+	return resp, nil
 }
