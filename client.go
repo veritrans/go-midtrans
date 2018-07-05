@@ -119,11 +119,7 @@ func (c *Client) Call(method, path string, body io.Reader, v interface{}) error 
 		return err
 	}
 
-	if err := c.ExecuteRequest(req, v); err != nil {
-		return err
-	}
-
-	return nil
+	return c.ExecuteRequest(req, v)
 }
 
 // ===================== END HTTP CLIENT ================================================
