@@ -1,45 +1,48 @@
 package midtrans
 
 import (
-    "encoding/json"
-    "bytes"
-    "io"
-    "strings"
+	"bytes"
+	"encoding/json"
+	"io"
+	"strings"
 )
 
+// SnapGateway struct
 type SnapGateway struct {
-    Client Client
+	Client Client
 }
 
-func (gway *SnapGateway) Call(method, path string, body io.Reader, v interface{}) error {
-    if !strings.HasPrefix(path, "/") {
-        path = "/" + path
-    }
+// Call : base method to call Snap API
+func (gateway *SnapGateway) Call(method, path string, body io.Reader, v interface{}) error {
+	if !strings.HasPrefix(path, "/") {
+		path = "/" + path
+	}
 
-    path = gway.Client.ApiEnvType.SnapUrl() + path
-    return gway.Client.Call(method, path, body, v)
+	path = gateway.Client.APIEnvType.SnapURL() + path
+	return gateway.Client.Call(method, path, body, v)
 }
 
-// Quickly get token without constructing the body manually
-func (g *SnapGateway) GetTokenQuick(orderId string, gross_amount int64) (SnapResponse, error) {
-    return g.GetToken(&SnapReq{
-        TransactionDetails: TransactionDetails{
-            OrderID: orderId,
-            GrossAmt: gross_amount,
-        },
-        EnabledPayments: AllPaymentSource,
-    })
+// GetTokenQuick : Quickly get token without constructing the body manually
+func (gateway *SnapGateway) GetTokenQuick(orderID string, grossAmount int64) (SnapResponse, error) {
+	return gateway.GetToken(&SnapReq{
+		TransactionDetails: TransactionDetails{
+			OrderID:  orderID,
+			GrossAmt: grossAmount,
+		},
+		EnabledPayments: AllPaymentSource,
+	})
 }
 
-func (gway *SnapGateway) GetToken(r *SnapReq) (SnapResponse, error) {
-    resp := SnapResponse{}
-    jsonReq, _ := json.Marshal(r)
+// GetToken : Get token by consuming SnapReq
+func (gateway *SnapGateway) GetToken(r *SnapReq) (SnapResponse, error) {
+	resp := SnapResponse{}
+	jsonReq, _ := json.Marshal(r)
 
-    err := gway.Call("POST", "snap/v1/transactions", bytes.NewBuffer(jsonReq), &resp)
-    if err != nil {
-        gway.Client.Logger.Println("Error getting snap token: ", err)
-        return resp, err
-    }
+	err := gateway.Call("POST", "snap/v1/transactions", bytes.NewBuffer(jsonReq), &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error getting snap token: ", err)
+		return resp, err
+	}
 
-    return resp, nil
+	return resp, nil
 }

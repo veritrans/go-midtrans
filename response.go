@@ -1,5 +1,6 @@
 package midtrans
 
+// VANumber : bank virtual account number
 type VANumber struct {
 	Bank     string `json:"bank"`
 	VANumber string `json:"va_number"`
@@ -29,7 +30,7 @@ type Response struct {
 	FraudStatus       string     `json:"fraud_status"`
 	PaymentType       string     `json:"payment_type"`
 	OrderID           string     `json:"order_id"`
-	TransactionId     string     `json:"transaction_id"`
+	TransactionID     string     `json:"transaction_id"`
 	TransactionTime   string     `json:"transaction_time"`
 	TransactionStatus string     `json:"transaction_status"`
 	GrossAmount       string     `json:"gross_amount"`
@@ -37,7 +38,7 @@ type Response struct {
 	PaymentCode       string     `json:"payment_code"`
 }
 
-// Response after calling the Snap API
+// SnapResponse : Response after calling the Snap API
 type SnapResponse struct {
 	StatusCode    string   `json:"status_code"`
 	Token         string   `json:"token"`
