@@ -1,7 +1,7 @@
 # Midtrans Library for Go(lang)
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/veritrans/go-midtrans)](https://goreportcard.com/report/github.com/veritrans/go-midtrans)
-[![Apache 2.0 license](http://img.shields.io/badge/license-Apache 2.0-brightgreen.svg)](LICENSE)
+[![Apache 2.0 license](https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg)](LICENSE)
 
 Midtrans :heart: Go !
 
