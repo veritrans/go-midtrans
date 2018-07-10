@@ -48,7 +48,7 @@ func setupMidtrans() {
 	midclient = midtrans.NewClient()
 	midclient.ServerKey = "VT-server-7CVlR3AJ8Dpkez3k_TeGJQZU"
 	midclient.ClientKey = "VT-client-IKktHiy3aRYHljsw"
-	midclient.ApiEnvType = midtrans.Sandbox
+	midclient.APIEnvType = midtrans.Sandbox
 
 	coreGateway = midtrans.CoreGateway{
 		Client: midclient,
