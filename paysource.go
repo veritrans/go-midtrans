@@ -67,6 +67,7 @@ const (
 
 // AllPaymentSource : Get All available PaymentType
 var AllPaymentSource = []PaymentType{
+	SourceGopay,
 	SourceCreditCard,
 	SourceMandiriClickpay,
 	SourceCimbClicks,
