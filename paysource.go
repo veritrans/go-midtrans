@@ -4,6 +4,9 @@ package midtrans
 type PaymentType string
 
 const (
+	// SourceBankTransfer : gopay
+	SourceGopay PaymentType = "gopay"
+
 	// SourceBankTransfer : bank_transfer
 	SourceBankTransfer PaymentType = "bank_transfer"
 
