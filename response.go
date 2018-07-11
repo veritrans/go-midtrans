@@ -6,6 +6,12 @@ type VANumber struct {
 	VANumber string `json:"va_number"`
 }
 
+type Action struct {
+	Name   string `json:"name"`
+	Method string `json:"method"`
+	URL    string `json:"url"`
+}
+
 // Response after calling the API
 type Response struct {
 	StatusCode        string     `json:"status_code"`
@@ -36,6 +42,7 @@ type Response struct {
 	GrossAmount       string     `json:"gross_amount"`
 	VANumbers         []VANumber `json:"va_numbers"`
 	PaymentCode       string     `json:"payment_code"`
+	Actions           []Action   `json:"actions"`
 }
 
 // SnapResponse : Response after calling the Snap API
