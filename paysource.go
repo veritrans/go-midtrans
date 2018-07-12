@@ -4,6 +4,9 @@ package midtrans
 type PaymentType string
 
 const (
+	// SourceBankTransfer : gopay
+	SourceGopay PaymentType = "gopay"
+
 	// SourceBankTransfer : bank_transfer
 	SourceBankTransfer PaymentType = "bank_transfer"
 
@@ -64,6 +67,7 @@ const (
 
 // AllPaymentSource : Get All available PaymentType
 var AllPaymentSource = []PaymentType{
+	SourceGopay,
 	SourceCreditCard,
 	SourceMandiriClickpay,
 	SourceCimbClicks,
