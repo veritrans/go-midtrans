@@ -25,7 +25,7 @@ func main() {
 	http.Handle("/snap", &templateHandler{
 		filename: "snap_index.html",
 		dataInitializer: func(t *templateHandler) {
-			snapResp, err := snapGateway.GetTokenQuick(generateOrderId(), 200000)
+			snapResp, err := snapGateway.GetTokenQuick(generateOrderID(), 200000)
 			t.data = make(map[string]interface{})
 
 			if err != nil {
@@ -48,7 +48,7 @@ func setupMidtrans() {
 	midclient = midtrans.NewClient()
 	midclient.ServerKey = "VT-server-7CVlR3AJ8Dpkez3k_TeGJQZU"
 	midclient.ClientKey = "VT-client-IKktHiy3aRYHljsw"
-	midclient.ApiEnvType = midtrans.Sandbox
+	midclient.APIEnvType = midtrans.Sandbox
 
 	coreGateway = midtrans.CoreGateway{
 		Client: midclient,
@@ -66,7 +66,7 @@ func chargeDirect(w http.ResponseWriter, r *http.Request) {
 			TokenID: r.FormValue("card-token"),
 		},
 		TransactionDetails: midtrans.TransactionDetails{
-			OrderID:  generateOrderId(),
+			OrderID:  generateOrderID(),
 			GrossAmt: 200000,
 		},
 	})
@@ -75,6 +75,6 @@ func chargeDirect(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(chargeResp.StatusMessage)
 }
 
-func generateOrderId() string {
+func generateOrderID() string {
 	return strconv.FormatInt(time.Now().UnixNano(), 10)
 }
