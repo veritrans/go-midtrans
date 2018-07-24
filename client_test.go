@@ -12,5 +12,5 @@ func TestDefaultEnvironmentType(t *testing.T) {
 	is := is.New(t)
 
 	midclient := midtrans.NewClient()
-	is.Equal(midtrans.Sandbox, midclient.ApiEnvType)
+	is.Equal(midtrans.Sandbox, midclient.APIEnvType)
 }

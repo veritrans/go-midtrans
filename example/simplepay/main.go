@@ -21,7 +21,7 @@ func main() {
 	flag.Parse()
 	fmt.Println("Server started on port: ", *addr)
 
-	http.Handle("/", &templateHandler{filename: "index.html"})
+	http.Handle("/", &templateHandler{filename: "core_api_index.html"})
 	http.Handle("/snap", &templateHandler{
 		filename: "snap_index.html",
 		dataInitializer: func(t *templateHandler) {
@@ -71,8 +71,7 @@ func chargeDirect(w http.ResponseWriter, r *http.Request) {
 		},
 	})
 
-	fmt.Println(chargeResp.ValMessages)
-	fmt.Println(chargeResp.StatusMessage)
+	w.Write([]byte(chargeResp.StatusMessage))
 }
 
 func generateOrderID() string {

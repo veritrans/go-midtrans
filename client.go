@@ -1,119 +1,125 @@
 package midtrans
 
 import (
-    "log"
-    "os"
-    "net/http"
-    "time"
-    "io"
-    "io/ioutil"
-    "encoding/json"
+	"encoding/json"
+	"io"
+	"io/ioutil"
+	"log"
+	"net/http"
+	"os"
+	"time"
 )
 
+// Client struct
 type Client struct {
-    ApiEnvType EnvironmentType
-    ClientKey string
-    ServerKey string
+	APIEnvType EnvironmentType
+	ClientKey  string
+	ServerKey  string
 
-    LogLevel int
-    Logger *log.Logger
+	LogLevel int
+	Logger   *log.Logger
 }
 
-// this function will always be called when the library is in use
+// NewClient : this function will always be called when the library is in use
 func NewClient() Client {
-    return Client{
-        ApiEnvType: Sandbox,
+	return Client{
+		APIEnvType: Sandbox,
 
-        // LogLevel is the logging level used by the Midtrans library
-        // 0: No logging
-        // 1: Errors only
-        // 2: Errors + informational (default)
-        // 3: Errors + informational + debug
-        LogLevel: 2,
-        Logger: log.New(os.Stderr, "", log.LstdFlags),
-    }
+		// LogLevel is the logging level used by the Midtrans library
+		// 0: No logging
+		// 1: Errors only
+		// 2: Errors + informational (default)
+		// 3: Errors + informational + debug
+		LogLevel: 2,
+		Logger:   log.New(os.Stderr, "", log.LstdFlags),
+	}
 }
 
 // ===================== HTTP CLIENT ================================================
-var defHttpTimeout = 80 * time.Second
-var httpClient = &http.Client{Timeout: defHttpTimeout}
+var defHTTPTimeout = 80 * time.Second
+var httpClient = &http.Client{Timeout: defHTTPTimeout}
 
+// NewRequest : send new request
 func (c *Client) NewRequest(method string, fullPath string, body io.Reader) (*http.Request, error) {
-    logLevel := c.LogLevel
-    logger := c.Logger
+	logLevel := c.LogLevel
+	logger := c.Logger
 
-    req, err := http.NewRequest(method, fullPath, body)
-    if err != nil {
-        if logLevel > 0 {
-            logger.Println("Request creation failed: ", err)
-        }
-        return nil, err
-    }
+	req, err := http.NewRequest(method, fullPath, body)
+	if err != nil {
+		if logLevel > 0 {
+			logger.Println("Request creation failed: ", err)
+		}
+		return nil, err
+	}
 
-    req.Header.Add("Content-Type", "application/json")
-    req.Header.Add("Accept", "application/json")
-    req.SetBasicAuth(c.ServerKey, "")
+	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("Accept", "application/json")
+	req.SetBasicAuth(c.ServerKey, "")
 
-    return req, nil
+	return req, nil
 }
 
+// ExecuteRequest : execute request
 func (c *Client) ExecuteRequest(req *http.Request, v interface{}) error {
-    logLevel := c.LogLevel
-    logger := c.Logger
+	logLevel := c.LogLevel
+	logger := c.Logger
 
-    if logLevel > 1 {
-        logger.Println("Request ", req.Method, ": ", req.URL.Host, req.URL.Path)
-    }
+	if logLevel > 1 {
+		logger.Println("Request ", req.Method, ": ", req.URL.Host, req.URL.Path)
+	}
 
-    start := time.Now()
+	start := time.Now()
 
-    res, err := httpClient.Do(req)
-    defer res.Body.Close()
+	res, err := httpClient.Do(req)
+	if err != nil {
+		if logLevel > 0 {
+			logger.Println("Cannot send request: ", err)
+		}
+		return err
+	}
+	defer res.Body.Close()
 
-    if logLevel > 2 {
-        logger.Println("Completed in ", time.Since(start))
-    }
+	if logLevel > 2 {
+		logger.Println("Completed in ", time.Since(start))
+	}
 
-    if err != nil {
-        if logLevel > 0 {
-            logger.Println("Request failed: ", err)
-        }
-        return err
-    }
+	if err != nil {
+		if logLevel > 0 {
+			logger.Println("Request failed: ", err)
+		}
+		return err
+	}
 
-    resBody, err := ioutil.ReadAll(res.Body)
-    if err != nil {
-        if logLevel > 0 {
-            logger.Println("Cannot read response body: ", err)
-        }
-        return err
-    }
+	resBody, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		if logLevel > 0 {
+			logger.Println("Cannot read response body: ", err)
+		}
+		return err
+	}
 
-    if logLevel > 2 {
-        logger.Println("Midtrans response: ", resBody)
-    }
+	if logLevel > 2 {
+		logger.Println("Midtrans response: ", resBody)
+	}
 
-    if v != nil {
-        return json.Unmarshal(resBody, v)
-    }
+	if v != nil {
+		return json.Unmarshal(resBody, v)
+	}
 
-    return nil
+	return nil
 }
 
 // Call the Midtrans API at specific `path` using the specified HTTP `method`. The result will be
-// given to `v` if there is no error. If any error occured, the return of this function is the error
+// given to `v` if there is no error. If any error occurred, the return of this function is the error
 // itself, otherwise nil.
 func (c *Client) Call(method, path string, body io.Reader, v interface{}) error {
-    req, err := c.NewRequest(method, path, body)
+	req, err := c.NewRequest(method, path, body)
 
-    if err != nil {
-        return err
-    }
+	if err != nil {
+		return err
+	}
 
-    if err := c.ExecuteRequest(req, v); err != nil {
-        return err
-    }
-
-    return nil
+	return c.ExecuteRequest(req, v)
 }
+
 // ===================== END HTTP CLIENT ================================================
