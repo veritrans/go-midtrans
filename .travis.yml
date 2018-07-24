@@ -7,4 +7,4 @@ go:
 
 script: 
   - go test ./...
-  - go build -i example\simplepay\main.go example\simplepay\template_handler.go
+  - go build -i example/simplepay/main.go example/simplepay/template_handler.go
