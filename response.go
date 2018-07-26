@@ -6,6 +6,7 @@ type VANumber struct {
 	VANumber string `json:"va_number"`
 }
 
+// Action represents response action
 type Action struct {
 	Name   string `json:"name"`
 	Method string `json:"method"`

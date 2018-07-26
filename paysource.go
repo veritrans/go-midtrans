@@ -4,9 +4,6 @@ package midtrans
 type PaymentType string
 
 const (
-	// SourceBankTransfer : gopay
-	SourceGopay PaymentType = "gopay"
-
 	// SourceBankTransfer : bank_transfer
 	SourceBankTransfer PaymentType = "bank_transfer"
 
@@ -30,6 +27,9 @@ const (
 
 	// SourceCimbClicks : cimb_clicks
 	SourceCimbClicks PaymentType = "cimb_clicks"
+
+	// SourceDanamonOnline : danamon_online
+	SourceDanamonOnline PaymentType = "danamon_online"
 
 	// SourceConvStore : cstore
 	SourceConvStore PaymentType = "cstore"
@@ -63,6 +63,9 @@ const (
 
 	// SourceGiftCardIndo : gci
 	SourceGiftCardIndo PaymentType = "gci"
+
+	// SourceGopay : gopay
+	SourceGopay PaymentType = "gopay"
 )
 
 // AllPaymentSource : Get All available PaymentType
@@ -71,6 +74,7 @@ var AllPaymentSource = []PaymentType{
 	SourceCreditCard,
 	SourceMandiriClickpay,
 	SourceCimbClicks,
+	SourceDanamonOnline,
 	SourceKlikBca,
 	SourceBcaKlikpay,
 	SourceBriEpay,
