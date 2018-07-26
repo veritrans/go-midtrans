@@ -4,9 +4,6 @@ package midtrans
 type PaymentType string
 
 const (
-	// SourceBankTransfer : gopay
-	SourceGopay PaymentType = "gopay"
-
 	// SourceBankTransfer : bank_transfer
 	SourceBankTransfer PaymentType = "bank_transfer"
 
@@ -15,9 +12,6 @@ const (
 
 	// SourceBCAVA : bca_va
 	SourceBCAVA PaymentType = "bca_va"
-
-	// SourceBbmMoney : bbm_money
-	SourceBbmMoney PaymentType = "bbm_money"
 
 	// SourceBcaKlikpay : bca_klikpay
 	SourceBcaKlikpay PaymentType = "bca_klikpay"
@@ -30,6 +24,9 @@ const (
 
 	// SourceCimbClicks : cimb_clicks
 	SourceCimbClicks PaymentType = "cimb_clicks"
+
+	// SourceDanamonOnline : danamon_online
+	SourceDanamonOnline PaymentType = "danamon_online"
 
 	// SourceConvStore : cstore
 	SourceConvStore PaymentType = "cstore"
@@ -46,9 +43,6 @@ const (
 	// SourceTelkomselCash : telkomsel_cash
 	SourceTelkomselCash PaymentType = "telkomsel_cash"
 
-	// SourceXlTunai : xl_tunai
-	SourceXlTunai PaymentType = "xl_tunai"
-
 	// SourceIndosatDompetku : indosat_dompetku
 	SourceIndosatDompetku PaymentType = "indosat_dompetku"
 
@@ -63,6 +57,9 @@ const (
 
 	// SourceGiftCardIndo : gci
 	SourceGiftCardIndo PaymentType = "gci"
+
+	// SourceGopay : gopay
+	SourceGopay PaymentType = "gopay"
 )
 
 // AllPaymentSource : Get All available PaymentType
@@ -71,13 +68,12 @@ var AllPaymentSource = []PaymentType{
 	SourceCreditCard,
 	SourceMandiriClickpay,
 	SourceCimbClicks,
+	SourceDanamonOnline,
 	SourceKlikBca,
 	SourceBcaKlikpay,
 	SourceBriEpay,
 	SourceTelkomselCash,
 	SourceEchannel,
-	SourceBbmMoney,
-	SourceXlTunai,
 	SourceIndosatDompetku,
 	SourceMandiriEcash,
 	SourcePermataVA,
