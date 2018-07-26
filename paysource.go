@@ -13,9 +13,6 @@ const (
 	// SourceBCAVA : bca_va
 	SourceBCAVA PaymentType = "bca_va"
 
-	// SourceBbmMoney : bbm_money
-	SourceBbmMoney PaymentType = "bbm_money"
-
 	// SourceBcaKlikpay : bca_klikpay
 	SourceBcaKlikpay PaymentType = "bca_klikpay"
 
@@ -45,9 +42,6 @@ const (
 
 	// SourceTelkomselCash : telkomsel_cash
 	SourceTelkomselCash PaymentType = "telkomsel_cash"
-
-	// SourceXlTunai : xl_tunai
-	SourceXlTunai PaymentType = "xl_tunai"
 
 	// SourceIndosatDompetku : indosat_dompetku
 	SourceIndosatDompetku PaymentType = "indosat_dompetku"
@@ -80,8 +74,6 @@ var AllPaymentSource = []PaymentType{
 	SourceBriEpay,
 	SourceTelkomselCash,
 	SourceEchannel,
-	SourceBbmMoney,
-	SourceXlTunai,
 	SourceIndosatDompetku,
 	SourceMandiriEcash,
 	SourcePermataVA,
