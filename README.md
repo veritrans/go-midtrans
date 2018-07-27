@@ -1,8 +1,8 @@
 # Midtrans Library for Go(lang)
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/veritrans/go-midtrans)](https://goreportcard.com/report/github.com/veritrans/go-midtrans)
+[![Go Report Card](https://goreportcard.com/badge/github.com/haritsfahreza/go-midtrans)](https://goreportcard.com/report/github.com/haritsfahreza/go-midtrans)
 [![Apache 2.0 license](https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg)](LICENSE)
-[![Build Status](https://travis-ci.org/veritrans/go-midtrans.svg?branch=master)](https://travis-ci.org/veritrans/go-midtrans)
+[![Build Status](https://travis-ci.org/haritsfahreza/go-midtrans.svg?branch=master)](https://travis-ci.org/haritsfahreza/go-midtrans)
 
 Midtrans :heart: Go !
 
