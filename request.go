@@ -2,10 +2,13 @@ package midtrans
 
 // ItemDetail : Represent the transaction details
 type ItemDetail struct {
-	ID    string `json:"id"`
-	Name  string `json:"name"`
-	Price int64  `json:"price"`
-	Qty   int32  `json:"quantity"`
+	ID           string `json:"id"`
+	Name         string `json:"name"`
+	Price        int64  `json:"price"`
+	Qty          int32  `json:"quantity"`
+	Brand        string `json:"brand,omitempty"`
+	Category     string `json:"category,omitempty"`
+	MerchantName string `json:"merchant_name,omitempty"`
 }
 
 // CustAddress : Represent the customer address
