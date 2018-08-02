@@ -103,7 +103,10 @@ func (c *Client) ExecuteRequest(req *http.Request, v interface{}) error {
 	}
 
 	if v != nil {
-		return json.Unmarshal(resBody, v)
+		if err = json.Unmarshal(resBody, v); err != nil {
+			return err
+		}
+		v.(map[string]interface{})["status_code"] = string(res.StatusCode)
 	}
 
 	return nil
