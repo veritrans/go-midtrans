@@ -25,13 +25,13 @@ type CustAddress struct {
 // CustDetail : Represent the customer detail
 type CustDetail struct {
 	// first name
-	FName string `json:"first_name"`
+	FName string `json:"first_name,omitempty"`
 
 	// last name
-	LName string `json:"last_name"`
+	LName string `json:"last_name,omitempty"`
 
-	Email    string       `json:"email"`
-	Phone    string       `json:"phone"`
+	Email    string       `json:"email,omitempty"`
+	Phone    string       `json:"phone,omitempty"`
 	BillAddr *CustAddress `json:"billing_address,omitempty"`
 	ShipAddr *CustAddress `json:"customer_address,omitempty"`
 }
