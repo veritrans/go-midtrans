@@ -48,7 +48,7 @@ type CreditCardDetail struct {
 	TokenID         string   `json:"token_id"`
 	Bank            string   `json:"bank,omitempty"`
 	Bins            []string `json:"bins,omitempty"`
-	InstallmentTerm []int8   `json:"installment_term,omitempty"`
+	InstallmentTerm int8     `json:"installment_term,omitempty"`
 	Type            string   `json:"type,omitempty"`
 	// indicate if generated token should be saved for next charge
 	SaveTokenID          bool   `json:"save_token_id,omitempty"`
