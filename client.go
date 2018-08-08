@@ -7,6 +7,8 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"reflect"
+	"strconv"
 	"time"
 )
 
@@ -103,7 +105,10 @@ func (c *Client) ExecuteRequest(req *http.Request, v interface{}) error {
 	}
 
 	if v != nil {
-		return json.Unmarshal(resBody, v)
+		if err = json.Unmarshal(resBody, v); err != nil {
+			return err
+		}
+		reflect.ValueOf(v).Elem().FieldByName("StatusCode").SetString(strconv.Itoa(res.StatusCode))
 	}
 
 	return nil

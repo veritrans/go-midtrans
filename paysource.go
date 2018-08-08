@@ -7,6 +7,9 @@ const (
 	// SourceBankTransfer : bank_transfer
 	SourceBankTransfer PaymentType = "bank_transfer"
 
+	// SourceBNIVA : bni_va
+	SourceBNIVA PaymentType = "bni_va"
+
 	// SourcePermataVA : permata_va
 	SourcePermataVA PaymentType = "permata_va"
 
@@ -76,6 +79,7 @@ var AllPaymentSource = []PaymentType{
 	SourceEchannel,
 	SourceIndosatDompetku,
 	SourceMandiriEcash,
+	SourceBNIVA,
 	SourcePermataVA,
 	SourceBCAVA,
 	SourceIndomaret,
