@@ -1,14 +1,16 @@
 package midtrans_test
 
 import (
-    "testing"
-    "github.com/cheekybits/is"
-    "midtrans"
+	"testing"
+
+	midtrans "github.com/veritrans/go-midtrans"
+
+	"github.com/cheekybits/is"
 )
 
 func TestDefaultEnvironmentType(t *testing.T) {
-    is := is.New(t)
+	is := is.New(t)
 
-    midclient := midtrans.NewClient()
-    is.Equal(midtrans.Sandbox, midclient.ApiEnvType)
+	midclient := midtrans.NewClient()
+	is.Equal(midtrans.Sandbox, midclient.APIEnvType)
 }

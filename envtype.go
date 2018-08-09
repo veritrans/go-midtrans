@@ -2,29 +2,35 @@ package midtrans
 
 import "strings"
 
+// EnvironmentType value
 type EnvironmentType int8
 
 const (
-    _ EnvironmentType = iota
-    Sandbox
-    Production
+	_ EnvironmentType = iota
+
+	// Sandbox : represent sandbox environment
+	Sandbox
+
+	// Production : represent production environment
+	Production
 )
 
-var typeString = map[EnvironmentType]string {
-    Sandbox: "https://api.sandbox.veritrans.co.id",
-    Production: "https://api.veritrans.co.id",
+var typeString = map[EnvironmentType]string{
+	Sandbox:    "https://api.sandbox.midtrans.com",
+	Production: "https://api.midtrans.com",
 }
 
 // implement stringer
 func (e EnvironmentType) String() string {
-    for k, v := range typeString {
-        if k == e {
-            return v
-        }
-    }
-    return "undefined"
+	for k, v := range typeString {
+		if k == e {
+			return v
+		}
+	}
+	return "undefined"
 }
 
-func (e EnvironmentType) SnapUrl() string {
-    return strings.Replace(e.String(), "api.", "app.", 1)
+// SnapURL : Get environment API URL
+func (e EnvironmentType) SnapURL() string {
+	return strings.Replace(e.String(), "api.", "app.", 1)
 }

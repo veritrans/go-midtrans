@@ -1,5 +1,9 @@
 # Midtrans Library for Go(lang)
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/veritrans/go-midtrans)](https://goreportcard.com/report/github.com/veritrans/go-midtrans)
+[![Apache 2.0 license](https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg)](LICENSE)
+[![Build Status](https://travis-ci.org/veritrans/go-midtrans.svg?branch=master)](https://travis-ci.org/veritrans/go-midtrans)
+
 Midtrans :heart: Go !
 
 Go is a very modern, terse, and combine aspect of dynamic and static typing that in a way very
@@ -23,7 +27,7 @@ Please proceed there for more detail on how to run the example.
     midclient := midtrans.NewClient()
     midclient.ServerKey = "YOUR-VT-SERVER-KEY"
     midclient.ClientKey = "YOUR-VT-CLIENT-KEY"
-    midclient.ApiEnvType = midtrans.Sandbox
+    midclient.APIEnvType = midtrans.Sandbox
 
     coreGateway := midtrans.CoreGateway{
         Client: midclient,
@@ -84,3 +88,7 @@ snap.pay(token, {
 You may want to override those `onSuccess`, `onPending` and `onError`
 functions to reflect the behaviour that you wished when the charging
 result in their respective state.
+
+## License
+
+See [LICENSE](LICENSE).

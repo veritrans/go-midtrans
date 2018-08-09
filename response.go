@@ -1,8 +1,16 @@
 package midtrans
 
+// VANumber : bank virtual account number
 type VANumber struct {
 	Bank     string `json:"bank"`
 	VANumber string `json:"va_number"`
+}
+
+// Action represents response action
+type Action struct {
+	Name   string `json:"name"`
+	Method string `json:"method"`
+	URL    string `json:"url"`
 }
 
 // Response after calling the API
@@ -26,17 +34,22 @@ type Response struct {
 	Page              int        `json:"page"`
 	TotalPage         int        `json:"total_page"`
 	TotalRecord       int        `json:"total_record"`
+	FraudStatus       string     `json:"fraud_status"`
+	PaymentType       string     `json:"payment_type"`
 	OrderID           string     `json:"order_id"`
-	TransactionId     string     `json:"transaction_id"`
+	TransactionID     string     `json:"transaction_id"`
 	TransactionTime   string     `json:"transaction_time"`
 	TransactionStatus string     `json:"transaction_status"`
 	GrossAmount       string     `json:"gross_amount"`
 	VANumbers         []VANumber `json:"va_numbers"`
+	PaymentCode       string     `json:"payment_code"`
+	Actions           []Action   `json:"actions"`
 }
 
-// Response after calling the Snap API
+// SnapResponse : Response after calling the Snap API
 type SnapResponse struct {
 	StatusCode    string   `json:"status_code"`
 	Token         string   `json:"token"`
+	RedirectURL   string   `json:"redirect_url"`
 	ErrorMessages []string `json:"error_messages"`
 }
