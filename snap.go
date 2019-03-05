@@ -29,7 +29,6 @@ func (gateway *SnapGateway) GetTokenQuick(orderID string, grossAmount int64) (Sn
 			OrderID:  orderID,
 			GrossAmt: grossAmount,
 		},
-		EnabledPayments: AllPaymentSource,
 	})
 }
 
