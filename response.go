@@ -53,3 +53,14 @@ type SnapResponse struct {
 	RedirectURL   string   `json:"redirect_url"`
 	ErrorMessages []string `json:"error_messages"`
 }
+
+// Show list of supported banks in IRIS. https://iris-docs.midtrans.com/#list-banks
+type IrisBeneficiaryBanksResponse struct {
+	BeneficiaryBanks []IrisBeneficiaryBankResponse `json:"beneficiary_banks"`
+	StatusCode       string                        `json:"status_code"`
+}
+
+type IrisBeneficiaryBankResponse struct {
+	Code string `json:"code"`
+	Name string `json:"name"`
+}
