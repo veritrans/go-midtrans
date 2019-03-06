@@ -21,7 +21,7 @@ func (gateway *IrisGateway) Call(method, path string, body io.Reader, v interfac
 }
 
 // Show list of supported banks in IRIS. (https://iris-docs.midtrans.com/#list-banks)
-func (gateway *IrisGateway) GetListBank() (IrisBeneficiaryBanksResponse, error) {
+func (gateway *IrisGateway) GetListBeneficiaryBank() (IrisBeneficiaryBanksResponse, error) {
 	resp := IrisBeneficiaryBanksResponse{}
 
 	err := gateway.Call("GET", "api/v1/beneficiary_banks", nil, &resp)
