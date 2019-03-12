@@ -185,7 +185,7 @@ type ChargeReq struct {
 // SnapReq : Represent SNAP API request payload
 type SnapReq struct {
 	TransactionDetails TransactionDetails `json:"transaction_details"`
-	EnabledPayments    *[]PaymentType     `json:"enabled_payments"`
+	EnabledPayments    []PaymentType      `json:"enabled_payments"`
 	Items              *[]ItemDetail      `json:"item_details,omitempty"`
 	CustomerDetail     *CustDetail        `json:"customer_details,omitempty"`
 	CreditCard         *CreditCardDetail  `json:"credit_card,omitempty"`
