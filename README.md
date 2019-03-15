@@ -92,6 +92,8 @@ result in their respective state.
 ### Iris Gateway
 Iris is Midtrans cash management solution that allows you to disburse payments to any bank accounts in Indonesia securely and easily. Iris connects to the banks’ hosts to enable seamless transfer using integrated APIs.
 
+>Note: `ServerKey` used for `irisGateway`'s `Client` is API Key found in Iris Dashboard. The API Key is different with Midtrans' payment gateway account's key.
+
 ```go
 var irisGateway midtrans.IrisGateway
 irisGateway = midtrans.IrisGateway{
