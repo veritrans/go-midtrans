@@ -78,6 +78,7 @@ type IrisBeneficiaries struct {
 }
 
 type IrisBeneficiariesResponse struct {
-	Status     string `json:"status"`
-	StatusCode string `json:"status_code"`
+	Status     string   `json:"status"`
+	StatusCode string   `json:"status_code"`
+	Errors     []string `json:"errors"`
 }

@@ -49,7 +49,8 @@ func (gateway *IrisGateway) CreateBeneficiaries(req *IrisBeneficiaries) (bool, e
 	}
 
 	if resp.Status != "created" {
-		return false, errors.New("Error creating beneficiaries: response status not created")
+		gateway.Client.Logger.Println("Error creating beneficiaries: ", resp.Errors)
+		return false, errors.New(strings.Join(resp.Errors, ","))
 	}
 
 	return true, nil
@@ -67,7 +68,8 @@ func (gateway *IrisGateway) UpdateBeneficiaries(aliasName string, req *IrisBenef
 	}
 
 	if resp.Status != "updated" {
-		return false, errors.New("Error updating beneficiaries: response status not updated")
+		gateway.Client.Logger.Println("Error updating beneficiaries: ", resp.Errors)
+		return false, errors.New(strings.Join(resp.Errors, ","))
 	}
 
 	return true, nil
