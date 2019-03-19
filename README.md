@@ -89,6 +89,25 @@ You may want to override those `onSuccess`, `onPending` and `onError`
 functions to reflect the behaviour that you wished when the charging
 result in their respective state.
 
+### Iris Gateway
+Iris is Midtrans cash management solution that allows you to disburse payments to any bank accounts in Indonesia securely and easily. Iris connects to the banks’ hosts to enable seamless transfer using integrated APIs.
+
+>Note: `ServerKey` used for `irisGateway`'s `Client` is API Key found in Iris Dashboard. The API Key is different with Midtrans' payment gateway account's key.
+
+```go
+var irisGateway midtrans.IrisGateway
+irisGateway = midtrans.IrisGateway{
+  Client: midclient,
+}
+
+res, err := irisGateway.GetListBeneficiaryBank()
+if err != nil {
+	fmt.Println("err ", err)
+	return
+}
+fmt.Printf("result %v \n ", res.BeneficiaryBanks)
+```
+
 ## License
 
 See [LICENSE](LICENSE).

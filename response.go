@@ -64,3 +64,21 @@ type IrisBeneficiaryBankResponse struct {
 	Code string `json:"code"`
 	Name string `json:"name"`
 }
+
+// Beneficiaries request (create, update, list)
+// https://iris-docs.midtrans.com/#create-beneficiaries
+// https://iris-docs.midtrans.com/#update-beneficiaries
+// https://iris-docs.midtrans.com/#list-beneficiaries
+type IrisBeneficiaries struct {
+	Name      string `json:"name"`
+	Account   string `json:"account"`
+	Bank      string `json:"bank"`
+	AliasName string `json:"alias_name"`
+	Email     string `json:"email"`
+}
+
+type IrisBeneficiariesResponse struct {
+	Status     string   `json:"status"`
+	StatusCode string   `json:"status_code"`
+	Errors     []string `json:"errors"`
+}
