@@ -158,6 +158,12 @@ type ConvStoreDetail struct {
 	Message string `json:"message"`
 }
 
+// GopayDetail: Represent gopay detail
+type GopayDetail struct {
+	EnableCallback bool   `json:"enable_callback"`
+	CallbackUrl    string `json:"callback_url"`
+}
+
 // ChargeReq : Represent Charge request payload
 type ChargeReq struct {
 	PaymentType        PaymentType        `json:"payment_type"`
@@ -175,6 +181,7 @@ type ChargeReq struct {
 	IndosatDompetku               *IndosatDompetkuDetail         `json:"indosat_dompetku,omitempty"`
 	CustomerDetail                *CustDetail                    `json:"customer_details,omitempty"`
 	ConvStore                     *ConvStoreDetail               `json:"cstore,omitempty"`
+	Gopay                         *GopayDetail                   `json:"gopay,omitempty"`
 
 	Items      *[]ItemDetail `json:"item_details,omitempty"`
 	CustField1 string        `json:"custom_field1,omitempty"`
