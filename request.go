@@ -196,6 +196,7 @@ type SnapReq struct {
 	Items              *[]ItemDetail      `json:"item_details,omitempty"`
 	CustomerDetail     *CustDetail        `json:"customer_details,omitempty"`
 	CreditCard         *CreditCardDetail  `json:"credit_card,omitempty"`
+	Gopay              *GopayDetail       `json:"gopay,omitempty"`
 	CustomField1       string             `json:"custom_field1"`
 	CustomField2       string             `json:"custom_field2"`
 	CustomField3       string             `json:"custom_field3"`
