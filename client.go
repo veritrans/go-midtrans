@@ -101,7 +101,7 @@ func (c *Client) ExecuteRequest(req *http.Request, v interface{}) error {
 	}
 
 	if logLevel > 2 {
-		logger.Println("Midtrans response: ", resBody)
+		logger.Println("Midtrans response: ", string(resBody))
 	}
 
 	if v != nil {
