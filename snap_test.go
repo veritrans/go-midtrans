@@ -58,10 +58,28 @@ func TestSnapCreateToken(t *testing.T) {
 		Client: midclient,
 	}
 
+	custAddress := &midtrans.CustAddress{
+		FName: "John",
+		LName: "Doe",
+		Phone: "081234567890",
+		Address: "Baker Street 97th",
+		City: "Jakarta",
+		Postcode: "16000",
+		CountryCode: "IDN",
+	}
+
 	snapReq := &midtrans.SnapReq{
 		TransactionDetails: midtrans.TransactionDetails{
 			OrderID: "order-id-go-"+timestamp,
 			GrossAmt: 200000,
+		},
+		CustomerDetail: &midtrans.CustDetail{
+			FName: "John",
+			LName: "Doe",
+			Email: "john@doe.com",
+			Phone: "081234567890",
+			BillAddr: custAddress,
+			ShipAddr: custAddress,
 		},
 		Items: &[]midtrans.ItemDetail{
 			midtrans.ItemDetail{
