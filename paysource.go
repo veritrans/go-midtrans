@@ -16,6 +16,9 @@ const (
 	// SourceBCAVA : bca_va
 	SourceBCAVA PaymentType = "bca_va"
 
+	// SourceOtherVA : other_va
+	SourceOtherVA PaymentType = "other_va"
+
 	// SourceBcaKlikpay : bca_klikpay
 	SourceBcaKlikpay PaymentType = "bca_klikpay"
 

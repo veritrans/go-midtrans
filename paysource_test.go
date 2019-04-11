@@ -14,6 +14,7 @@ func TestPaymentType(t *testing.T) {
 	is.Equal("bca_va", midtrans.SourceBCAVA)
 	is.Equal("permata_va", midtrans.SourcePermataVA)
 	is.Equal("bni_va", midtrans.SourceBNIVA)
+	is.Equal("other_va", midtrans.SourceOtherVA)
 	is.Equal("cimb_clicks", midtrans.SourceCimbClicks)
 	is.Equal("danamon_online", midtrans.SourceDanamonOnline)
 	is.Equal("mandiri_clickpay", midtrans.SourceMandiriClickpay)
