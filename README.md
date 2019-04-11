@@ -44,7 +44,7 @@ Please proceed there for more detail on how to run the example.
         },
         Items: &[]midtrans.ItemDetail{
             midtrans.ItemDetail{
-                Id: "ITEM1",
+                ID: "ITEM1",
                 Price: 200000,
                 Qty: 1,
                 Name: "Someitem",
@@ -60,6 +60,8 @@ Please proceed there for more detail on how to run the example.
 Snap is Midtrans existing tool to help merchant charge customers using a
 mobile-friendly, in-page, no-redirect checkout facilities. Using snap is
 completely simple.
+
+Quick transaction with minimum Snap parameters:
 
 ```go
 var snapGateway midtrans.SnapGateway
@@ -89,6 +91,57 @@ You may want to override those `onSuccess`, `onPending` and `onError`
 functions to reflect the behaviour that you wished when the charging
 result in their respective state.
 
+Alternativelly, more complete Snap parameter:
+
+```go
+
+    midclient := midtrans.NewClient()
+    midclient.ServerKey = "YOUR-VT-SERVER-KEY"
+    midclient.ClientKey = "YOUR-VT-CLIENT-KEY"
+    midclient.APIEnvType = midtrans.Sandbox
+
+    var snapGateway midtrans.SnapGateway
+    snapGateway = midtrans.SnapGateway{
+        Client: midclient,
+    }
+
+    custAddress := &midtrans.CustAddress{
+        FName: "John",
+        LName: "Doe",
+        Phone: "081234567890",
+        Address: "Baker Street 97th",
+        City: "Jakarta",
+        Postcode: "16000",
+        CountryCode: "IDN",
+    }
+
+    snapReq := &midtrans.SnapReq{
+        TransactionDetails: midtrans.TransactionDetails{
+            OrderID: "order-id-go-"+timestamp,
+            GrossAmt: 200000,
+        },
+        CustomerDetail: &midtrans.CustDetail{
+            FName: "John",
+            LName: "Doe",
+            Email: "john@doe.com",
+            Phone: "081234567890",
+            BillAddr: custAddress,
+            ShipAddr: custAddress,
+        },
+        Items: &[]midtrans.ItemDetail{
+            midtrans.ItemDetail{
+                ID: "ITEM1",
+                Price: 200000,
+                Qty: 1,
+                Name: "Someitem",
+            },
+        },
+    }
+
+    log.Println("GetToken:")
+    snapTokenResp, err := snapGateway.GetToken(snapReq)
+```
+
 ### Iris Gateway
 Iris is Midtrans cash management solution that allows you to disburse payments to any bank accounts in Indonesia securely and easily. Iris connects to the banks’ hosts to enable seamless transfer using integrated APIs.
 
@@ -102,8 +155,8 @@ irisGateway = midtrans.IrisGateway{
 
 res, err := irisGateway.GetListBeneficiaryBank()
 if err != nil {
-	fmt.Println("err ", err)
-	return
+    fmt.Println("err ", err)
+    return
 }
 fmt.Printf("result %v \n ", res.BeneficiaryBanks)
 ```
