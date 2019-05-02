@@ -14,7 +14,6 @@ func TestPaymentType(t *testing.T) {
 	is.Equal("bca_va", midtrans.SourceBCAVA)
 	is.Equal("permata_va", midtrans.SourcePermataVA)
 	is.Equal("bni_va", midtrans.SourceBNIVA)
-	is.Equal("other_va", midtrans.SourceOtherVA)
 	is.Equal("cimb_clicks", midtrans.SourceCimbClicks)
 	is.Equal("danamon_online", midtrans.SourceDanamonOnline)
 	is.Equal("mandiri_clickpay", midtrans.SourceMandiriClickpay)
@@ -22,7 +21,10 @@ func TestPaymentType(t *testing.T) {
 	is.Equal("telkomsel_cash", midtrans.SourceTelkomselCash)
 	is.Equal("echannel", midtrans.SourceEchannel)
 	is.Equal("cstore", midtrans.SourceConvStore)
+	is.Equal("indomaret", midtrans.SourceIndomaret)
+	is.Equal("alfamart", midtrans.SourceAlfamart)
 	is.Equal("bca_klikbca", midtrans.SourceKlikBca)
 	is.Equal("bca_klikpay", midtrans.SourceBcaKlikpay)
 	is.Equal("gopay", midtrans.SourceGopay)
+	is.Equal("akulaku", midtrans.SourceAkulaku)
 }

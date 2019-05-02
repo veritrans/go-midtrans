@@ -61,11 +61,17 @@ const (
 	// SourceIndomaret : indomaret
 	SourceIndomaret PaymentType = "indomaret"
 
+	// SourceAlfamart : alfamart
+	SourceAlfamart PaymentType = "alfamart"
+
 	// SourceGiftCardIndo : gci
 	SourceGiftCardIndo PaymentType = "gci"
 
 	// SourceGopay : gopay
 	SourceGopay PaymentType = "gopay"
+
+	// SourceAkulaku : akulaku
+	SourceAkulaku PaymentType = "akulaku"
 )
 
 // AllPaymentSource : Get All available PaymentType
