@@ -25,13 +25,13 @@ type CustAddress struct {
 // CustDetail : Represent the customer detail
 type CustDetail struct {
 	// first name
-	FName string `json:"first_name"`
+	FName string `json:"first_name,omitempty"`
 
 	// last name
-	LName string `json:"last_name"`
+	LName string `json:"last_name,omitempty"`
 
-	Email    string       `json:"email"`
-	Phone    string       `json:"phone"`
+	Email    string       `json:"email,omitempty"`
+	Phone    string       `json:"phone,omitempty"`
 	BillAddr *CustAddress `json:"billing_address,omitempty"`
 	ShipAddr *CustAddress `json:"customer_address,omitempty"`
 }
@@ -48,7 +48,7 @@ type CreditCardDetail struct {
 	TokenID         string   `json:"token_id"`
 	Bank            string   `json:"bank,omitempty"`
 	Bins            []string `json:"bins,omitempty"`
-	InstallmentTerm []int8   `json:"installment_term,omitempty"`
+	InstallmentTerm int8     `json:"installment_term,omitempty"`
 	Type            string   `json:"type,omitempty"`
 	// indicate if generated token should be saved for next charge
 	SaveTokenID          bool   `json:"save_token_id,omitempty"`
@@ -158,6 +158,12 @@ type ConvStoreDetail struct {
 	Message string `json:"message"`
 }
 
+// GopayDetail: Represent gopay detail
+type GopayDetail struct {
+	EnableCallback bool   `json:"enable_callback"`
+	CallbackUrl    string `json:"callback_url"`
+}
+
 // ChargeReq : Represent Charge request payload
 type ChargeReq struct {
 	PaymentType        PaymentType        `json:"payment_type"`
@@ -175,6 +181,7 @@ type ChargeReq struct {
 	IndosatDompetku               *IndosatDompetkuDetail         `json:"indosat_dompetku,omitempty"`
 	CustomerDetail                *CustDetail                    `json:"customer_details,omitempty"`
 	ConvStore                     *ConvStoreDetail               `json:"cstore,omitempty"`
+	Gopay                         *GopayDetail                   `json:"gopay,omitempty"`
 
 	Items      *[]ItemDetail `json:"item_details,omitempty"`
 	CustField1 string        `json:"custom_field1,omitempty"`
@@ -189,6 +196,7 @@ type SnapReq struct {
 	Items              *[]ItemDetail      `json:"item_details,omitempty"`
 	CustomerDetail     *CustDetail        `json:"customer_details,omitempty"`
 	CreditCard         *CreditCardDetail  `json:"credit_card,omitempty"`
+	Gopay              *GopayDetail       `json:"gopay,omitempty"`
 	CustomField1       string             `json:"custom_field1"`
 	CustomField2       string             `json:"custom_field2"`
 	CustomField3       string             `json:"custom_field3"`

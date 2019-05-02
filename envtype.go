@@ -34,3 +34,8 @@ func (e EnvironmentType) String() string {
 func (e EnvironmentType) SnapURL() string {
 	return strings.Replace(e.String(), "api.", "app.", 1)
 }
+
+// IrisURL : Get environment API URL
+func (e EnvironmentType) IrisURL() string {
+	return strings.Replace(e.String(), "api.", "app.", 1) + "/iris"
+}
