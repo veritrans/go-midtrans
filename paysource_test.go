@@ -22,7 +22,10 @@ func TestPaymentType(t *testing.T) {
 	is.Equal("telkomsel_cash", midtrans.SourceTelkomselCash)
 	is.Equal("echannel", midtrans.SourceEchannel)
 	is.Equal("cstore", midtrans.SourceConvStore)
+	is.Equal("indomaret", midtrans.SourceIndomaret)
+	is.Equal("alfamart", midtrans.SourceAlfamart)
 	is.Equal("bca_klikbca", midtrans.SourceKlikBca)
 	is.Equal("bca_klikpay", midtrans.SourceBcaKlikpay)
 	is.Equal("gopay", midtrans.SourceGopay)
+	is.Equal("akulaku", midtrans.SourceAkulaku)
 }
