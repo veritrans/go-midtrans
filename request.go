@@ -53,6 +53,7 @@ type CreditCardDetail struct {
 	// indicate if generated token should be saved for next charge
 	SaveTokenID          bool   `json:"save_token_id,omitempty"`
 	SavedTokenIDExpireAt string `json:"saved_token_id_expired_at,omitempty"`
+	Authentication bool `json:"authentication,omitempty"`
 }
 
 // PermataBankTransferDetail : Represent Permata bank_transfer detail
