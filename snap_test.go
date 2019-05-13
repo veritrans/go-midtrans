@@ -89,6 +89,11 @@ func TestSnapCreateToken(t *testing.T) {
 				Name: "Someitem",
 			},
 		},
+		Expiry: &midtrans.ExpiryDetail{
+			// StartTime: "2019-05-13 18:00:00 +0700",
+			Unit: "hour",
+			Duration: 48,
+		},
 		Gopay: &midtrans.GopayDetail{
 			EnableCallback: true,
 			CallbackUrl: "https://example.com/gopay/finish",
