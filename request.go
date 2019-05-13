@@ -42,6 +42,13 @@ type TransactionDetails struct {
 	GrossAmt int64  `json:"gross_amount"`
 }
 
+// ExpiryDetail : Represent SNAP expiry details
+type ExpiryDetail struct {
+	StartTime   string `json:"start_time,omitempty"`
+	Unit        string `json:"unit"`
+	Duration    int64  `json:"duration"`
+}
+
 // CreditCardDetail : Represent credit card detail
 type CreditCardDetail struct {
 	Secure          bool     `json:"secure,omitempty"`
@@ -196,6 +203,7 @@ type SnapReq struct {
 	EnabledPayments    []PaymentType      `json:"enabled_payments"`
 	Items              *[]ItemDetail      `json:"item_details,omitempty"`
 	CustomerDetail     *CustDetail        `json:"customer_details,omitempty"`
+	Expiry             *ExpiryDetail      `json:"expiry,omitempty"`
 	CreditCard         *CreditCardDetail  `json:"credit_card,omitempty"`
 	Gopay              *GopayDetail       `json:"gopay,omitempty"`
 	CustomField1       string             `json:"custom_field1"`
