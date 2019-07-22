@@ -49,18 +49,35 @@ type ExpiryDetail struct {
 	Duration    int64  `json:"duration"`
 }
 
+type InstallmentTermsDetail {
+	Bni     []int8 `json:"bni,omitempty"`
+	Mandiri []int8 `json:"mandiri,omitempty"`
+	Cimb    []int8 `json:"cimb,omitempty"`
+	Mega    []int8 `json:"mega,omitempty"`
+	Bca     []int8 `json:"bca,omitempty"`
+	Bri     []int8 `json:"bri,omitempty"`
+	Maybank []int8 `json:"maybank,omitempty"`
+	Offline []int8 `json:"offline,omitempty"`
+}
+
+type InstallmentDetail struct {
+	Required bool                      `json:"required"`
+	Terms    *[]InstallmentTermsDetail `json:"terms"`
+}
+
 // CreditCardDetail : Represent credit card detail
 type CreditCardDetail struct {
-	Secure          bool     `json:"secure,omitempty"`
-	TokenID         string   `json:"token_id"`
-	Bank            string   `json:"bank,omitempty"`
-	Bins            []string `json:"bins,omitempty"`
-	InstallmentTerm int8     `json:"installment_term,omitempty"`
-	Type            string   `json:"type,omitempty"`
+	Secure          bool               `json:"secure,omitempty"`
+	TokenID         string             `json:"token_id"`
+	Bank            string             `json:"bank,omitempty"`
+	Bins            []string           `json:"bins,omitempty"`
+	Installment     *InstallmentDetail `json:"installment,omitempty"`
+	InstallmentTerm int8               `json:"installment_term,omitempty"`
+	Type            string             `json:"type,omitempty"`
 	// indicate if generated token should be saved for next charge
-	SaveTokenID          bool   `json:"save_token_id,omitempty"`
-	SavedTokenIDExpireAt string `json:"saved_token_id_expired_at,omitempty"`
-	Authentication bool `json:"authentication,omitempty"`
+	SaveTokenID          bool          `json:"save_token_id,omitempty"`
+	SavedTokenIDExpireAt string        `json:"saved_token_id_expired_at,omitempty"`
+	Authentication bool                `json:"authentication,omitempty"`
 }
 
 // PermataBankTransferDetail : Represent Permata bank_transfer detail
