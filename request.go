@@ -38,8 +38,8 @@ type CustDetail struct {
 
 // TransactionDetails : Represent transaction details
 type TransactionDetails struct {
-	OrderID  string `json:"order_id"`
-	GrossAmt int64  `json:"gross_amount"`
+	OrderID  string  `json:"order_id"`
+	GrossAmt float64 `json:"gross_amount"`
 }
 
 // ExpiryDetail : Represent SNAP expiry details
