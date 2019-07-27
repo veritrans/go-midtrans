@@ -44,9 +44,9 @@ type TransactionDetails struct {
 
 // ExpiryDetail : Represent SNAP expiry details
 type ExpiryDetail struct {
-	StartTime   string `json:"start_time,omitempty"`
-	Unit        string `json:"unit"`
-	Duration    int64  `json:"duration"`
+	StartTime string `json:"start_time,omitempty"`
+	Unit      string `json:"unit"`
+	Duration  int64  `json:"duration"`
 }
 
 // CreditCardDetail : Represent credit card detail
@@ -60,7 +60,7 @@ type CreditCardDetail struct {
 	// indicate if generated token should be saved for next charge
 	SaveTokenID          bool   `json:"save_token_id,omitempty"`
 	SavedTokenIDExpireAt string `json:"saved_token_id_expired_at,omitempty"`
-	Authentication bool `json:"authentication,omitempty"`
+	Authentication       string `json:"authentication,omitempty"`
 }
 
 // PermataBankTransferDetail : Represent Permata bank_transfer detail
