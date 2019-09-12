@@ -111,7 +111,9 @@ func (c *Client) ExecuteRequest(req *http.Request, v interface{}) error {
 
 		// we're safe to reflect status_code if response not an array
 		if reflect.ValueOf(v).Elem().Kind() != reflect.Slice {
-			reflect.ValueOf(v).Elem().FieldByName("StatusCode").SetString(strconv.Itoa(res.StatusCode))
+			if reflect.ValueOf(v).Elem().FieldByName("StatusCode").IsValid() {
+				reflect.ValueOf(v).Elem().FieldByName("StatusCode").SetString(strconv.Itoa(res.StatusCode))
+			}
 		}
 	}
 

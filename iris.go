@@ -87,3 +87,21 @@ func (gateway *IrisGateway) GetListBeneficiaries() ([]IrisBeneficiaries, error) 
 
 	return resp, nil
 }
+
+// CreatePayouts : This API is for Creator to create a payout. It can be used for single payout and also multiple payouts. (https://iris-docs.midtrans.com/#create-payouts)
+func (gateway *IrisGateway) CreatePayouts(req IrisCreatePayoutReq) (IrisCreatePayoutResponse, error) {
+	resp := IrisCreatePayoutResponse{}
+	jsonReq, _ := json.Marshal(req)
+
+	err := gateway.Call("POST", "api/v1/payouts", bytes.NewBuffer(jsonReq), &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error creating payouts: ", err)
+		return resp, err
+	}
+
+	if resp.ErrorMessage != "" {
+		return resp, errors.New(resp.ErrorMessage)
+	}
+
+	return resp, nil
+}
