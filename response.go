@@ -85,3 +85,15 @@ type IrisBeneficiariesResponse struct {
 	StatusCode string   `json:"status_code"`
 	Errors     []string `json:"errors"`
 }
+
+// IrisCreatePayoutResponse : Represent Create Payout response
+type IrisCreatePayoutResponse struct {
+	Payouts      []IrisCreatePayoutDetailResponse `json:"payouts"`
+	ErrorMessage string                           `json:"error_message"`
+	Errors       []string                         `json:"errors"`
+}
+
+type IrisCreatePayoutDetailResponse struct {
+	Status      string `json:"status"`
+	ReferenceNo string `json:"reference_no"`
+}
