@@ -154,6 +154,11 @@ func (gateway *IrisGateway) RejectPayouts(req IrisRejectPayoutReq) (IrisRejectPa
 func (gateway *IrisGateway) GetPayoutDetails(referenceNo string) (IrisPayoutDetailResponse, error) {
 	resp := IrisPayoutDetailResponse{}
 
+	// handle conflict call with payout history (https://iris-docs.midtrans.com/#payout-history)
+	if referenceNo == "" {
+		return resp, errors.New("you must specified referenceNo")
+	}
+
 	err := gateway.Call("GET", "api/v1/payouts/"+referenceNo, nil, &resp)
 	if err != nil {
 		gateway.Client.Logger.Println("Error getting payout details: ", err)
