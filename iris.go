@@ -149,3 +149,20 @@ func (gateway *IrisGateway) RejectPayouts(req IrisRejectPayoutReq) (IrisRejectPa
 
 	return resp, nil
 }
+
+// GetPayoutDetails : Get details of a single payout (https://iris-docs.midtrans.com/#get-payout-details)
+func (gateway *IrisGateway) GetPayoutDetails(referenceNo string) (IrisPayoutDetailResponse, error) {
+	resp := IrisPayoutDetailResponse{}
+
+	err := gateway.Call("GET", "api/v1/payouts/"+referenceNo, nil, &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error getting payout details: ", err)
+		return resp, err
+	}
+
+	if resp.ErrorMessage != "" {
+		return resp, errors.New(resp.ErrorMessage)
+	}
+
+	return resp, nil
+}
