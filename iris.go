@@ -127,3 +127,25 @@ func (gateway *IrisGateway) ApprovePayouts(req IrisApprovePayoutReq) (IrisApprov
 
 	return resp, nil
 }
+
+// RejectPayouts : Use this API for Apporver to reject multiple payout request. (https://iris-docs.midtrans.com/#reject-payouts)
+func (gateway *IrisGateway) RejectPayouts(req IrisRejectPayoutReq) (IrisRejectPayoutResponse, error) {
+	resp := IrisRejectPayoutResponse{}
+	jsonReq, _ := json.Marshal(req)
+
+	err := gateway.Call("POST", "api/v1/payouts/reject", bytes.NewBuffer(jsonReq), &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error rejecting payouts: ", err)
+		return resp, err
+	}
+
+	if len(resp.Errors) > 0 {
+		return resp, errors.New(strings.Join(resp.Errors, ", "))
+	}
+
+	if resp.Status != "ok" {
+		return resp, errors.New("Error rejecting payouts, status from API not OK")
+	}
+
+	return resp, nil
+}

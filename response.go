@@ -103,3 +103,9 @@ type IrisApprovePayoutResponse struct {
 	ErrorMessage string   `json:"error_message"`
 	Errors       []string `json:"errors"`
 }
+
+type IrisRejectPayoutResponse struct {
+	Status       string   `json:"status"`
+	ErrorMessage string   `json:"error_message"`
+	Errors       []string `json:"errors"`
+}

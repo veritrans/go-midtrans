@@ -235,3 +235,8 @@ type IrisApprovePayoutReq struct {
 	ReferenceNo []string `json:"reference_nos"`
 	OTP         string   `json:"otp"`
 }
+
+type IrisRejectPayoutReq struct {
+	ReferenceNo  []string `json:"reference_nos"`
+	RejectReason string   `json:"reject_reason"`
+}
