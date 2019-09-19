@@ -97,3 +97,9 @@ type IrisCreatePayoutDetailResponse struct {
 	Status      string `json:"status"`
 	ReferenceNo string `json:"reference_no"`
 }
+
+type IrisApprovePayoutResponse struct {
+	Status       string   `json:"status"`
+	ErrorMessage string   `json:"error_message"`
+	Errors       []string `json:"errors"`
+}

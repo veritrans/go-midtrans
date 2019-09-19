@@ -230,3 +230,8 @@ type IrisCreatePayoutDetailReq struct {
 	Amount             string `json:"amount"`
 	Notes              string `json:"notes"`
 }
+
+type IrisApprovePayoutReq struct {
+	ReferenceNo []string `json:"reference_nos"`
+	OTP         string   `json:"otp"`
+}
