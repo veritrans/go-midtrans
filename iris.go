@@ -166,3 +166,31 @@ func (gateway *IrisGateway) GetPayoutDetails(referenceNo string) (IrisPayoutDeta
 
 	return resp, nil
 }
+
+// ValidateBankAccount : Check if an account is valid, if valid return account information. (https://iris-docs.midtrans.com/#validate-bank-account)
+func (gateway *IrisGateway) ValidateBankAccount(bankName string, accountNo string) (IrisBankAccountDetailResponse, error) {
+	resp := IrisBankAccountDetailResponse{}
+
+	err := gateway.Call("GET", fmt.Sprintf("api/v1/account_validation?bank=%s&account=%s", bankName, accountNo), nil, &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error validating bank account: ", err)
+		return resp, err
+	}
+
+	if resp.ErrorMessage != "" {
+		errMsg := []string{}
+		if len(resp.Errors.Account) > 0 {
+			accountErr := "account: " + strings.Join(resp.Errors.Account, ", ")
+			errMsg = append(errMsg, accountErr)
+		}
+
+		if len(resp.Errors.Bank) > 0 {
+			bankErr := "bank: " + strings.Join(resp.Errors.Bank, ", ")
+			errMsg = append(errMsg, bankErr)
+		}
+
+		return resp, errors.New(strings.Join(errMsg, " & "))
+	}
+
+	return resp, nil
+}

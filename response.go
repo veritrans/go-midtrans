@@ -127,3 +127,16 @@ type IrisPayoutDetailResponse struct {
 	ErrorMessage       string    `json:"error_message"`
 	Errors             string    `json:"errors"`
 }
+
+type IrisBankAccountDetailResponse struct {
+	AccountName  string                              `json:"account_name"`
+	AccountNo    string                              `json:"account_no"`
+	BankName     string                              `json:"bank_name"`
+	ErrorMessage string                              `json:"error_message"`
+	Errors       *IrisBankAccountDetailErrorResponse `json:"errors"`
+}
+
+type IrisBankAccountDetailErrorResponse struct {
+	Account []string `json:"account"`
+	Bank    []string `json:"bank"`
+}
