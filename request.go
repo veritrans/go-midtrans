@@ -216,3 +216,27 @@ type CaptureReq struct {
 	TransactionID string  `json:"transaction_id"`
 	GrossAmt      float64 `json:"gross_amount"`
 }
+
+// IrisCreatePayoutReq : Represent Create Payout request payload
+type IrisCreatePayoutReq struct {
+	Payouts []IrisCreatePayoutDetailReq `json:"payouts"`
+}
+
+type IrisCreatePayoutDetailReq struct {
+	BeneficiaryName    string `json:"beneficiary_name"`
+	BeneficiaryAccount string `json:"beneficiary_account"`
+	BeneficiaryBank    string `json:"beneficiary_bank"`
+	BeneficiaryEmail   string `json:"beneficiary_email"`
+	Amount             string `json:"amount"`
+	Notes              string `json:"notes"`
+}
+
+type IrisApprovePayoutReq struct {
+	ReferenceNo []string `json:"reference_nos"`
+	OTP         string   `json:"otp"`
+}
+
+type IrisRejectPayoutReq struct {
+	ReferenceNo  []string `json:"reference_nos"`
+	RejectReason string   `json:"reject_reason"`
+}
