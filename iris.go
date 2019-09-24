@@ -149,3 +149,53 @@ func (gateway *IrisGateway) RejectPayouts(req IrisRejectPayoutReq) (IrisRejectPa
 
 	return resp, nil
 }
+
+// GetPayoutDetails : Get details of a single payout (https://iris-docs.midtrans.com/#get-payout-details)
+func (gateway *IrisGateway) GetPayoutDetails(referenceNo string) (IrisPayoutDetailResponse, error) {
+	resp := IrisPayoutDetailResponse{}
+
+	// handle conflict call with payout history (https://iris-docs.midtrans.com/#payout-history)
+	if referenceNo == "" {
+		return resp, errors.New("you must specified referenceNo")
+	}
+
+	err := gateway.Call("GET", "api/v1/payouts/"+referenceNo, nil, &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error getting payout details: ", err)
+		return resp, err
+	}
+
+	if resp.ErrorMessage != "" {
+		return resp, errors.New(resp.ErrorMessage)
+	}
+
+	return resp, nil
+}
+
+// ValidateBankAccount : Check if an account is valid, if valid return account information. (https://iris-docs.midtrans.com/#validate-bank-account)
+func (gateway *IrisGateway) ValidateBankAccount(bankName string, accountNo string) (IrisBankAccountDetailResponse, error) {
+	resp := IrisBankAccountDetailResponse{}
+
+	err := gateway.Call("GET", fmt.Sprintf("api/v1/account_validation?bank=%s&account=%s", bankName, accountNo), nil, &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error validating bank account: ", err)
+		return resp, err
+	}
+
+	if resp.ErrorMessage != "" {
+		errMsg := []string{}
+		if len(resp.Errors.Account) > 0 {
+			accountErr := "account: " + strings.Join(resp.Errors.Account, ", ")
+			errMsg = append(errMsg, accountErr)
+		}
+
+		if len(resp.Errors.Bank) > 0 {
+			bankErr := "bank: " + strings.Join(resp.Errors.Bank, ", ")
+			errMsg = append(errMsg, bankErr)
+		}
+
+		return resp, errors.New(strings.Join(errMsg, " & "))
+	}
+
+	return resp, nil
+}

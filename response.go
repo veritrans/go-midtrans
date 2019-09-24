@@ -1,5 +1,7 @@
 package midtrans
 
+import "time"
+
 // VANumber : bank virtual account number
 type VANumber struct {
 	Bank     string `json:"bank"`
@@ -108,4 +110,33 @@ type IrisRejectPayoutResponse struct {
 	Status       string   `json:"status"`
 	ErrorMessage string   `json:"error_message"`
 	Errors       []string `json:"errors"`
+}
+
+type IrisPayoutDetailResponse struct {
+	Amount             string    `json:"amount"`
+	BeneficiaryName    string    `json:"beneficiary_name"`
+	BeneficiaryAccount string    `json:"beneficiary_account"`
+	Bank               string    `json:"bank"`
+	ReferenceNo        string    `json:"reference_no"`
+	Notes              string    `json:"notes"`
+	BeneficiaryEmail   string    `json:"beneficiary_email"`
+	Status             string    `json:"status"`
+	CreatedBy          string    `json:"created_by"`
+	CreatedAt          time.Time `json:"created_at"`
+	UpdatedAt          time.Time `json:"updated_at"`
+	ErrorMessage       string    `json:"error_message"`
+	Errors             string    `json:"errors"`
+}
+
+type IrisBankAccountDetailResponse struct {
+	AccountName  string                              `json:"account_name"`
+	AccountNo    string                              `json:"account_no"`
+	BankName     string                              `json:"bank_name"`
+	ErrorMessage string                              `json:"error_message"`
+	Errors       *IrisBankAccountDetailErrorResponse `json:"errors"`
+}
+
+type IrisBankAccountDetailErrorResponse struct {
+	Account []string `json:"account"`
+	Bank    []string `json:"bank"`
 }
