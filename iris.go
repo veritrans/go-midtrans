@@ -212,3 +212,16 @@ func (gateway *IrisGateway) CheckBalance() (IrisBalanceResponse, error) {
 
 	return resp, nil
 }
+
+// GetPayoutHistory : Returns all the payout details for specific dates (https://iris-docs.midtrans.com/#payout-history)
+func (gateway *IrisGateway) GetPayoutHistory(fromDate string, toDate string) ([]IrisPayoutDetailResponse, error) {
+	resp := []IrisPayoutDetailResponse{}
+
+	err := gateway.Call("GET", fmt.Sprintf("api/v1/payouts?from_date=%s&to_date=%s", fromDate, toDate), nil, &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error get payout history: ", err)
+		return resp, err
+	}
+
+	return resp, nil
+}
