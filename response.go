@@ -140,3 +140,7 @@ type IrisBankAccountDetailErrorResponse struct {
 	Account []string `json:"account"`
 	Bank    []string `json:"bank"`
 }
+
+type IrisBalanceResponse struct {
+	Balance string `json:"balance"`
+}

@@ -199,3 +199,16 @@ func (gateway *IrisGateway) ValidateBankAccount(bankName string, accountNo strin
 
 	return resp, nil
 }
+
+// CheckBalance : Check Balance (Aggregator) (https://iris-docs.midtrans.com/#check-balance-aggregator)
+func (gateway *IrisGateway) CheckBalance() (IrisBalanceResponse, error) {
+	resp := IrisBalanceResponse{}
+
+	err := gateway.Call("GET", "api/v1/balance", nil, &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error check balance: ", err)
+		return resp, err
+	}
+
+	return resp, nil
+}
