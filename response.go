@@ -59,18 +59,19 @@ type SnapResponse struct {
 	ErrorMessages []string `json:"error_messages"`
 }
 
-// Show list of supported banks in IRIS. https://iris-docs.midtrans.com/#list-banks
+// IrisBeneficiaryBanksResponse : Show list of supported banks in IRIS. https://iris-docs.midtrans.com/#list-banks
 type IrisBeneficiaryBanksResponse struct {
 	BeneficiaryBanks []IrisBeneficiaryBankResponse `json:"beneficiary_banks"`
 	StatusCode       string                        `json:"status_code"`
 }
 
+// IrisBeneficiaryBankResponse : Represent Beneficiary bank response payload
 type IrisBeneficiaryBankResponse struct {
 	Code string `json:"code"`
 	Name string `json:"name"`
 }
 
-// Beneficiaries request (create, update, list)
+// IrisBeneficiaries : Beneficiaries request (create, update, list)
 // https://iris-docs.midtrans.com/#create-beneficiaries
 // https://iris-docs.midtrans.com/#update-beneficiaries
 // https://iris-docs.midtrans.com/#list-beneficiaries
@@ -82,36 +83,41 @@ type IrisBeneficiaries struct {
 	Email     string `json:"email"`
 }
 
+// IrisBeneficiariesResponse : Represent Beneficiaries response payload
 type IrisBeneficiariesResponse struct {
 	Status     string   `json:"status"`
 	StatusCode string   `json:"status_code"`
 	Errors     []string `json:"errors"`
 }
 
-// IrisCreatePayoutResponse : Represent Create Payout response
+// IrisCreatePayoutResponse : Represent Create payout response payload
 type IrisCreatePayoutResponse struct {
 	Payouts      []IrisCreatePayoutDetailResponse `json:"payouts"`
 	ErrorMessage string                           `json:"error_message"`
 	Errors       []string                         `json:"errors"`
 }
 
+// IrisCreatePayoutDetailResponse : Represent Create payout detail response payload
 type IrisCreatePayoutDetailResponse struct {
 	Status      string `json:"status"`
 	ReferenceNo string `json:"reference_no"`
 }
 
+// IrisApprovePayoutResponse : Represent Approve payout response payload
 type IrisApprovePayoutResponse struct {
 	Status       string   `json:"status"`
 	ErrorMessage string   `json:"error_message"`
 	Errors       []string `json:"errors"`
 }
 
+// IrisRejectPayoutResponse : Represent Reject payout response payload
 type IrisRejectPayoutResponse struct {
 	Status       string   `json:"status"`
 	ErrorMessage string   `json:"error_message"`
 	Errors       []string `json:"errors"`
 }
 
+// IrisPayoutDetailResponse : Represent Payout detail response payload
 type IrisPayoutDetailResponse struct {
 	Amount             string    `json:"amount"`
 	BeneficiaryName    string    `json:"beneficiary_name"`
@@ -128,6 +134,7 @@ type IrisPayoutDetailResponse struct {
 	Errors             string    `json:"errors"`
 }
 
+// IrisBankAccountDetailResponse : Represent Bank account detail payload
 type IrisBankAccountDetailResponse struct {
 	AccountName  string                              `json:"account_name"`
 	AccountNo    string                              `json:"account_no"`
@@ -136,6 +143,7 @@ type IrisBankAccountDetailResponse struct {
 	Errors       *IrisBankAccountDetailErrorResponse `json:"errors"`
 }
 
+// IrisBankAccountDetailErrorResponse : Represent Bank account detail error payload
 type IrisBankAccountDetailErrorResponse struct {
 	Account []string `json:"account"`
 	Bank    []string `json:"bank"`

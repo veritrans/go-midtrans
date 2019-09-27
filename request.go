@@ -44,9 +44,9 @@ type TransactionDetails struct {
 
 // ExpiryDetail : Represent SNAP expiry details
 type ExpiryDetail struct {
-	StartTime   string `json:"start_time,omitempty"`
-	Unit        string `json:"unit"`
-	Duration    int64  `json:"duration"`
+	StartTime string `json:"start_time,omitempty"`
+	Unit      string `json:"unit"`
+	Duration  int64  `json:"duration"`
 }
 
 // CreditCardDetail : Represent credit card detail
@@ -60,7 +60,7 @@ type CreditCardDetail struct {
 	// indicate if generated token should be saved for next charge
 	SaveTokenID          bool   `json:"save_token_id,omitempty"`
 	SavedTokenIDExpireAt string `json:"saved_token_id_expired_at,omitempty"`
-	Authentication bool `json:"authentication,omitempty"`
+	Authentication       bool   `json:"authentication,omitempty"`
 }
 
 // PermataBankTransferDetail : Represent Permata bank_transfer detail
@@ -166,10 +166,10 @@ type ConvStoreDetail struct {
 	Message string `json:"message"`
 }
 
-// GopayDetail: Represent gopay detail
+// GopayDetail : Represent gopay detail
 type GopayDetail struct {
 	EnableCallback bool   `json:"enable_callback"`
-	CallbackUrl    string `json:"callback_url"`
+	CallbackURL    string `json:"callback_url"`
 }
 
 // ChargeReq : Represent Charge request payload
@@ -222,6 +222,7 @@ type IrisCreatePayoutReq struct {
 	Payouts []IrisCreatePayoutDetailReq `json:"payouts"`
 }
 
+// IrisCreatePayoutDetailReq : Represent Create Payout detail payload
 type IrisCreatePayoutDetailReq struct {
 	BeneficiaryName    string `json:"beneficiary_name"`
 	BeneficiaryAccount string `json:"beneficiary_account"`
@@ -231,11 +232,13 @@ type IrisCreatePayoutDetailReq struct {
 	Notes              string `json:"notes"`
 }
 
+// IrisApprovePayoutReq : Represent Approve Payout payload
 type IrisApprovePayoutReq struct {
 	ReferenceNo []string `json:"reference_nos"`
 	OTP         string   `json:"otp"`
 }
 
+// IrisRejectPayoutReq : Represent Reject Payout payload
 type IrisRejectPayoutReq struct {
 	ReferenceNo  []string `json:"reference_nos"`
 	RejectReason string   `json:"reject_reason"`
