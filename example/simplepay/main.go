@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
 	"log"
@@ -21,12 +22,19 @@ func main() {
 	flag.Parse()
 	fmt.Println("Server started on port: ", *addr)
 
-	http.Handle("/", &templateHandler{filename: "core_api_index.html"})
+	http.Handle("/", &templateHandler{
+		filename: "core_api_index.html",
+		dataInitializer: func(t *templateHandler) {
+			t.data = make(map[string]interface{})
+			t.data["ClientKey"] = midclient.ClientKey
+		},
+	})
 	http.Handle("/snap", &templateHandler{
 		filename: "snap_index.html",
 		dataInitializer: func(t *templateHandler) {
 			snapResp, err := snapGateway.GetTokenQuick(generateOrderID(), 200000)
 			t.data = make(map[string]interface{})
+			t.data["ClientKey"] = midclient.ClientKey
 
 			if err != nil {
 				log.Fatal("Error generating snap token: ", err)
@@ -71,7 +79,14 @@ func chargeDirect(w http.ResponseWriter, r *http.Request) {
 		},
 	})
 
-	w.Write([]byte(chargeResp.StatusMessage))
+	js, err := json.Marshal(chargeResp)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(js)
 }
 
 func generateOrderID() string {
