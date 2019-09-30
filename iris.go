@@ -199,3 +199,29 @@ func (gateway *IrisGateway) ValidateBankAccount(bankName string, accountNo strin
 
 	return resp, nil
 }
+
+// CheckBalance : Check Balance (Aggregator) (https://iris-docs.midtrans.com/#check-balance-aggregator)
+func (gateway *IrisGateway) CheckBalance() (IrisBalanceResponse, error) {
+	resp := IrisBalanceResponse{}
+
+	err := gateway.Call("GET", "api/v1/balance", nil, &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error check balance: ", err)
+		return resp, err
+	}
+
+	return resp, nil
+}
+
+// GetPayoutHistory : Returns all the payout details for specific dates (https://iris-docs.midtrans.com/#payout-history)
+func (gateway *IrisGateway) GetPayoutHistory(fromDate string, toDate string) ([]IrisPayoutDetailResponse, error) {
+	resp := []IrisPayoutDetailResponse{}
+
+	err := gateway.Call("GET", fmt.Sprintf("api/v1/payouts?from_date=%s&to_date=%s", fromDate, toDate), nil, &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error get payout history: ", err)
+		return resp, err
+	}
+
+	return resp, nil
+}
