@@ -40,6 +40,27 @@ func (gateway *CoreGateway) Charge(req *ChargeReq) (Response, error) {
 	return resp, nil
 }
 
+// ChargeMap : Perform transaction using ChargeReqWithMap
+func (gateway *CoreGateway) ChargeMap(req *ChargeReqWithMap) (ResponseWithMap, error) {
+	resp := ResponseWithMap{}
+	jsonReq, _ := json.Marshal(req)
+
+	err := gateway.Call("POST", "v2/charge", bytes.NewBuffer(jsonReq), &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error charging: ", err)
+		return resp, err
+	}
+
+	if resp["status_code"] != nil {
+		gateway.Client.Logger.Println("==== Status Code === : ", resp["status_code"])
+		gateway.Client.Logger.Println("==== Message === : ", resp["status_message"])
+	} else {
+		gateway.Client.Logger.Println("==== Error Message === : ", resp["message"])
+	}
+
+	return resp, nil
+}
+
 // PreauthCard : Perform authorized transactions using ChargeReq
 func (gateway *CoreGateway) PreauthCard(req *ChargeReq) (Response, error) {
 	req.CreditCard.Type = "authorize"
