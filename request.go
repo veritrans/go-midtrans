@@ -197,6 +197,9 @@ type ChargeReq struct {
 	CustField3 string        `json:"custom_field3,omitempty"`
 }
 
+// ChargeReqWithMap : Represent Charge request with map payload
+type ChargeReqWithMap map[string]interface{}
+
 // SnapReq : Represent SNAP API request payload
 type SnapReq struct {
 	TransactionDetails TransactionDetails `json:"transaction_details"`
