@@ -51,6 +51,9 @@ type Response struct {
 	Actions           []Action   `json:"actions"`
 }
 
+// ResponseWithMap after calling the API
+type ResponseWithMap map[string]interface{}
+
 // SnapResponse : Response after calling the Snap API
 type SnapResponse struct {
 	StatusCode    string   `json:"status_code"`
