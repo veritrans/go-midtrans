@@ -46,6 +46,7 @@ func main() {
 	})
 	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
 	http.HandleFunc("/chargeDirect", chargeDirect)
+	http.HandleFunc("/chargeWithMap", chargeMap)
 
 	if err := http.ListenAndServe(*addr, nil); err != nil {
 		log.Fatal("Failed starting server: ", err)
@@ -79,14 +80,39 @@ func chargeDirect(w http.ResponseWriter, r *http.Request) {
 		},
 	})
 
-	js, err := json.Marshal(chargeResp)
+	result, err := json.Marshal(chargeResp)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	w.Write(js)
+	w.Write(result)
+}
+
+func chargeMap(w http.ResponseWriter, r *http.Request) {
+	var reqPayload = &midtrans.ChargeReqWithMap{}
+	err := json.NewDecoder(r.Body).Decode(reqPayload)
+	if err != nil {
+		response := make(map[string]interface{})
+		response["status_code"] = 400
+		response["status_message"] = "please fill request payload, refer to https://api-docs.midtrans.com/#credit-card-charge"
+
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(response)
+		return
+	}
+
+	chargeResp, _ := coreGateway.ChargeMap(reqPayload)
+	result, err := json.Marshal(chargeResp)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(result)
 }
 
 func generateOrderID() string {
