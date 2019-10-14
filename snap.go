@@ -23,7 +23,7 @@ func (gateway *SnapGateway) Call(method, path string, body io.Reader, v interfac
 }
 
 // GetTokenQuick : Quickly get token without constructing the body manually
-func (gateway *SnapGateway) GetTokenQuick(orderID string, grossAmount int64) (SnapResponse, error) {
+func (gateway *SnapGateway) GetTokenQuick(orderID string, grossAmount float64) (SnapResponse, error) {
 	return gateway.GetToken(&SnapReq{
 		TransactionDetails: TransactionDetails{
 			OrderID:  orderID,
