@@ -46,6 +46,7 @@ type Response struct {
 	VANumbers         []VANumber `json:"va_numbers"`
 	PaymentCode       string     `json:"payment_code"`
 	Store             string     `json:"store"`
+	MerchantID        string     `json:"merchant_id"`
 	MaskedCard        string     `json:"masked_card"`
 	Currency          string     `json:"currency"`
 	CardType          string     `json:"card_type"`
