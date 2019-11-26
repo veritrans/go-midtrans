@@ -131,3 +131,39 @@ func (gateway *CoreGateway) Status(orderID string) (Response, error) {
 
 	return resp, nil
 }
+
+// Refund : refund order using order ID
+func (gateway *CoreGateway) Refund(orderID string, req RefundReq) (Response, error) {
+	resp := Response{}
+	jsonReq, _ := json.Marshal(req)
+
+	err := gateway.Call("GET", "v2/"+orderID+"/refund", bytes.NewBuffer(jsonReq), &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error approving: ", err)
+		return resp, err
+	}
+
+	if resp.StatusMessage != "" {
+		gateway.Client.Logger.Println(resp.StatusMessage)
+	}
+
+	return resp, nil
+}
+
+// DirectRefund : refund order using order ID
+func (gateway *CoreGateway) DirectRefund(orderID string, req RefundReq) (Response, error) {
+	resp := Response{}
+	jsonReq, _ := json.Marshal(req)
+
+	err := gateway.Call("GET", "v2/"+orderID+"/refund/online/direct", bytes.NewBuffer(jsonReq), &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error approving: ", err)
+		return resp, err
+	}
+
+	if resp.StatusMessage != "" {
+		gateway.Client.Logger.Println(resp.StatusMessage)
+	}
+
+	return resp, nil
+}
