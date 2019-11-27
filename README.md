@@ -10,6 +10,11 @@ Go is a very modern, terse, and combine aspect of dynamic and static typing that
 well suited for web development, among other things. Its small memory footprint is also
 an advantage of itself. Now, Midtrans is available to be used in Go, too.
 
+Installing package from this specific branch
+```
+go get github.com/veritrans/go-midtrans@RCv1.0
+```
+
 ## Usage blueprint
 
 1. There is a type named `Client` (`midtrans.Client`) that should be instantiated through `NewClient` which hold any possible setting to the library.
