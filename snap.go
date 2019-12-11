@@ -3,6 +3,7 @@ package midtrans
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"io"
 	"strings"
 )
@@ -41,6 +42,10 @@ func (gateway *SnapGateway) GetToken(r *SnapReq) (SnapResponse, error) {
 	if err != nil {
 		gateway.Client.Logger.Println("Error getting snap token: ", err)
 		return resp, err
+	}
+
+	if len(resp.ErrorMessages) > 0 {
+		return resp, errors.New(strings.Join(resp.ErrorMessages, ", "))
 	}
 
 	return resp, nil
