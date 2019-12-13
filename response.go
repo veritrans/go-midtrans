@@ -54,6 +54,18 @@ type Response struct {
 	RefundChargebackID int        `json:"refund_chargeback_id"`
 	RefundAmount       string     `json:"refund_amount"`
 	RefundKey          string     `json:"refund_key"`
+	Refunds            []Refund   `json:"refunds"`
+}
+
+// Refund Details
+type Refund struct {
+	RefundChargebackID int    `json:"refund_chargeback_id"`
+	RefundAmount       string `json:"refund_amount"`
+	Reason             string `json:"reason"`
+	RefundKey          string `json:"refund_key"`
+	RefundMethod       string `json:"refund_method"`
+	BankConfirmedAt    string `json:"bank_confirmed_at"`
+	CreatedAt          string `json:"created_at"`
 }
 
 // SnapResponse : Response after calling the Snap API
