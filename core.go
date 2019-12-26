@@ -173,7 +173,7 @@ func (gateway *CoreGateway) Subscribe(req *Subscribe) (Subscribe, error) {
 	resp := Subscribe{}
 	jsonReq, _ := json.Marshal(req)
 
-	err := gateway.Call("POST", "v1/subscription", bytes.NewBuffer(jsonReq), &resp)
+	err := gateway.Call("POST", "v1/subscriptions", bytes.NewBuffer(jsonReq), &resp)
 	if err != nil {
 		gateway.Client.Logger.Println("Error charging: ", err)
 		return resp, err
