@@ -248,24 +248,19 @@ type RefundReq struct {
 	Reason    string `json:"reason"`
 }
 
-// Subscribe : Represent Subscribe object payload (request and response)
-type Subscribe struct {
-	ID          string      `json:"id,omitempty"`
-	Name        string      `json:"name"`
-	Amount      string      `json:"amount"`
-	Currency    string      `json:"currency"`
-	CreatedAt   string      `json:"created_at,omitempty"`
-	Status      string      `json:"status,omitempty"`
-	Token       string      `json:"token"`
-	PaymentType PaymentType `json:"payment_type"`
-	Schedule    Schedule    `json:"schedule"`
+// SubscribeReq : Represent Subscribe object payload (request and response)
+type SubscribeReq struct {
+	Name        string            `json:"name"`
+	Amount      string            `json:"amount"`
+	Currency    string            `json:"currency"`
+	Token       string            `json:"token"`
+	PaymentType PaymentType       `json:"payment_type"`
+	Schedule    ScheduleDetailReq `json:"schedule"`
 }
 
-// Schedule : Represent Schedule object payload
-type Schedule struct {
-	Interval            int    `json:"interval"`
-	IntervalUnit        string `json:"interval_unit"`
-	StartTime           string `json:"start_time,omitempty"`
-	PreviousExecutionAt string `json:"previous_execution_at,omitempty"`
-	NextExecutionAt     string `json:"next_execution_at,omitempty"`
+// ScheduleDetailReq : Represent Schedule object payload
+type ScheduleDetail struct {
+	Interval     int    `json:"interval"`
+	IntervalUnit string `json:"interval_unit"`
+	StartTime    string `json:"start_time,omitempty"`
 }
