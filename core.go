@@ -167,3 +167,21 @@ func (gateway *CoreGateway) DirectRefund(orderID string, req *RefundReq) (Respon
 
 	return resp, nil
 }
+
+// Subscribe : Perform transaction using subscriptions
+func (gateway *CoreGateway) Subscribe(req *Subscribe) (Subscribe, error) {
+	resp := Subscribe{}
+	jsonReq, _ := json.Marshal(req)
+
+	err := gateway.Call("POST", "v1/subscription", bytes.NewBuffer(jsonReq), &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error charging: ", err)
+		return resp, err
+	}
+
+	if resp.Status != "" {
+		gateway.Client.Logger.Println(resp.Status)
+	}
+
+	return resp, nil
+}
