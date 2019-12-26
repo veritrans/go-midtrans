@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	midtrans "github.com/ardityawahyu/go-midtrans"
 	"github.com/cheekybits/is"
+	midtrans "github.com/veritrans/go-midtrans"
 )
 
 var idSubs string
