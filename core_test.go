@@ -2,9 +2,9 @@ package midtrans_test
 
 import (
 	"log"
+	"strconv"
 	"testing"
 	"time"
-	"strconv"
 
 	"github.com/cheekybits/is"
 	midtrans "github.com/veritrans/go-midtrans"
@@ -16,7 +16,7 @@ func TestCoreCharge(t *testing.T) {
 	is := is.New(t)
 	now := time.Now()
 	timestamp := strconv.FormatInt(now.Unix(), 10)
-	orderId1 = "order-id-go-"+timestamp
+	orderId1 = "order-id-go-" + timestamp
 
 	midclient := midtrans.NewClient()
 	midclient.ServerKey = "SB-Mid-server-GwUP_WGbJPXsDzsNEBRs8IYA"
@@ -31,19 +31,19 @@ func TestCoreCharge(t *testing.T) {
 	chargeReq := &midtrans.ChargeReq{
 		PaymentType: midtrans.SourceGopay,
 		TransactionDetails: midtrans.TransactionDetails{
-			OrderID: orderId1,
+			OrderID:  orderId1,
 			GrossAmt: 200000,
 		},
 		Gopay: &midtrans.GopayDetail{
 			EnableCallback: true,
-			CallbackUrl: "https://example.org",
+			CallbackUrl:    "https://example.org",
 		},
 		Items: &[]midtrans.ItemDetail{
 			midtrans.ItemDetail{
-				ID: "ITEM1",
+				ID:    "ITEM1",
 				Price: 200000,
-				Qty: 1,
-				Name: "Some item",
+				Qty:   1,
+				Name:  "Some item",
 			},
 		},
 	}
@@ -85,6 +85,6 @@ func TestCoreStatus(t *testing.T) {
 		log.Println("Success w/ res:")
 		log.Println(statusResp)
 		is.OK(statusResp)
-		is.Equal("pending",statusResp.TransactionStatus)
+		is.Equal("pending", statusResp.TransactionStatus)
 	}
 }
