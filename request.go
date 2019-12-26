@@ -257,7 +257,7 @@ type Subscribe struct {
 	CreatedAt   string      `json:"created_at,omitempty"`
 	Status      string      `json:"status,omitempty"`
 	Token       string      `json:"token"`
-	PaymentType PaymentType `json:"payment type"`
+	PaymentType PaymentType `json:"payment_type"`
 	Schedule    Schedule    `json:"schedule"`
 }
 
