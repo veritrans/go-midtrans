@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/cheekybits/is"
-	midtrans "github.com/veritrans/go-midtrans"
+	midtrans "github.com/veritrans/gos"
 )
 
 var idSubs string
@@ -28,13 +28,13 @@ func TestSubscribeCharge(t *testing.T) {
 		Client: midclient,
 	}
 
-	subs := &midtrans.Subscribe{
+	subs := &midtrans.SubscribeReq{
 		Name:        idSubs,
 		Amount:      "14000",
 		Currency:    "IDR",
 		Token:       "asd",
 		PaymentType: midtrans.SourceCreditCard,
-		Schedule: midtrans.Schedule{
+		Schedule: midtrans.ScheduleDetailReq{
 			Interval:     1,
 			IntervalUnit: "month",
 		},
