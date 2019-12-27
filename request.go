@@ -249,3 +249,10 @@ type IrisRejectPayoutReq struct {
 	ReferenceNo  []string `json:"reference_nos"`
 	RejectReason string   `json:"reject_reason"`
 }
+
+// RefundReq : Represent Refund request payload
+type RefundReq struct {
+	RefundKey string `json:"refund_key"`
+	Amount    int64  `json:"amount"`
+	Reason    string `json:"reason"`
+}

@@ -108,7 +108,7 @@ func (gateway *CoreGateway) Cancel(orderID string) (Response, error) {
 
 	err := gateway.Call("POST", "v2/"+orderID+"/cancel", nil, &resp)
 	if err != nil {
-		gateway.Client.Logger.Println("Error approving: ", err)
+		gateway.Client.Logger.Println("Error while cancel: ", err)
 		return resp, err
 	}
 
@@ -125,7 +125,7 @@ func (gateway *CoreGateway) Expire(orderID string) (Response, error) {
 
 	err := gateway.Call("POST", "v2/"+orderID+"/expire", nil, &resp)
 	if err != nil {
-		gateway.Client.Logger.Println("Error approving: ", err)
+		gateway.Client.Logger.Println("Error while expire: ", err)
 		return resp, err
 	}
 
@@ -142,7 +142,43 @@ func (gateway *CoreGateway) Status(orderID string) (Response, error) {
 
 	err := gateway.Call("GET", "v2/"+orderID+"/status", nil, &resp)
 	if err != nil {
-		gateway.Client.Logger.Println("Error approving: ", err)
+		gateway.Client.Logger.Println("Error while get status: ", err)
+		return resp, err
+	}
+
+	if resp.StatusMessage != "" {
+		gateway.Client.Logger.Println(resp.StatusMessage)
+	}
+
+	return resp, nil
+}
+
+// Refund : refund order using order ID
+func (gateway *CoreGateway) Refund(orderID string, req *RefundReq) (Response, error) {
+	resp := Response{}
+	jsonReq, _ := json.Marshal(req)
+
+	err := gateway.Call("POST", "v2/"+orderID+"/refund", bytes.NewBuffer(jsonReq), &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error while refund: ", err)
+		return resp, err
+	}
+
+	if resp.StatusMessage != "" {
+		gateway.Client.Logger.Println(resp.StatusMessage)
+	}
+
+	return resp, nil
+}
+
+// DirectRefund : refund order using order ID
+func (gateway *CoreGateway) DirectRefund(orderID string, req *RefundReq) (Response, error) {
+	resp := Response{}
+	jsonReq, _ := json.Marshal(req)
+
+	err := gateway.Call("POST", "v2/"+orderID+"/refund/online/direct", bytes.NewBuffer(jsonReq), &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error while direct refund: ", err)
 		return resp, err
 	}
 
