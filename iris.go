@@ -24,7 +24,7 @@ func (gateway *IrisGateway) Call(method, path string, body io.Reader, v interfac
 	return gateway.Client.Call(method, path, body, v)
 }
 
-// Show list of supported banks in IRIS. (https://iris-docs.midtrans.com/#list-banks)
+// GetListBeneficiaryBank : Show list of supported banks in IRIS. (https://iris-docs.midtrans.com/#list-banks)
 func (gateway *IrisGateway) GetListBeneficiaryBank() (IrisBeneficiaryBanksResponse, error) {
 	resp := IrisBeneficiaryBanksResponse{}
 
@@ -37,7 +37,7 @@ func (gateway *IrisGateway) GetListBeneficiaryBank() (IrisBeneficiaryBanksRespon
 	return resp, nil
 }
 
-// Create Beneficiaries (https://iris-docs.midtrans.com/#create-beneficiaries)
+// CreateBeneficiaries : Create Beneficiaries (https://iris-docs.midtrans.com/#create-beneficiaries)
 func (gateway *IrisGateway) CreateBeneficiaries(req *IrisBeneficiaries) (bool, error) {
 	resp := IrisBeneficiariesResponse{}
 	jsonReq, _ := json.Marshal(req)
@@ -56,7 +56,7 @@ func (gateway *IrisGateway) CreateBeneficiaries(req *IrisBeneficiaries) (bool, e
 	return true, nil
 }
 
-// Update Beneficiaries (https://iris-docs.midtrans.com/#update-beneficiaries)
+// UpdateBeneficiaries : Update Beneficiaries (https://iris-docs.midtrans.com/#update-beneficiaries)
 func (gateway *IrisGateway) UpdateBeneficiaries(aliasName string, req *IrisBeneficiaries) (bool, error) {
 	resp := IrisBeneficiariesResponse{}
 	jsonReq, _ := json.Marshal(req)
@@ -75,7 +75,7 @@ func (gateway *IrisGateway) UpdateBeneficiaries(aliasName string, req *IrisBenef
 	return true, nil
 }
 
-// Get List Beneficiaries (https://iris-docs.midtrans.com/#list-beneficiaries)
+// GetListBeneficiaries : Get List Beneficiaries (https://iris-docs.midtrans.com/#list-beneficiaries)
 func (gateway *IrisGateway) GetListBeneficiaries() ([]IrisBeneficiaries, error) {
 	var resp []IrisBeneficiaries
 

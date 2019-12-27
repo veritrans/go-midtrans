@@ -1,6 +1,6 @@
 # Simplepay
 
-An alternative of [Simplepay](https://github.com/veritrans/veritrans-ruby/tree/master/example/rails/simplepay)
+An alternative of [Simplepay](https://github.com/veritrans/go-midtrans/example/simplepay)
 written for Go. It should give an illustration and proof of concept
 for integrating Midtrans PG with Go.
 

@@ -32,7 +32,7 @@ func NewClient() Client {
 		// 1: Errors only
 		// 2: Errors + informational (default)
 		// 3: Errors + informational + debug
-		LogLevel: 2,
+		LogLevel: 3,
 		Logger:   log.New(os.Stderr, "", log.LstdFlags),
 	}
 }
@@ -109,10 +109,23 @@ func (c *Client) ExecuteRequest(req *http.Request, v interface{}) error {
 			return err
 		}
 
-		// we're safe to reflect status_code if response not an array
-		if reflect.ValueOf(v).Elem().Kind() != reflect.Slice {
-			if reflect.ValueOf(v).Elem().FieldByName("StatusCode").IsValid() {
+		// when return unexpected error, midtrans not return `status_message` but `message`, so this to catch it
+		error := make(map[string]string)
+		if res.StatusCode >= 500 {
+			err := json.Unmarshal(resBody, &error)
+			if err != nil {
+				return err
+			}
+		}
+
+		// we're safe to reflect status_code if response not return status code
+		if reflect.ValueOf(v).Elem().Kind() == reflect.Struct {
+			if reflect.ValueOf(v).Elem().FieldByName("StatusCode").Len() == 0 {
 				reflect.ValueOf(v).Elem().FieldByName("StatusCode").SetString(strconv.Itoa(res.StatusCode))
+				// response of snap transaction not return StatusMessage
+				if req.URL.Path != "/snap/v1/transactions" {
+					reflect.ValueOf(v).Elem().FieldByName("StatusMessage").SetString(error["message"])
+				}
 			}
 		}
 	}
