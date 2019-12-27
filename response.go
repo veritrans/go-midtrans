@@ -163,15 +163,16 @@ type IrisBalanceResponse struct {
 }
 
 type SubscribeResponse struct {
-	ID          string                 `json:"id"`
-	CreatedAt   string                 `json:"created_at"`
-	Status      string                 `json:"status"`
-	Name        string                 `json:"name"`
-	Amount      string                 `json:"amount"`
-	Currency    string                 `json:"currency"`
-	Token       string                 `json:"token"`
-	PaymentType PaymentType            `json:"payment_type"`
-	Schedule    ScheduleDetailResponse `json:"schedule"`
+	ID            string                 `json:"id"`
+	CreatedAt     string                 `json:"created_at"`
+	Status        string                 `json:"status"`
+	Name          string                 `json:"name"`
+	Amount        string                 `json:"amount"`
+	Currency      string                 `json:"currency"`
+	Token         string                 `json:"token"`
+	PaymentType   PaymentType            `json:"payment_type"`
+	Schedule      ScheduleDetailResponse `json:"schedule"`
+	StatusMessage string                 `json:"status_message"`
 }
 
 type ScheduleDetailResponse struct {
