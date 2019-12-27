@@ -161,3 +161,23 @@ type IrisBankAccountDetailErrorResponse struct {
 type IrisBalanceResponse struct {
 	Balance string `json:"balance"`
 }
+
+type SubscribeResponse struct {
+	ID          string                 `json:"id"`
+	CreatedAt   string                 `json:"created_at"`
+	Status      string                 `json:"status"`
+	Name        string                 `json:"name"`
+	Amount      string                 `json:"amount"`
+	Currency    string                 `json:"currency"`
+	Token       string                 `json:"token"`
+	PaymentType PaymentType            `json:"payment_type"`
+	Schedule    ScheduleDetailResponse `json:"schedule"`
+}
+
+type ScheduleDetailResponse struct {
+	Interval            int    `json:"interval"`
+	IntervalUnit        string `json:"interval_unit"`
+	StartTime           string `json:"start_time"`
+	PreviousExecutionAt string `json:"previous_execution_at"`
+	NextExecutionAt     string `json:"next_execution_at"`
+}

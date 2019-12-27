@@ -247,3 +247,19 @@ type RefundReq struct {
 	Amount    int64  `json:"amount"`
 	Reason    string `json:"reason"`
 }
+
+// SubscribeReq : Represent Subscribe object payload (request and response)
+type SubscribeReq struct {
+	Name        string            `json:"name"`
+	Amount      string            `json:"amount"`
+	Currency    string            `json:"currency"`
+	Token       string            `json:"token"`
+	PaymentType PaymentType       `json:"payment_type"`
+	Schedule    ScheduleDetailReq `json:"schedule"`
+}
+
+// ScheduleDetailReq : Represent Schedule object payload
+type ScheduleDetailReq struct {
+	Interval     int    `json:"interval"`
+	IntervalUnit string `json:"interval_unit"`
+}
