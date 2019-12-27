@@ -152,3 +152,23 @@ func (gateway *CoreGateway) Status(orderID string) (Response, error) {
 
 	return resp, nil
 }
+
+// StatusMap : get order status using order ID
+func (gateway *CoreGateway) StatusMap(orderID string) (ResponseWithMap, error) {
+	resp := ResponseWithMap{}
+
+	err := gateway.Call("GET", "v2/"+orderID+"/status", nil, &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error approving: ", err)
+		return resp, err
+	}
+
+	if resp["status_code"] != nil {
+		gateway.Client.Logger.Println("==== Status Code === : ", resp["status_code"])
+		gateway.Client.Logger.Println("==== Message === : ", resp["status_message"])
+	} else {
+		gateway.Client.Logger.Println("==== Error Message === : ", resp["message"])
+	}
+
+	return resp, nil
+}

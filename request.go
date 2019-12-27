@@ -131,11 +131,11 @@ type BCAKlikBCADetail struct {
 
 // MandiriClickPayDetail : Represent Mandiri ClickPay detail
 type MandiriClickPayDetail struct {
-	CardNumber string `json:"card_number"`
-	Input1     string `json:"input1"`
-	Input2     string `json:"input2"`
-	Input3     string `json:"input3"`
-	Token      string `json:"token"`
+	TokenID string `json:"token_id"`
+	Input1  string `json:"input1"`
+	Input2  string `json:"input2"`
+	Input3  string `json:"input3"`
+	Token   string `json:"token"`
 }
 
 // CIMBClicksDetail : Represent CIMB Clicks detail
@@ -213,6 +213,9 @@ type SnapReq struct {
 	CustomField2       string             `json:"custom_field2"`
 	CustomField3       string             `json:"custom_field3"`
 }
+
+// SnapReqWithMap : Represent snap request with map payload
+type SnapReqWithMap map[string]interface{}
 
 // CaptureReq : Represent Capture request payload
 type CaptureReq struct {

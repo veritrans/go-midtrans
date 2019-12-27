@@ -45,8 +45,9 @@ func main() {
 		},
 	})
 	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
-	http.HandleFunc("/chargeDirect", chargeDirect)
-	http.HandleFunc("/chargeWithMap", chargeMap)
+	http.HandleFunc("/chargeDirect", chargeDirect) // direct request from web form
+	http.HandleFunc("/chargeWithMap", chargeMap)   // json request
+	http.HandleFunc("/notification", notification) // json request
 
 	if err := http.ListenAndServe(*addr, nil); err != nil {
 		log.Fatal("Failed starting server: ", err)
@@ -55,7 +56,7 @@ func main() {
 
 func setupMidtrans() {
 	midclient = midtrans.NewClient()
-	midclient.ServerKey = "VT-server-7CVlR3AJ8Dpkez3k_TeGJQZU"
+	midclient.ServerKey = "SB-Mid-server-87VSTBv1hIHvTcFUVCmMu0Ni"
 	midclient.ClientKey = "VT-client-IKktHiy3aRYHljsw"
 	midclient.APIEnvType = midtrans.Sandbox
 
@@ -96,7 +97,7 @@ func chargeMap(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		response := make(map[string]interface{})
 		response["status_code"] = 400
-		response["status_message"] = "please fill request payload, refer to https://api-docs.midtrans.com/#credit-card-charge"
+		response["status_message"] = "please fill request payload, refer to https://api-docs.midtrans.com depend on payment method"
 
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusBadRequest)
@@ -105,6 +106,35 @@ func chargeMap(w http.ResponseWriter, r *http.Request) {
 	}
 
 	chargeResp, _ := coreGateway.ChargeMap(reqPayload)
+	result, err := json.Marshal(chargeResp)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(result)
+}
+
+func notification(w http.ResponseWriter, r *http.Request) {
+	var reqPayload = &midtrans.ChargeReqWithMap{}
+	err := json.NewDecoder(r.Body).Decode(reqPayload)
+	if err != nil {
+		response := make(map[string]interface{})
+		response["status_code"] = 400
+		response["status_message"] = "please fill request payload, refer to https://api-docs.midtrans.com/#receiving-notifications"
+
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(response)
+		return
+	}
+
+	encode, _ := json.Marshal(reqPayload)
+	resArray := make(map[string]string)
+	err = json.Unmarshal(encode, &resArray)
+
+	chargeResp, _ := coreGateway.StatusMap(resArray["order_id"])
 	result, err := json.Marshal(chargeResp)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
