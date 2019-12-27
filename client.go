@@ -32,7 +32,7 @@ func NewClient() Client {
 		// 1: Errors only
 		// 2: Errors + informational (default)
 		// 3: Errors + informational + debug
-		LogLevel: 3,
+		LogLevel: 2,
 		Logger:   log.New(os.Stderr, "", log.LstdFlags),
 	}
 }
