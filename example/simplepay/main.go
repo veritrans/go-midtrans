@@ -45,9 +45,9 @@ func main() {
 		},
 	})
 	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
-	http.HandleFunc("/chargeDirect", chargeDirect) // direct request from web form
-	http.HandleFunc("/chargeWithMap", chargeMap)   // json request
-	http.HandleFunc("/notification", notification) // json request
+	http.HandleFunc("/chargeDirect", chargeDirect)   // direct request from web form
+	http.HandleFunc("/chargeWithMap", ChargeWithMap) // json request
+	http.HandleFunc("/notification", notification)   // json request
 
 	if err := http.ListenAndServe(*addr, nil); err != nil {
 		log.Fatal("Failed starting server: ", err)
@@ -91,7 +91,7 @@ func chargeDirect(w http.ResponseWriter, r *http.Request) {
 	w.Write(result)
 }
 
-func chargeMap(w http.ResponseWriter, r *http.Request) {
+func ChargeWithMap(w http.ResponseWriter, r *http.Request) {
 	var reqPayload = &midtrans.ChargeReqWithMap{}
 	err := json.NewDecoder(r.Body).Decode(reqPayload)
 	if err != nil {
@@ -105,7 +105,7 @@ func chargeMap(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	chargeResp, _ := coreGateway.ChargeMap(reqPayload)
+	chargeResp, _ := coreGateway.ChargeWithMap(reqPayload)
 	result, err := json.Marshal(chargeResp)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -134,7 +134,7 @@ func notification(w http.ResponseWriter, r *http.Request) {
 	resArray := make(map[string]string)
 	err = json.Unmarshal(encode, &resArray)
 
-	chargeResp, _ := coreGateway.StatusMap(resArray["order_id"])
+	chargeResp, _ := coreGateway.StatusWithMap(resArray["order_id"])
 	result, err := json.Marshal(chargeResp)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

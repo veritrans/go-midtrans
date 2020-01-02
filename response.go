@@ -169,6 +169,7 @@ type IrisBankAccountDetailErrorResponse struct {
 	Bank    []string `json:"bank"`
 }
 
+// IrisBalanceResponse : Represent balance detail response payload
 type IrisBalanceResponse struct {
 	Balance string `json:"balance"`
 }

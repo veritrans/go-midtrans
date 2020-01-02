@@ -60,7 +60,7 @@ func TestSnapCreateTokenQuickWithMap(t *testing.T) {
 	}
 
 	log.Println("CreateTokenQuickWithMap:")
-	snapTokenResp, err := snapGateway.GetTokenQuickMap("order-id-go-"+timestamp, 200000)
+	snapTokenResp, err := snapGateway.GetTokenQuickWithMap("order-id-go-"+timestamp, 200000)
 	if err != nil {
 		log.Println("Fail w/ err:")
 		log.Fatal(err)
@@ -128,7 +128,7 @@ func TestSnapCreateToken(t *testing.T) {
 		},
 		Gopay: &midtrans.GopayDetail{
 			EnableCallback: true,
-			CallbackURL:    "https://example.com/gopay/finish",
+			CallbackUrl:    "https://example.com/gopay/finish",
 		},
 	}
 

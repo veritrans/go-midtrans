@@ -51,9 +51,9 @@ func (gateway *SnapGateway) GetToken(r *SnapReq) (SnapResponse, error) {
 	return resp, nil
 }
 
-// GetTokenQuickMap : Quickly get token without constructing the body manually
-func (gateway *SnapGateway) GetTokenQuickMap(orderID string, grossAmount int64) (ResponseWithMap, error) {
-	return gateway.GetTokenMap(&SnapReqWithMap{
+// GetTokenQuickWithMap : Quickly get token without constructing the body manually
+func (gateway *SnapGateway) GetTokenQuickWithMap(orderID string, grossAmount int64) (ResponseWithMap, error) {
+	return gateway.GetTokenWithMap(&SnapReqWithMap{
 		"transaction_details": TransactionDetails{
 			OrderID:  orderID,
 			GrossAmt: grossAmount,
@@ -61,8 +61,8 @@ func (gateway *SnapGateway) GetTokenQuickMap(orderID string, grossAmount int64) 
 	})
 }
 
-// GetTokenMap : Get token by consuming SnapReqWithMap
-func (gateway *SnapGateway) GetTokenMap(r *SnapReqWithMap) (ResponseWithMap, error) {
+// GetTokenWithMap : Get token by consuming SnapReqWithMap
+func (gateway *SnapGateway) GetTokenWithMap(r *SnapReqWithMap) (ResponseWithMap, error) {
 	resp := ResponseWithMap{}
 	jsonReq, _ := json.Marshal(r)
 

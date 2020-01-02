@@ -36,7 +36,7 @@ func TestCoreCharge(t *testing.T) {
 		},
 		Gopay: &midtrans.GopayDetail{
 			EnableCallback: true,
-			CallbackURL:    "https://example.org",
+			CallbackUrl:    "https://example.org",
 		},
 		Items: &[]midtrans.ItemDetail{
 			midtrans.ItemDetail{
@@ -62,7 +62,7 @@ func TestCoreCharge(t *testing.T) {
 	}
 }
 
-func TestCoreChargeMap(t *testing.T) {
+func TestCoreChargeWithMap(t *testing.T) {
 	is := is.New(t)
 	now := time.Now()
 	timestamp := strconv.FormatInt(now.Unix(), 10)
@@ -86,7 +86,7 @@ func TestCoreChargeMap(t *testing.T) {
 		},
 		"gopay": &midtrans.GopayDetail{
 			EnableCallback: true,
-			CallbackURL:    "https://example.org",
+			CallbackUrl:    "https://example.org",
 		},
 		"item_details": &[]midtrans.ItemDetail{
 			midtrans.ItemDetail{
@@ -99,7 +99,7 @@ func TestCoreChargeMap(t *testing.T) {
 	}
 
 	log.Println("Charge:")
-	chargeResp, err := coreGateway.ChargeMap(chargeReq)
+	chargeResp, err := coreGateway.ChargeWithMap(chargeReq)
 	if err != nil {
 		log.Println("Fail w/ err:")
 		log.Fatal(err)

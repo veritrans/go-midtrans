@@ -169,7 +169,7 @@ type ConvStoreDetail struct {
 // GopayDetail : Represent gopay detail
 type GopayDetail struct {
 	EnableCallback bool   `json:"enable_callback"`
-	CallbackURL    string `json:"callback_url"`
+	CallbackUrl    string `json:"callback_url"`
 }
 
 // ChargeReq : Represent Charge request payload

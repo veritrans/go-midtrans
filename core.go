@@ -40,8 +40,8 @@ func (gateway *CoreGateway) Charge(req *ChargeReq) (Response, error) {
 	return resp, nil
 }
 
-// ChargeMap : Perform transaction using ChargeReqWithMap
-func (gateway *CoreGateway) ChargeMap(req *ChargeReqWithMap) (ResponseWithMap, error) {
+// ChargeWithMap : Perform transaction using ChargeReqWithMap
+func (gateway *CoreGateway) ChargeWithMap(req *ChargeReqWithMap) (ResponseWithMap, error) {
 	resp := ResponseWithMap{}
 	jsonReq, _ := json.Marshal(req)
 
@@ -189,8 +189,8 @@ func (gateway *CoreGateway) DirectRefund(orderID string, req *RefundReq) (Respon
 	return resp, nil
 }
 
-// StatusMap : get order status using order ID
-func (gateway *CoreGateway) StatusMap(orderID string) (ResponseWithMap, error) {
+// StatusWithMap : get order status using order ID
+func (gateway *CoreGateway) StatusWithMap(orderID string) (ResponseWithMap, error) {
 	resp := ResponseWithMap{}
 
 	err := gateway.Call("GET", "v2/"+orderID+"/status", nil, &resp)
