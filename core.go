@@ -208,3 +208,110 @@ func (gateway *CoreGateway) StatusWithMap(orderID string) (ResponseWithMap, erro
 
 	return resp, nil
 }
+
+// Subscribe : Perform transaction using subscriptions
+func (gateway *CoreGateway) Subscribe(req *SubscribeReq) (SubscribeResponse, error) {
+	resp := SubscribeResponse{}
+	jsonReq, _ := json.Marshal(req)
+
+	err := gateway.Call("POST", "v1/subscriptions", bytes.NewBuffer(jsonReq), &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error while subscribing: ", err)
+		return resp, err
+	}
+
+	if resp.Status != "" {
+		gateway.Client.Logger.Println(resp.Status)
+	}
+
+	if resp.StatusMessage != "" {
+		gateway.Client.Logger.Println(resp.StatusMessage)
+	}
+
+	return resp, nil
+}
+
+// SubscribeDetail : Perform get subscription details
+func (gateway *CoreGateway) SubscribeDetail(subscriptionID string) (SubscribeResponse, error) {
+	resp := SubscribeResponse{}
+
+	err := gateway.Call("GET", "v1/subscriptions/"+subscriptionID, nil, &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error while get subscription details: ", err)
+		return resp, err
+	}
+
+	if resp.Status != "" {
+		gateway.Client.Logger.Println(resp.Status)
+	}
+
+	if resp.StatusMessage != "" {
+		gateway.Client.Logger.Println(resp.StatusMessage)
+	}
+
+	return resp, nil
+}
+
+// SubscribeUpdate : Perform update a subscription
+func (gateway *CoreGateway) SubscribeUpdate(subscriptionID string, req *SubscribeReq) (SubscribeResponse, error) {
+	resp := SubscribeResponse{}
+	jsonReq, _ := json.Marshal(req)
+
+	err := gateway.Call("PATCH", "v1/subscriptions/"+subscriptionID, bytes.NewBuffer(jsonReq), &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error while update subscription: ", err)
+		return resp, err
+	}
+
+	if resp.Status != "" {
+		gateway.Client.Logger.Println(resp.Status)
+	}
+
+	if resp.StatusMessage != "" {
+		gateway.Client.Logger.Println(resp.StatusMessage)
+	}
+
+	return resp, nil
+}
+
+// SubscribeDisable : Perform disable a subscription
+func (gateway *CoreGateway) SubscribeDisable(subscriptionID string) (SubscribeResponse, error) {
+	resp := SubscribeResponse{}
+
+	err := gateway.Call("POST", "v1/subscriptions/"+subscriptionID+"/disable", nil, &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error while disable subscription: ", err)
+		return resp, err
+	}
+
+	if resp.Status != "" {
+		gateway.Client.Logger.Println(resp.Status)
+	}
+
+	if resp.StatusMessage != "" {
+		gateway.Client.Logger.Println(resp.StatusMessage)
+	}
+
+	return resp, nil
+}
+
+// SubscribeEnable : Perform enable a subscription
+func (gateway *CoreGateway) SubscribeEnable(subscriptionID string) (SubscribeResponse, error) {
+	resp := SubscribeResponse{}
+
+	err := gateway.Call("POST", "v1/subscriptions/"+subscriptionID+"/enable", nil, &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error while enable subscription: ", err)
+		return resp, err
+	}
+
+	if resp.Status != "" {
+		gateway.Client.Logger.Println(resp.Status)
+	}
+
+	if resp.StatusMessage != "" {
+		gateway.Client.Logger.Println(resp.StatusMessage)
+	}
+
+	return resp, nil
+}

@@ -114,7 +114,7 @@ func TestSnapCreateToken(t *testing.T) {
 			ShipAddr: custAddress,
 		},
 		Items: &[]midtrans.ItemDetail{
-			midtrans.ItemDetail{
+			{
 				ID:    "ITEM1",
 				Price: 200000,
 				Qty:   1,

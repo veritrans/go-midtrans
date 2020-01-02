@@ -39,7 +39,7 @@ func TestCoreCharge(t *testing.T) {
 			CallbackUrl:    "https://example.org",
 		},
 		Items: &[]midtrans.ItemDetail{
-			midtrans.ItemDetail{
+			{
 				ID:    "ITEM1",
 				Price: 200000,
 				Qty:   1,
