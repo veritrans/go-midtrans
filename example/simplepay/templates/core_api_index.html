@@ -2,10 +2,13 @@
 <html>
     <head>
         <title>Simplepay - Core API</title>
-        <script src="https://api.sandbox.midtrans.com/v2/assets/js/midtrans.min.js" type="text/javascript"></script>
+        <script id="midtrans-script" type="text/javascript" src="https://api.midtrans.com/v2/assets/js/midtrans-new-3ds.min.js" data-environment="sandbox" data-client-key="{{.ClientKey}}"></script>
         <script src="https://code.jquery.com/jquery-2.2.4.min.js" type="text/javascript"></script>
         <script src="/assets/ccfield.js"></script>
         <link href="/assets/common.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/featherlight/1.7.12/featherlight.min.css">
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/featherlight/1.7.12/featherlight.min.js"></script>
+        
     </head>
     <body>
         <div class='cart'>
@@ -23,7 +26,7 @@
 
                     <div class='row items'>
                         <span>Card number</span>
-                        <span class="input-span"><input type='text' id='card-number' value="4011111111111112"/></span>
+                        <span class="input-span"><input type='text' id='card-number' value="4617 0069 5974 6656"/></span>
                     </div>
 
                     <div class='row items'>
@@ -41,6 +44,11 @@
                         <span class='input-span'><input type='text' id='card-expyear' value="2020"/></span>
                     </div>
 
+                    <div class='row items'>
+                        <span>3D Secure</span>
+                        <span class='input-span'><input type='checkbox' name='secure' value="true" checked/></span>
+                    </div>
+
                     <input type="hidden" id="card-token" name="card-token"/>
 
                     <div class='row checkout'>
@@ -53,37 +61,73 @@
     </body>
 
     <script type='text/javascript'>
-        Veritrans.url = "https://api.sandbox.midtrans.com/v2/token";
-        Veritrans.client_key = "VT-client-IKktHiy3aRYHljsw";
-
         $(document).ready(function() {
-            $("#card-number").makeCreditCardField();
+            var card = {
+                "card_number": $("#card-number").val(),
+                "card_exp_month": $("#card-expmo").val(),
+                "card_exp_year": $("#card-expyear").val(),
+                "card_cvv": $("#card-cvv").val(),
+                "secure": $('[name=secure]')[0].checked,
+                "gross_amount": 200000
+            };
 
-            function createTokenData() {
-                return {
-                    card_number: $("#card-number").val(),
-                    card_cvv: $("#card-cvv").val(),
-                    card_exp_month: $("#card-expmo").val(),
-                    card_exp_year: $("#card-expyear").val(),
-                    gross_amount: 200000,
-                    // don't use 3DS
-                    secure: false
-                };
-            }
+            // callback functions
+            var callback = {
+                onSuccess: function(response){
+                    // Success to get card token_id, implement as you wish here
+                    console.log('Success to get card token_id, response:', response);
+                    MidtransNew3ds.authenticate(response.redirect_url, options);
+                },
+                onFailure: function(response){
+                    // Fail to get card token_id, implement as you wish here
+                    console.log('Fail to get card token_id, response:', response);
+                }
+            };
+
+            var options = {
+                performAuthentication: function(redirect_url){
+                    openDialog(redirect_url);
+                },
+                onSuccess: function(response){
+                    closeDialog();
+                    console.log('sukses');
+                    console.log('response:',response);
+                    console.log("SUBMIT");
+                    $("#card-token").val(response.token_id);
+                    $("#card-form").submit();
+                },
+                onFailure: function(response){
+                    closeDialog();
+                    console.log('gagal');
+                    console.log('response:',response);
+                    alert(response.status_message);
+                },
+                onPending: function(response){
+                    closeDialog();
+                    console.log('pending');
+                    console.log('response:',response);
+                }
+            };
 
             $(".checkout-button").on("click", function() {
-                var form = $("#card-form");
-                Veritrans.token(createTokenData, function(data) {
-                    console.log("Token data: ", data);
-                    if (data.token_id) {
-                        $("#card-token").val(data.token_id);
-                        console.log(data);
-                        form.submit();
-                    } else {
-                        alert("There is an error when getting token")
-                    }
-                });
+                MidtransNew3ds.getCardToken(card, callback);
             })
+
+            function openDialog(url) {
+                $.featherlight({
+                iframe: url, 
+                iframeMaxWidth: '80%', 
+                iframeWidth: 700, 
+                iframeHeight: 500,
+                closeOnClick: false,
+                closeOnEsc: false,
+                closeIcon:''
+                });
+            }
+
+            function closeDialog() {
+                $.featherlight.close();
+            }
         });
     </script>
 </html>

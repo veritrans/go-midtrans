@@ -62,6 +62,55 @@ func TestCoreCharge(t *testing.T) {
 	}
 }
 
+func TestCoreChargeWithMap(t *testing.T) {
+	is := is.New(t)
+	now := time.Now()
+	timestamp := strconv.FormatInt(now.Unix(), 10)
+	orderId1 = "order-id-go-" + timestamp
+
+	midclient := midtrans.NewClient()
+	midclient.ServerKey = "SB-Mid-server-GwUP_WGbJPXsDzsNEBRs8IYA"
+	midclient.ClientKey = "SB-Mid-client-61XuGAwQ8Bj8LxSS"
+	midclient.APIEnvType = midtrans.Sandbox
+	midclient.LogLevel = 3
+
+	coreGateway := midtrans.CoreGateway{
+		Client: midclient,
+	}
+
+	chargeReq := &midtrans.ChargeReqWithMap{
+		"payment_type": midtrans.SourceGopay,
+		"transaction_details": midtrans.TransactionDetails{
+			OrderID:  orderId1,
+			GrossAmt: 200000,
+		},
+		"gopay": &midtrans.GopayDetail{
+			EnableCallback: true,
+			CallbackUrl:    "https://example.org",
+		},
+		"item_details": &[]midtrans.ItemDetail{
+			midtrans.ItemDetail{
+				ID:    "ITEM1",
+				Price: 200000,
+				Qty:   1,
+				Name:  "Map Interface",
+			},
+		},
+	}
+
+	log.Println("Charge:")
+	chargeResp, err := coreGateway.ChargeWithMap(chargeReq)
+	if err != nil {
+		log.Println("Fail w/ err:")
+		log.Fatal(err)
+		log.Println(err)
+	} else {
+		log.Println("Success w/ res:")
+		log.Println(chargeResp)
+		is.OK(chargeResp["actions"])
+	}
+}
+
 func TestCoreStatus(t *testing.T) {
 	is := is.New(t)
 

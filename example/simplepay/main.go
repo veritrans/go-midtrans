@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
 	"log"
@@ -21,12 +22,19 @@ func main() {
 	flag.Parse()
 	fmt.Println("Server started on port: ", *addr)
 
-	http.Handle("/", &templateHandler{filename: "core_api_index.html"})
+	http.Handle("/", &templateHandler{
+		filename: "core_api_index.html",
+		dataInitializer: func(t *templateHandler) {
+			t.data = make(map[string]interface{})
+			t.data["ClientKey"] = midclient.ClientKey
+		},
+	})
 	http.Handle("/snap", &templateHandler{
 		filename: "snap_index.html",
 		dataInitializer: func(t *templateHandler) {
 			snapResp, err := snapGateway.GetTokenQuick(generateOrderID(), 200000)
 			t.data = make(map[string]interface{})
+			t.data["ClientKey"] = midclient.ClientKey
 
 			if err != nil {
 				log.Fatal("Error generating snap token: ", err)
@@ -37,7 +45,9 @@ func main() {
 		},
 	})
 	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
-	http.HandleFunc("/chargeDirect", chargeDirect)
+	http.HandleFunc("/chargeDirect", chargeDirect)   // direct request from web form
+	http.HandleFunc("/chargeWithMap", ChargeWithMap) // json request
+	http.HandleFunc("/notification", notification)   // json request
 
 	if err := http.ListenAndServe(*addr, nil); err != nil {
 		log.Fatal("Failed starting server: ", err)
@@ -46,8 +56,8 @@ func main() {
 
 func setupMidtrans() {
 	midclient = midtrans.NewClient()
-	midclient.ServerKey = "VT-server-7CVlR3AJ8Dpkez3k_TeGJQZU"
-	midclient.ClientKey = "VT-client-IKktHiy3aRYHljsw"
+	midclient.ServerKey = "SB-Mid-server-87VSTBv1hIHvTcFUVCmMu0Ni"
+	midclient.ClientKey = "SB-Mid-client-yrY4WjUNOnhOyIIH"
 	midclient.APIEnvType = midtrans.Sandbox
 
 	coreGateway = midtrans.CoreGateway{
@@ -71,7 +81,68 @@ func chargeDirect(w http.ResponseWriter, r *http.Request) {
 		},
 	})
 
-	w.Write([]byte(chargeResp.StatusMessage))
+	result, err := json.Marshal(chargeResp)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(result)
+}
+
+func ChargeWithMap(w http.ResponseWriter, r *http.Request) {
+	var reqPayload = &midtrans.ChargeReqWithMap{}
+	err := json.NewDecoder(r.Body).Decode(reqPayload)
+	if err != nil {
+		response := make(map[string]interface{})
+		response["status_code"] = 400
+		response["status_message"] = "please fill request payload, refer to https://api-docs.midtrans.com depend on payment method"
+
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(response)
+		return
+	}
+
+	chargeResp, _ := coreGateway.ChargeWithMap(reqPayload)
+	result, err := json.Marshal(chargeResp)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(result)
+}
+
+func notification(w http.ResponseWriter, r *http.Request) {
+	var reqPayload = &midtrans.ChargeReqWithMap{}
+	err := json.NewDecoder(r.Body).Decode(reqPayload)
+	if err != nil {
+		response := make(map[string]interface{})
+		response["status_code"] = 400
+		response["status_message"] = "please fill request payload, refer to https://api-docs.midtrans.com/#receiving-notifications"
+
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(response)
+		return
+	}
+
+	encode, _ := json.Marshal(reqPayload)
+	resArray := make(map[string]string)
+	err = json.Unmarshal(encode, &resArray)
+
+	chargeResp, _ := coreGateway.StatusWithMap(resArray["order_id"])
+	result, err := json.Marshal(chargeResp)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(result)
 }
 
 func generateOrderID() string {

@@ -40,6 +40,27 @@ func (gateway *CoreGateway) Charge(req *ChargeReq) (Response, error) {
 	return resp, nil
 }
 
+// ChargeWithMap : Perform transaction using ChargeReqWithMap
+func (gateway *CoreGateway) ChargeWithMap(req *ChargeReqWithMap) (ResponseWithMap, error) {
+	resp := ResponseWithMap{}
+	jsonReq, _ := json.Marshal(req)
+
+	err := gateway.Call("POST", "v2/charge", bytes.NewBuffer(jsonReq), &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error charging: ", err)
+		return resp, err
+	}
+
+	if resp["status_code"] != nil {
+		gateway.Client.Logger.Println("==== Status Code === : ", resp["status_code"])
+		gateway.Client.Logger.Println("==== Message === : ", resp["status_message"])
+	} else {
+		gateway.Client.Logger.Println("==== Error Message === : ", resp["message"])
+	}
+
+	return resp, nil
+}
+
 // PreauthCard : Perform authorized transactions using ChargeReq
 func (gateway *CoreGateway) PreauthCard(req *ChargeReq) (Response, error) {
 	req.CreditCard.Type = "authorize"
@@ -163,6 +184,26 @@ func (gateway *CoreGateway) DirectRefund(orderID string, req *RefundReq) (Respon
 
 	if resp.StatusMessage != "" {
 		gateway.Client.Logger.Println(resp.StatusMessage)
+	}
+
+	return resp, nil
+}
+
+// StatusWithMap : get order status using order ID
+func (gateway *CoreGateway) StatusWithMap(orderID string) (ResponseWithMap, error) {
+	resp := ResponseWithMap{}
+
+	err := gateway.Call("GET", "v2/"+orderID+"/status", nil, &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error approving: ", err)
+		return resp, err
+	}
+
+	if resp["status_code"] != nil {
+		gateway.Client.Logger.Println("==== Status Code === : ", resp["status_code"])
+		gateway.Client.Logger.Println("==== Message === : ", resp["status_message"])
+	} else {
+		gateway.Client.Logger.Println("==== Error Message === : ", resp["message"])
 	}
 
 	return resp, nil

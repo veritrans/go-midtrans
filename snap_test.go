@@ -42,6 +42,38 @@ func TestSnapCreateTokenQuick(t *testing.T) {
 	}
 }
 
+func TestSnapCreateTokenQuickWithMap(t *testing.T) {
+	// t.Skip("Temprorary Skipping")
+	is := is.New(t)
+	now := time.Now()
+	timestamp := strconv.FormatInt(now.Unix(), 10)
+
+	midclient := midtrans.NewClient()
+	midclient.ServerKey = "SB-Mid-server-GwUP_WGbJPXsDzsNEBRs8IYA"
+	midclient.ClientKey = "SB-Mid-client-61XuGAwQ8Bj8LxSS"
+	midclient.APIEnvType = midtrans.Sandbox
+	midclient.LogLevel = 3
+
+	var snapGateway midtrans.SnapGateway
+	snapGateway = midtrans.SnapGateway{
+		Client: midclient,
+	}
+
+	log.Println("CreateTokenQuickWithMap:")
+	snapTokenResp, err := snapGateway.GetTokenQuickWithMap("order-id-go-"+timestamp, 200000)
+	if err != nil {
+		log.Println("Fail w/ err:")
+		log.Fatal(err)
+	} else {
+		log.Println("Success w/ token:")
+		log.Println(snapTokenResp)
+
+		is.OK(snapTokenResp)
+		is.OK(snapTokenResp["token"])
+		is.OK(snapTokenResp["redirect_url"])
+	}
+}
+
 func TestSnapCreateToken(t *testing.T) {
 	is := is.New(t)
 	now := time.Now()
