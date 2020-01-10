@@ -44,9 +44,9 @@ type TransactionDetails struct {
 
 // ExpiryDetail : Represent SNAP expiry details
 type ExpiryDetail struct {
-	StartTime   string `json:"start_time,omitempty"`
-	Unit        string `json:"unit"`
-	Duration    int64  `json:"duration"`
+	StartTime string `json:"start_time,omitempty"`
+	Unit      string `json:"unit"`
+	Duration  int64  `json:"duration"`
 }
 
 // InstallmentTermsDetail : Represent installment available banks
@@ -77,9 +77,9 @@ type CreditCardDetail struct {
 	InstallmentTerm int8               `json:"installment_term,omitempty"`
 	Type            string             `json:"type,omitempty"`
 	// indicate if generated token should be saved for next charge
-	SaveTokenID          bool          `json:"save_token_id,omitempty"`
-	SavedTokenIDExpireAt string        `json:"saved_token_id_expired_at,omitempty"`
-	Authentication bool                `json:"authentication,omitempty"`
+	SaveTokenID          bool   `json:"save_token_id,omitempty"`
+	SavedTokenIDExpireAt string `json:"saved_token_id_expired_at,omitempty"`
+	Authentication       bool   `json:"authentication,omitempty"`
 }
 
 // PermataBankTransferDetail : Represent Permata bank_transfer detail
@@ -150,11 +150,11 @@ type BCAKlikBCADetail struct {
 
 // MandiriClickPayDetail : Represent Mandiri ClickPay detail
 type MandiriClickPayDetail struct {
-	CardNumber string `json:"card_number"`
-	Input1     string `json:"input1"`
-	Input2     string `json:"input2"`
-	Input3     string `json:"input3"`
-	Token      string `json:"token"`
+	TokenID string `json:"token_id"`
+	Input1  string `json:"input1"`
+	Input2  string `json:"input2"`
+	Input3  string `json:"input3"`
+	Token   string `json:"token"`
 }
 
 // CIMBClicksDetail : Represent CIMB Clicks detail
@@ -185,7 +185,7 @@ type ConvStoreDetail struct {
 	Message string `json:"message"`
 }
 
-// GopayDetail: Represent gopay detail
+// GopayDetail : Represent gopay detail
 type GopayDetail struct {
 	EnableCallback bool   `json:"enable_callback"`
 	CallbackUrl    string `json:"callback_url"`
@@ -216,6 +216,9 @@ type ChargeReq struct {
 	CustField3 string        `json:"custom_field3,omitempty"`
 }
 
+// ChargeReqWithMap : Represent Charge request with map payload
+type ChargeReqWithMap map[string]interface{}
+
 // SnapReq : Represent SNAP API request payload
 type SnapReq struct {
 	TransactionDetails TransactionDetails `json:"transaction_details"`
@@ -230,8 +233,61 @@ type SnapReq struct {
 	CustomField3       string             `json:"custom_field3"`
 }
 
+// SnapReqWithMap : Represent snap request with map payload
+type SnapReqWithMap map[string]interface{}
+
 // CaptureReq : Represent Capture request payload
 type CaptureReq struct {
 	TransactionID string  `json:"transaction_id"`
 	GrossAmt      float64 `json:"gross_amount"`
+}
+
+// IrisCreatePayoutReq : Represent Create Payout request payload
+type IrisCreatePayoutReq struct {
+	Payouts []IrisCreatePayoutDetailReq `json:"payouts"`
+}
+
+// IrisCreatePayoutDetailReq : Represent Create Payout detail payload
+type IrisCreatePayoutDetailReq struct {
+	BeneficiaryName    string `json:"beneficiary_name"`
+	BeneficiaryAccount string `json:"beneficiary_account"`
+	BeneficiaryBank    string `json:"beneficiary_bank"`
+	BeneficiaryEmail   string `json:"beneficiary_email"`
+	Amount             string `json:"amount"`
+	Notes              string `json:"notes"`
+}
+
+// IrisApprovePayoutReq : Represent Approve Payout payload
+type IrisApprovePayoutReq struct {
+	ReferenceNo []string `json:"reference_nos"`
+	OTP         string   `json:"otp"`
+}
+
+// IrisRejectPayoutReq : Represent Reject Payout payload
+type IrisRejectPayoutReq struct {
+	ReferenceNo  []string `json:"reference_nos"`
+	RejectReason string   `json:"reject_reason"`
+}
+
+// RefundReq : Represent Refund request payload
+type RefundReq struct {
+	RefundKey string `json:"refund_key"`
+	Amount    int64  `json:"amount"`
+	Reason    string `json:"reason"`
+}
+
+// SubscribeReq : Represent Subscribe object payload (request and response)
+type SubscribeReq struct {
+	Name        string            `json:"name"`
+	Amount      string            `json:"amount"`
+	Currency    string            `json:"currency"`
+	Token       string            `json:"token"`
+	PaymentType PaymentType       `json:"payment_type"`
+	Schedule    ScheduleDetailReq `json:"schedule"`
+}
+
+// ScheduleDetailReq : Represent Schedule object payload
+type ScheduleDetailReq struct {
+	Interval     int    `json:"interval"`
+	IntervalUnit string `json:"interval_unit"`
 }

@@ -40,6 +40,27 @@ func (gateway *CoreGateway) Charge(req *ChargeReq) (Response, error) {
 	return resp, nil
 }
 
+// ChargeWithMap : Perform transaction using ChargeReqWithMap
+func (gateway *CoreGateway) ChargeWithMap(req *ChargeReqWithMap) (ResponseWithMap, error) {
+	resp := ResponseWithMap{}
+	jsonReq, _ := json.Marshal(req)
+
+	err := gateway.Call("POST", "v2/charge", bytes.NewBuffer(jsonReq), &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error charging: ", err)
+		return resp, err
+	}
+
+	if resp["status_code"] != nil {
+		gateway.Client.Logger.Println("==== Status Code === : ", resp["status_code"])
+		gateway.Client.Logger.Println("==== Message === : ", resp["status_message"])
+	} else {
+		gateway.Client.Logger.Println("==== Error Message === : ", resp["message"])
+	}
+
+	return resp, nil
+}
+
 // PreauthCard : Perform authorized transactions using ChargeReq
 func (gateway *CoreGateway) PreauthCard(req *ChargeReq) (Response, error) {
 	req.CreditCard.Type = "authorize"
@@ -87,7 +108,7 @@ func (gateway *CoreGateway) Cancel(orderID string) (Response, error) {
 
 	err := gateway.Call("POST", "v2/"+orderID+"/cancel", nil, &resp)
 	if err != nil {
-		gateway.Client.Logger.Println("Error approving: ", err)
+		gateway.Client.Logger.Println("Error while cancel: ", err)
 		return resp, err
 	}
 
@@ -104,7 +125,7 @@ func (gateway *CoreGateway) Expire(orderID string) (Response, error) {
 
 	err := gateway.Call("POST", "v2/"+orderID+"/expire", nil, &resp)
 	if err != nil {
-		gateway.Client.Logger.Println("Error approving: ", err)
+		gateway.Client.Logger.Println("Error while expire: ", err)
 		return resp, err
 	}
 
@@ -121,8 +142,171 @@ func (gateway *CoreGateway) Status(orderID string) (Response, error) {
 
 	err := gateway.Call("GET", "v2/"+orderID+"/status", nil, &resp)
 	if err != nil {
+		gateway.Client.Logger.Println("Error while get status: ", err)
+		return resp, err
+	}
+
+	if resp.StatusMessage != "" {
+		gateway.Client.Logger.Println(resp.StatusMessage)
+	}
+
+	return resp, nil
+}
+
+// Refund : refund order using order ID
+func (gateway *CoreGateway) Refund(orderID string, req *RefundReq) (Response, error) {
+	resp := Response{}
+	jsonReq, _ := json.Marshal(req)
+
+	err := gateway.Call("POST", "v2/"+orderID+"/refund", bytes.NewBuffer(jsonReq), &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error while refund: ", err)
+		return resp, err
+	}
+
+	if resp.StatusMessage != "" {
+		gateway.Client.Logger.Println(resp.StatusMessage)
+	}
+
+	return resp, nil
+}
+
+// DirectRefund : refund order using order ID
+func (gateway *CoreGateway) DirectRefund(orderID string, req *RefundReq) (Response, error) {
+	resp := Response{}
+	jsonReq, _ := json.Marshal(req)
+
+	err := gateway.Call("POST", "v2/"+orderID+"/refund/online/direct", bytes.NewBuffer(jsonReq), &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error while direct refund: ", err)
+		return resp, err
+	}
+
+	if resp.StatusMessage != "" {
+		gateway.Client.Logger.Println(resp.StatusMessage)
+	}
+
+	return resp, nil
+}
+
+// StatusWithMap : get order status using order ID
+func (gateway *CoreGateway) StatusWithMap(orderID string) (ResponseWithMap, error) {
+	resp := ResponseWithMap{}
+
+	err := gateway.Call("GET", "v2/"+orderID+"/status", nil, &resp)
+	if err != nil {
 		gateway.Client.Logger.Println("Error approving: ", err)
 		return resp, err
+	}
+
+	if resp["status_code"] != nil {
+		gateway.Client.Logger.Println("==== Status Code === : ", resp["status_code"])
+		gateway.Client.Logger.Println("==== Message === : ", resp["status_message"])
+	} else {
+		gateway.Client.Logger.Println("==== Error Message === : ", resp["message"])
+	}
+
+	return resp, nil
+}
+
+// Subscribe : Perform transaction using subscriptions
+func (gateway *CoreGateway) Subscribe(req *SubscribeReq) (SubscribeResponse, error) {
+	resp := SubscribeResponse{}
+	jsonReq, _ := json.Marshal(req)
+
+	err := gateway.Call("POST", "v1/subscriptions", bytes.NewBuffer(jsonReq), &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error while subscribing: ", err)
+		return resp, err
+	}
+
+	if resp.Status != "" {
+		gateway.Client.Logger.Println(resp.Status)
+	}
+
+	if resp.StatusMessage != "" {
+		gateway.Client.Logger.Println(resp.StatusMessage)
+	}
+
+	return resp, nil
+}
+
+// SubscribeDetail : Perform get subscription details
+func (gateway *CoreGateway) SubscribeDetail(subscriptionID string) (SubscribeResponse, error) {
+	resp := SubscribeResponse{}
+
+	err := gateway.Call("GET", "v1/subscriptions/"+subscriptionID, nil, &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error while get subscription details: ", err)
+		return resp, err
+	}
+
+	if resp.Status != "" {
+		gateway.Client.Logger.Println(resp.Status)
+	}
+
+	if resp.StatusMessage != "" {
+		gateway.Client.Logger.Println(resp.StatusMessage)
+	}
+
+	return resp, nil
+}
+
+// SubscribeUpdate : Perform update a subscription
+func (gateway *CoreGateway) SubscribeUpdate(subscriptionID string, req *SubscribeReq) (SubscribeResponse, error) {
+	resp := SubscribeResponse{}
+	jsonReq, _ := json.Marshal(req)
+
+	err := gateway.Call("PATCH", "v1/subscriptions/"+subscriptionID, bytes.NewBuffer(jsonReq), &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error while update subscription: ", err)
+		return resp, err
+	}
+
+	if resp.Status != "" {
+		gateway.Client.Logger.Println(resp.Status)
+	}
+
+	if resp.StatusMessage != "" {
+		gateway.Client.Logger.Println(resp.StatusMessage)
+	}
+
+	return resp, nil
+}
+
+// SubscribeDisable : Perform disable a subscription
+func (gateway *CoreGateway) SubscribeDisable(subscriptionID string) (SubscribeResponse, error) {
+	resp := SubscribeResponse{}
+
+	err := gateway.Call("POST", "v1/subscriptions/"+subscriptionID+"/disable", nil, &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error while disable subscription: ", err)
+		return resp, err
+	}
+
+	if resp.Status != "" {
+		gateway.Client.Logger.Println(resp.Status)
+	}
+
+	if resp.StatusMessage != "" {
+		gateway.Client.Logger.Println(resp.StatusMessage)
+	}
+
+	return resp, nil
+}
+
+// SubscribeEnable : Perform enable a subscription
+func (gateway *CoreGateway) SubscribeEnable(subscriptionID string) (SubscribeResponse, error) {
+	resp := SubscribeResponse{}
+
+	err := gateway.Call("POST", "v1/subscriptions/"+subscriptionID+"/enable", nil, &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error while enable subscription: ", err)
+		return resp, err
+	}
+
+	if resp.Status != "" {
+		gateway.Client.Logger.Println(resp.Status)
 	}
 
 	if resp.StatusMessage != "" {
