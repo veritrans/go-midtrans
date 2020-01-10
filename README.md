@@ -13,7 +13,7 @@ an advantage of itself. Now, Midtrans is available to be used in Go, too.
 ## Usage blueprint
 
 1. There is a type named `Client` (`midtrans.Client`) that should be instantiated through `NewClient` which hold any possible setting to the library.
-2. There is a gateway classes which you will be using depending on whether you used Core, SNAP, or VT-WEB. The gateway type need a Client instance.
+2. There is a gateway classes which you will be using depending on whether you used Core, SNAP, SNAP-Redirect. The gateway type need a Client instance.
 3. Any activity (charge, approve, etc) is done in the gateway level.
 
 ## Example
@@ -53,6 +53,29 @@ Please proceed there for more detail on how to run the example.
     }
 
     resp, _ := coreGateway.Charge(chargeReq)
+```
+
+### How Core API does charge with map type
+please refer to file `main.go` in folder `example/simplepay`
+```go
+func ChargeWithMap(w http.ResponseWriter, r *http.Request) {
+	var reqPayload = &midtrans.ChargeReqWithMap{}
+	err := json.NewDecoder(r.Body).Decode(reqPayload)
+	if err != nil {
+		// do something
+		return
+	}
+	
+	chargeResp, _ := coreGateway.ChargeWithMap(reqPayload)
+	result, err := json.Marshal(chargeResp)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(result)
+}
 ```
 
 ### Snap Gateway
@@ -140,6 +163,36 @@ Alternativelly, more complete Snap parameter:
 
     log.Println("GetToken:")
     snapTokenResp, err := snapGateway.GetToken(snapReq)
+```
+
+### Handle HTTP Notification
+Create separated web endpoint (notification url) to receive HTTP POST notification callback/webhook. 
+HTTP notification will be sent whenever transaction status is changed.
+Example also available in `main.go` in folder `example/simplepay` 
+
+```go
+func notification(w http.ResponseWriter, r *http.Request) {
+	var reqPayload = &midtrans.ChargeReqWithMap{}
+	err := json.NewDecoder(r.Body).Decode(reqPayload)
+	if err != nil {
+		// do something
+		return
+	}
+
+	encode, _ := json.Marshal(reqPayload)
+	resArray := make(map[string]string)
+	err = json.Unmarshal(encode, &resArray)
+
+	chargeResp, _ := coreGateway.StatusWithMap(resArray["order_id"])
+	result, err := json.Marshal(chargeResp)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(result)
+}
 ```
 
 ### Iris Gateway
