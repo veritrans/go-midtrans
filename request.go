@@ -63,8 +63,8 @@ type InstallmentTermsDetail struct {
 
 // InstallmentDetail : Represent installment detaul
 type InstallmentDetail struct {
-	Required bool                      `json:"required"`
-	Terms    *[]InstallmentTermsDetail `json:"terms"`
+	Required bool                    `json:"required"`
+	Terms    *InstallmentTermsDetail `json:"terms"`
 }
 
 // CreditCardDetail : Represent credit card detail
