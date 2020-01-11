@@ -61,7 +61,7 @@ type InstallmentTermsDetail struct {
 	Offline []int8 `json:"offline,omitempty"`
 }
 
-// InstallmentDetail : Represent installment detaul
+// InstallmentDetail : Represent installment detail
 type InstallmentDetail struct {
 	Required bool                    `json:"required"`
 	Terms    *InstallmentTermsDetail `json:"terms"`
