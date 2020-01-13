@@ -49,7 +49,8 @@ type ExpiryDetail struct {
 	Duration  int64  `json:"duration"`
 }
 
-type InstallmentTermsDetail {
+// InstallmentTermsDetail : Represent installment available banks
+type InstallmentTermsDetail struct {
 	Bni     []int8 `json:"bni,omitempty"`
 	Mandiri []int8 `json:"mandiri,omitempty"`
 	Cimb    []int8 `json:"cimb,omitempty"`
@@ -60,9 +61,10 @@ type InstallmentTermsDetail {
 	Offline []int8 `json:"offline,omitempty"`
 }
 
+// InstallmentDetail : Represent installment detail
 type InstallmentDetail struct {
-	Required bool                      `json:"required"`
-	Terms    *[]InstallmentTermsDetail `json:"terms"`
+	Required bool                    `json:"required"`
+	Terms    *InstallmentTermsDetail `json:"terms"`
 }
 
 // CreditCardDetail : Represent credit card detail
@@ -75,9 +77,9 @@ type CreditCardDetail struct {
 	InstallmentTerm int8               `json:"installment_term,omitempty"`
 	Type            string             `json:"type,omitempty"`
 	// indicate if generated token should be saved for next charge
-	SaveTokenID          bool          `json:"save_token_id,omitempty"`
-	SavedTokenIDExpireAt string        `json:"saved_token_id_expired_at,omitempty"`
-	Authentication bool                `json:"authentication,omitempty"`
+	SaveTokenID          bool   `json:"save_token_id,omitempty"`
+	SavedTokenIDExpireAt string `json:"saved_token_id_expired_at,omitempty"`
+	Authentication       bool   `json:"authentication,omitempty"`
 }
 
 // PermataBankTransferDetail : Represent Permata bank_transfer detail
