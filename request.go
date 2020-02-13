@@ -210,10 +210,11 @@ type ChargeReq struct {
 	ConvStore                     *ConvStoreDetail               `json:"cstore,omitempty"`
 	Gopay                         *GopayDetail                   `json:"gopay,omitempty"`
 
-	Items      *[]ItemDetail `json:"item_details,omitempty"`
-	CustField1 string        `json:"custom_field1,omitempty"`
-	CustField2 string        `json:"custom_field2,omitempty"`
-	CustField3 string        `json:"custom_field3,omitempty"`
+	Items        *[]ItemDetail `json:"item_details,omitempty"`
+	CustField1   string        `json:"custom_field1,omitempty"`
+	CustField2   string        `json:"custom_field2,omitempty"`
+	CustField3   string        `json:"custom_field3,omitempty"`
+	CustomExpiry *CustomExpiry `json:"custom_expiry,omitempty"`
 }
 
 // ChargeReqWithMap : Represent Charge request with map payload
@@ -231,6 +232,13 @@ type SnapReq struct {
 	CustomField1       string             `json:"custom_field1"`
 	CustomField2       string             `json:"custom_field2"`
 	CustomField3       string             `json:"custom_field3"`
+}
+
+// CustomExpiry : Represent Core API custom_expiry
+type CustomExpiry struct {
+	OrderTime      string `json:"order_time,omitempty"`
+	ExpiryDuration int    `json:"expiry_duration,omitempty"`
+	Unit           string `json:"unit,omitempty"`
 }
 
 // SnapReqWithMap : Represent snap request with map payload
