@@ -102,6 +102,23 @@ func (gateway *CoreGateway) Approve(orderID string) (Response, error) {
 	return resp, nil
 }
 
+// Deny : Deny a transaction using order ID which gets challenge status from Fraud Detection System
+func (gateway *CoreGateway) Deny(orderID string) (Response, error) {
+	resp := Response{}
+
+	err := gateway.Call("POST", "v2/"+orderID+"/deny", nil, &resp)
+	if err != nil {
+		gateway.Client.Logger.Println("Error while deny: ", err)
+		return resp, err
+	}
+
+	if resp.StatusMessage != "" {
+		gateway.Client.Logger.Println(resp.StatusMessage)
+	}
+
+	return resp, nil
+}
+
 // Cancel : Cancel order using order ID
 func (gateway *CoreGateway) Cancel(orderID string) (Response, error) {
 	resp := Response{}
