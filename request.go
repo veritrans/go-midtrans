@@ -297,5 +297,7 @@ type SubscribeReq struct {
 // ScheduleDetailReq : Represent Schedule object payload
 type ScheduleDetailReq struct {
 	Interval     int    `json:"interval"`
+	MaxInterval  int    `json:"max_interval"`
 	IntervalUnit string `json:"interval_unit"`
+	StartTime    string `json:"start_time"`
 }
