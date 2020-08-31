@@ -73,6 +73,7 @@ type CreditCardDetail struct {
 	TokenID         string             `json:"token_id"`
 	Bank            string             `json:"bank,omitempty"`
 	Bins            []string           `json:"bins,omitempty"`
+	WhitelistBins   []string           `json:"whitelist_bins,omitempty"`
 	Installment     *InstallmentDetail `json:"installment,omitempty"`
 	InstallmentTerm int8               `json:"installment_term,omitempty"`
 	Type            string             `json:"type,omitempty"`
