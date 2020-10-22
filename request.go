@@ -78,6 +78,8 @@ type CreditCardDetail struct {
 	InstallmentTerm int8               `json:"installment_term,omitempty"`
 	Type            string             `json:"type,omitempty"`
 	// indicate if generated token should be saved for next charge
+	SaveCard             bool   `json:"save_card,omitempty"`
+	CardToken            string `json:"card_token,omitempty"`
 	SaveTokenID          bool   `json:"save_token_id,omitempty"`
 	SavedTokenIDExpireAt string `json:"saved_token_id_expired_at,omitempty"`
 	Authentication       bool   `json:"authentication,omitempty"`
@@ -230,6 +232,7 @@ type SnapReq struct {
 	Expiry             *ExpiryDetail      `json:"expiry,omitempty"`
 	CreditCard         *CreditCardDetail  `json:"credit_card,omitempty"`
 	Gopay              *GopayDetail       `json:"gopay,omitempty"`
+	UserId             string             `json:"user_id"`
 	CustomField1       string             `json:"custom_field1"`
 	CustomField2       string             `json:"custom_field2"`
 	CustomField3       string             `json:"custom_field3"`
