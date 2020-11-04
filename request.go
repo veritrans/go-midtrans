@@ -227,6 +227,7 @@ type ChargeReqWithMap map[string]interface{}
 type SnapReq struct {
 	TransactionDetails TransactionDetails `json:"transaction_details"`
 	EnabledPayments    []PaymentType      `json:"enabled_payments"`
+	Callbacks          *Callbacks         `json:"callbacks"`
 	Items              *[]ItemDetail      `json:"item_details,omitempty"`
 	CustomerDetail     *CustDetail        `json:"customer_details,omitempty"`
 	Expiry             *ExpiryDetail      `json:"expiry,omitempty"`
@@ -236,6 +237,10 @@ type SnapReq struct {
 	CustomField1       string             `json:"custom_field1"`
 	CustomField2       string             `json:"custom_field2"`
 	CustomField3       string             `json:"custom_field3"`
+}
+
+type Callbacks struct {
+	Finish string `json:"finish"`
 }
 
 // CustomExpiry : Represent Core API custom_expiry
