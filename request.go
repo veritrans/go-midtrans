@@ -226,17 +226,17 @@ type ChargeReqWithMap map[string]interface{}
 // SnapReq : Represent SNAP API request payload
 type SnapReq struct {
 	TransactionDetails TransactionDetails `json:"transaction_details"`
-	EnabledPayments    []PaymentType      `json:"enabled_payments"`
-	Callbacks          *Callbacks         `json:"callbacks"`
+	EnabledPayments    []PaymentType      `json:"enabled_payments,omitempty"`
+	Callbacks          *Callbacks         `json:"callbacks,omitempty"`
 	Items              *[]ItemDetail      `json:"item_details,omitempty"`
 	CustomerDetail     *CustDetail        `json:"customer_details,omitempty"`
 	Expiry             *ExpiryDetail      `json:"expiry,omitempty"`
 	CreditCard         *CreditCardDetail  `json:"credit_card,omitempty"`
 	Gopay              *GopayDetail       `json:"gopay,omitempty"`
 	UserId             string             `json:"user_id,omitempty"`
-	CustomField1       string             `json:"custom_field1"`
-	CustomField2       string             `json:"custom_field2"`
-	CustomField3       string             `json:"custom_field3"`
+	CustomField1       string             `json:"custom_field1,omitempty"`
+	CustomField2       string             `json:"custom_field2,omitempty"`
+	CustomField3       string             `json:"custom_field3,omitempty"`
 }
 
 type Callbacks struct {
