@@ -28,4 +28,5 @@ func TestPaymentType(t *testing.T) {
 	is.Equal("bca_klikpay", midtrans.SourceBcaKlikpay)
 	is.Equal("gopay", midtrans.SourceGopay)
 	is.Equal("akulaku", midtrans.SourceAkulaku)
+	is.Equal("shopeepay", midtrans.SourceShopeePay)
 }

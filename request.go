@@ -194,6 +194,11 @@ type GopayDetail struct {
 	CallbackUrl    string `json:"callback_url"`
 }
 
+// ShopeePayDetail : Represent shopeepay detail
+type ShopeePayDetail struct {
+	CallbackUrl string `json:"callback_url,omitempty"`
+}
+
 // ChargeReq : Represent Charge request payload
 type ChargeReq struct {
 	PaymentType        PaymentType        `json:"payment_type"`
@@ -212,6 +217,7 @@ type ChargeReq struct {
 	CustomerDetail                *CustDetail                    `json:"customer_details,omitempty"`
 	ConvStore                     *ConvStoreDetail               `json:"cstore,omitempty"`
 	Gopay                         *GopayDetail                   `json:"gopay,omitempty"`
+	ShopeePay                     *ShopeePayDetail               `json:"shopeepay,omitempty"`
 
 	Items        *[]ItemDetail `json:"item_details,omitempty"`
 	CustField1   string        `json:"custom_field1,omitempty"`
@@ -233,6 +239,7 @@ type SnapReq struct {
 	Expiry             *ExpiryDetail      `json:"expiry,omitempty"`
 	CreditCard         *CreditCardDetail  `json:"credit_card,omitempty"`
 	Gopay              *GopayDetail       `json:"gopay,omitempty"`
+	ShopeePay          *ShopeePayDetail   `json:"shopeepay,omitempty"`
 	UserId             string             `json:"user_id,omitempty"`
 	CustomField1       string             `json:"custom_field1,omitempty"`
 	CustomField2       string             `json:"custom_field2,omitempty"`
