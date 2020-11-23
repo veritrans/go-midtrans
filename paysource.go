@@ -70,6 +70,9 @@ const (
 	// SourceGopay : gopay
 	SourceGopay PaymentType = "gopay"
 
+	// SourceShopeePay : shopeepay
+	SourceShopeePay PaymentType = "shopeepay"
+
 	// SourceAkulaku : akulaku
 	SourceAkulaku PaymentType = "akulaku"
 )
@@ -94,4 +97,5 @@ var AllPaymentSource = []PaymentType{
 	SourceIndomaret,
 	SourceKioson,
 	SourceGiftCardIndo,
+	SourceShopeePay,
 }
