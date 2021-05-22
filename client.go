@@ -12,6 +12,11 @@ import (
 	"time"
 )
 
+var (
+	defaultHTTPTimeout = 80 * time.Second
+	defaultHTTPClient  = &http.Client{Timeout: defaultHTTPTimeout}
+)
+
 // Client struct
 type Client struct {
 	APIEnvType EnvironmentType
@@ -20,11 +25,51 @@ type Client struct {
 
 	LogLevel int
 	Logger   *log.Logger
+
+	HTTPClient *http.Client
+}
+
+type ClientOption func(*Client)
+
+func WithEnvType(envType EnvironmentType) ClientOption {
+	return func(c *Client) {
+		c.APIEnvType = envType
+	}
+}
+
+func WithClientKey(key string) ClientOption {
+	return func(c *Client) {
+		c.ClientKey = key
+	}
+}
+
+func WithServerKey(key string) ClientOption {
+	return func(c *Client) {
+		c.ServerKey = key
+	}
+}
+
+func WithLogLevel(level int) ClientOption {
+	return func(c *Client) {
+		c.LogLevel = level
+	}
+}
+
+func WithLogger(logger *log.Logger) ClientOption {
+	return func(c *Client) {
+		c.Logger = logger
+	}
+}
+
+func WithHTTPClient(hc *http.Client) ClientOption {
+	return func(c *Client) {
+		c.HTTPClient = hc
+	}
 }
 
 // NewClient : this function will always be called when the library is in use
-func NewClient() Client {
-	return Client{
+func NewClient(opts ...ClientOption) Client {
+	client := Client{
 		APIEnvType: Sandbox,
 
 		// LogLevel is the logging level used by the Midtrans library
@@ -32,14 +77,17 @@ func NewClient() Client {
 		// 1: Errors only
 		// 2: Errors + informational (default)
 		// 3: Errors + informational + debug
-		LogLevel: 2,
-		Logger:   log.New(os.Stderr, "", log.LstdFlags),
+		LogLevel:   2,
+		Logger:     log.New(os.Stderr, "", log.LstdFlags),
+		HTTPClient: defaultHTTPClient,
 	}
-}
 
-// ===================== HTTP CLIENT ================================================
-var defHTTPTimeout = 80 * time.Second
-var httpClient = &http.Client{Timeout: defHTTPTimeout}
+	for _, apply := range opts {
+		apply(&client)
+	}
+
+	return client
+}
 
 // NewRequest : send new request
 func (c *Client) NewRequest(method string, fullPath string, body io.Reader) (*http.Request, error) {
@@ -72,7 +120,7 @@ func (c *Client) ExecuteRequest(req *http.Request, v interface{}) error {
 
 	start := time.Now()
 
-	res, err := httpClient.Do(req)
+	res, err := c.HTTPClient.Do(req)
 	if err != nil {
 		if logLevel > 0 {
 			logger.Println("Cannot send request: ", err)
