@@ -213,6 +213,11 @@ if err != nil {
 }
 fmt.Printf("result %v \n ", res.BeneficiaryBanks)
 ```
+## Change log
+
+- Use go modules
+- Add ability to set HTTP client
+- Use function options for constructing a new client
 
 ## License
 
