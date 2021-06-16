@@ -1,3 +1,23 @@
+
+--------------------
+
+> **:warning::warning: IMPORTANT ANNOUNCEMENT :warning::warning:**
+
+**Please use the updated and revamped: [Midtrans Go](https://github.com/Midtrans/midtrans-go).
+For better and more intuitive usage.**
+
+<details>
+<summary>Click Here to Learn More</summary>
+
+This library was created in the early days, then we realize some of the designs and patterns used in this library is not the best and easiest to maintain. We learn from the mistakes, and decide it will be better to revamp as brand new [Midtrans Go](https://github.com/Midtrans/midtrans-go) library. This decision is to avoid forcing breaking changes to this library, allow old users to migrate as they see fit, and allows better flexibility on the revamped design. Thank you for your support, contributions, and understanding. 🙂
+</details>
+
+This repo still be here for archive and backward-compatibility purpose for those who still use it. But it's always recommended to use the newer version [Midtrans Go](https://github.com/Midtrans/midtrans-go).
+
+> **:speaker: END OF ANNOUNCEMENT :speaker:**
+
+---------------------
+
 # Midtrans Library for Go(lang)
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/veritrans/go-midtrans)](https://goreportcard.com/report/github.com/veritrans/go-midtrans)
