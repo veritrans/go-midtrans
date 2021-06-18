@@ -3,6 +3,7 @@ package midtrans
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"io"
 	"strings"
 )
@@ -33,8 +34,8 @@ func (gateway *CoreGateway) Charge(req *ChargeReq) (Response, error) {
 		return resp, err
 	}
 
-	if resp.StatusMessage != "" {
-		gateway.Client.Logger.Println(resp.StatusMessage)
+	if resp.StatusCode != "200" {
+		return resp, errors.New(resp.StatusMessage)
 	}
 
 	return resp, nil
@@ -78,8 +79,8 @@ func (gateway *CoreGateway) CaptureCard(req *CaptureReq) (Response, error) {
 		return resp, err
 	}
 
-	if resp.StatusMessage != "" {
-		gateway.Client.Logger.Println(resp.StatusMessage)
+	if resp.StatusCode != "200" {
+		return resp, errors.New(resp.StatusMessage)
 	}
 
 	return resp, nil
@@ -95,8 +96,8 @@ func (gateway *CoreGateway) Approve(orderID string) (Response, error) {
 		return resp, err
 	}
 
-	if resp.StatusMessage != "" {
-		gateway.Client.Logger.Println(resp.StatusMessage)
+	if resp.StatusCode != "200" {
+		return resp, errors.New(resp.StatusMessage)
 	}
 
 	return resp, nil
@@ -129,8 +130,8 @@ func (gateway *CoreGateway) Cancel(orderID string) (Response, error) {
 		return resp, err
 	}
 
-	if resp.StatusMessage != "" {
-		gateway.Client.Logger.Println(resp.StatusMessage)
+	if resp.StatusCode != "200" {
+		return resp, errors.New(resp.StatusMessage)
 	}
 
 	return resp, nil
@@ -146,8 +147,8 @@ func (gateway *CoreGateway) Expire(orderID string) (Response, error) {
 		return resp, err
 	}
 
-	if resp.StatusMessage != "" {
-		gateway.Client.Logger.Println(resp.StatusMessage)
+	if resp.StatusCode != "200" {
+		return resp, errors.New(resp.StatusMessage)
 	}
 
 	return resp, nil
@@ -163,8 +164,8 @@ func (gateway *CoreGateway) Status(orderID string) (Response, error) {
 		return resp, err
 	}
 
-	if resp.StatusMessage != "" {
-		gateway.Client.Logger.Println(resp.StatusMessage)
+	if resp.StatusCode != "200" {
+		return resp, errors.New(resp.StatusMessage)
 	}
 
 	return resp, nil
@@ -181,8 +182,8 @@ func (gateway *CoreGateway) Refund(orderID string, req *RefundReq) (Response, er
 		return resp, err
 	}
 
-	if resp.StatusMessage != "" {
-		gateway.Client.Logger.Println(resp.StatusMessage)
+	if resp.StatusCode != "200" {
+		return resp, errors.New(resp.StatusMessage)
 	}
 
 	return resp, nil
@@ -199,8 +200,8 @@ func (gateway *CoreGateway) DirectRefund(orderID string, req *RefundReq) (Respon
 		return resp, err
 	}
 
-	if resp.StatusMessage != "" {
-		gateway.Client.Logger.Println(resp.StatusMessage)
+	if resp.StatusCode != "200" {
+		return resp, errors.New(resp.StatusMessage)
 	}
 
 	return resp, nil
